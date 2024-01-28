@@ -1,0 +1,43 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: var(--bs-gutter-y);
+
+  section {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px 20px;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1450px;
+  }
+
+  h3 {
+    font-size: 4em;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #212529;
+  }
+
+  hr {
+    width: 60%;
+  }
+}

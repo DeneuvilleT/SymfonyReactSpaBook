@@ -39,7 +39,7 @@ const Nav = () => {
   return (
     <nav className={styles.nav}>
       <h1>
-        <Link to={"/"}>Exemple.com</Link>
+        <Link to={"/"}>Pause & Nature</Link>
       </h1>
 
       <ul>

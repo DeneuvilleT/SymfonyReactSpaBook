@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./containers/Header/Header";
+import Home from "./containers/Home/Home";
 import Product from "./components/Product/Product";
 import Logup from "./containers/Logup/Logup";
 import Logout from "./containers/Logout/Logout";
@@ -34,7 +35,7 @@ const App = ({ container }) => {
       <Header />
       <Notif />
       <Routes>
-        <Route path="/" element={<Authentication child={ProductList} auth={false} />} />
+        <Route path="/" element={<Authentication child={Home} auth={false} />} />
         <Route path="product/:id" element={<Authentication child={Product} auth={false} />} />
 
         <Route path="/cart" element={<Authentication child={Cart} auth={false} />} />
