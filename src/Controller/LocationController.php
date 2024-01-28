@@ -24,6 +24,16 @@ class LocationController extends AbstractController
     public function searchBar(Request $request, LocationRepository $localRepo): Response
     {
         $datas = json_decode($request->getContent(), true);
+
+        $locations = $localRepo->search(
+            $datas["accommodation"], 
+            $datas["begin"], 
+            $datas["end"], 
+            $datas["capacity"]
+        );
+
+        dd($locations);
+
         return new Response(Response::HTTP_REQUEST_TIMEOUT);
     }
 
