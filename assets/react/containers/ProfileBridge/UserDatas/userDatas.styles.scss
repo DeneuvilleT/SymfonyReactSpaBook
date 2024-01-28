@@ -1,0 +1,116 @@
+.userDatas {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 50px;
+  margin: 50px auto;
+  width: 100%;
+  max-width: 1450px;
+  font-size: 1em;
+
+  h2 {
+    font-size: 26px;
+  }
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 26px;
+  }
+
+  section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 60px;
+    margin: auto;
+    width: 100%;
+    padding: 0 50px;
+  }
+
+  section div:first-child {
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    padding: 20px 73px 20px 0;
+    border-right: 1px solid black;
+  }
+
+  section div:nth-child(2) {
+    padding: 20px;
+  }
+
+  legend {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 21px;
+    padding: 20px 0;
+    width: 100%;
+  }
+
+  legend:nth-child(2) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  form,
+  address,
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: none;
+    gap: 20px;
+    border-radius: 5px;
+  }
+
+  address {
+    position: relative;
+  }
+
+  p,
+  select,
+  input,
+  button {
+    font-size: 1.25em;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
+    border: none;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    min-height: 35px;
+    min-width: 300px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    min-height: 0;
+    min-width: 200px;
+    max-width: 250px;
+  }
+
+  button:disabled {
+    background-color: #999;
+    cursor: default;
+  }
+
+  button:disabled:hover {
+    filter: brightness(1);
+  }
+
+  button:disabled:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+  }
+}
