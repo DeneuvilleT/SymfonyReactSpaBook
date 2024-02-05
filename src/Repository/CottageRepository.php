@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\House;
+use App\Entity\Cottage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,14 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method House[]    findAll()
  * @method House[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class HouseRepository extends ServiceEntityRepository
+class CottageRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, House::class);
+        parent::__construct($registry, Cottage::class);
     }
 
-    public function save(House $entity, bool $flush = false): void
+    public function save(Cottage $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class HouseRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(House $entity, bool $flush = false): void
+    public function remove(Cottage $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

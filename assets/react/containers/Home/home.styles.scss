@@ -2,22 +2,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
 
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
   width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  padding-right: calc(var(1.5rem) * 0.5);
+  padding-left: calc(var(1.5rem) * 0.5);
   margin-right: auto;
   margin-left: auto;
 
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
+  padding-right: calc(var(1.5rem) * 0.5);
+  padding-left: calc(var(1.5rem) * 0.5);
+  margin-top: var(0);
 
   section {
     display: flex;

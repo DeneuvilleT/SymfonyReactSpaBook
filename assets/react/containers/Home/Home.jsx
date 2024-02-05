@@ -6,7 +6,6 @@ import styles from "./home.styles.scss";
 const Home = () => {
   return (
     <main className={styles.home}>
-      <h3>Bienvenue sur les logis de Pause & Nature</h3>
 
       <section>
         <FormBook
@@ -52,9 +51,15 @@ const Home = () => {
               type: "checkbox",
               value : "false"
             },
-            isAnimals: {
+            animalAccepted: {
               label: "Animaux",
-              name: "isAnimals",
+              name: "animalAccepted",
+              type: "checkbox",
+              value : "false"
+            },
+            hasGarden: {
+              label: "Jardin",
+              name: "hasGarden",
               type: "checkbox",
               value : "false"
             },

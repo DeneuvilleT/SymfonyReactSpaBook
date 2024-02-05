@@ -39,7 +39,7 @@ const Nav = () => {
   return (
     <nav className={styles.nav}>
       <h1>
-        <Link to={"/"}>Pause & Nature</Link>
+        <Link to={"/"}>Cabane et gîte au naturel</Link>
       </h1>
 
       <ul>

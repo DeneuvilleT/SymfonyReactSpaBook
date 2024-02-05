@@ -5,14 +5,10 @@ namespace App\Entity;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use ReflectionClass;
 
-#[ORM\InheritanceType("JOINED")]
-#[ORM\DiscriminatorColumn(name: "location_type", type: "string")]
-#[ORM\DiscriminatorMap(["apartment" => Apartment::class, "house" => House::class, "boat" => Boat::class, "treeHouse" => TreeHouse::class])]
+
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
 {
@@ -21,127 +17,119 @@ class Location
     #[ORM\Column]
     protected ?int $id = null;
 
-    #[Assert\Length(
-        min: 4,
-        max: 100,
-        minMessage: 'Le nom de votre établissement doit comporter au moins 4 caractéres.',
-        maxMessage: 'Le nom de votre établissement doit comporter au maximum 100 caractéres.',
-    )]
-    #[ORM\Column(length: 255)]
-    protected ?string $name = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    protected ?string $description = null;
-
-    #[ORM\Column(length: 255)]
-    protected ?string $address = null;
-
-    #[ORM\Column(length: 255)]
-    protected ?string $tel = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 6)]
-    protected ?string $priceOneNight = null;
-
     #[ORM\Column]
-    protected ?int $nbrRoom = null;
+    protected ?int $capacity = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Booking::class)]
     protected Collection $bookings;
 
-    #[ORM\ManyToOne(inversedBy: 'location')]
-    protected ?User $user = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $hasSanitary = null;
 
-    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Room::class)]
-    protected Collection $room;
+    #[ORM\Column(nullable: true)]
+    private ?bool $hasGarden = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $City = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $hasPool = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Longitude = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $animalAccepted = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Latitude = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $available = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $treeHeight = null;
+
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: DatesTable::class)]
+    private Collection $datesTables;
 
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
-        $this->room = new ArrayCollection();
+        $this->datesTables = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getCapacity(): ?int
     {
-        return $this->id;
+        return $this->capacity;
     }
 
-    public function getName(): ?string
+    public function setCapacity(int $capacity): self
     {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+        $this->capacity = $capacity;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function hasSanitary(): ?bool
     {
-        return $this->description;
+        return $this->hasSanitary;
     }
 
-    public function setDescription(?string $description): self
+    public function setHasSanitary(bool $hasSanitary): self
     {
-        $this->description = $description;
+        $this->hasSanitary = $hasSanitary;
 
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function hasGarden(): ?bool
     {
-        return $this->address;
+        return $this->hasGarden;
     }
 
-    public function setAddress(string $address): self
+    public function setHasGarden(bool $hasGarden): self
     {
-        $this->address = $address;
+        $this->hasGarden = $hasGarden;
 
         return $this;
     }
 
-    public function getTel(): ?string
+    public function isHasPool(): ?bool
     {
-        return $this->tel;
+        return $this->hasPool;
     }
 
-    public function setTel(string $tel): self
+    public function setHasPool(bool $hasPool): self
     {
-        $this->tel = $tel;
+        $this->hasPool = $hasPool;
 
         return $this;
     }
 
-    public function getPriceOneNight(): ?string
+    public function isAnimalAccepted(): ?bool
     {
-        return $this->priceOneNight;
+        return $this->animalAccepted;
     }
 
-    public function setPriceOneNight(string $priceOneNight): self
+    public function setAnimalAccepted(bool $animalAccepted): self
     {
-        $this->priceOneNight = $priceOneNight;
+        $this->animalAccepted = $animalAccepted;
 
         return $this;
     }
 
-    public function getNbrRoom(): ?int
+    public function isAvailable(): ?bool
     {
-        return $this->nbrRoom;
+        return $this->available;
     }
 
-    public function setNbrRoom(int $nbrRoom): self
+    public function setAvailable(bool $available): self
     {
-        $this->nbrRoom = $nbrRoom;
+        $this->available = $available;
+
+        return $this;
+    }
+
+    public function getTreeHeight(): ?float
+    {
+        return $this->treeHeight;
+    }
+
+    public function setTreeHeight(float $treeHeight): self
+    {
+        $this->treeHeight = $treeHeight;
 
         return $this;
     }
@@ -176,99 +164,39 @@ class Location
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Room>
-     */
-    public function getRoom(): Collection
-    {
-        return $this->room;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->room->contains($room)) {
-            $this->room->add($room);
-            $room->setLocation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->room->removeElement($room)) {
-            // set the owning side to null (unless already changed)
-            if ($room->getLocation() === $this) {
-                $room->setLocation(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getClassName()
     {
         $class = new ReflectionClass($this);
         return $class->getShortName();
     }
 
-    public function getCity(): ?string
+    /**
+     * @return Collection<int, DatesTable>
+     */
+    public function getDatesTables(): Collection
     {
-        return $this->City;
+        return $this->datesTables;
     }
 
-    public function setCity(string $City): self
+    public function addDatesTable(DatesTable $datesTable): static
     {
-        $this->City = $City;
+        if (!$this->datesTables->contains($datesTable)) {
+            $this->datesTables->add($datesTable);
+            $datesTable->setLocation($this);
+        }
 
         return $this;
     }
 
-    public function getLongitude(): ?string
+    public function removeDatesTable(DatesTable $datesTable): static
     {
-        return $this->Longitude;
-    }
-
-    public function setLongitude(string $Longitude): self
-    {
-        $this->Longitude = $Longitude;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?string
-    {
-        return $this->Latitude;
-    }
-
-    public function setLatitude(string $Latitude): self
-    {
-        $this->Latitude = $Latitude;
-
-        return $this;
-    }
-
-    public function getCapacity()
-    {
-        $capacity = 0;
-
-        foreach ($this->getRoom() as $rooms) {
-            foreach ($rooms->getRoomBed() as $roomBed) {
-                $capacity += $roomBed->getQuantity() * $roomBed->getBed()->getCapacity();
+        if ($this->datesTables->removeElement($datesTable)) {
+            // set the owning side to null (unless already changed)
+            if ($datesTable->getLocation() === $this) {
+                $datesTable->setLocation(null);
             }
         }
-        return $capacity;
+
+        return $this;
     }
 }

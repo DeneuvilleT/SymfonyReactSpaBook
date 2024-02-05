@@ -30,7 +30,7 @@ class Booking
     private ?string $totalPrice = null;
 
     #[ORM\ManyToOne(inversedBy: 'booking')]
-    private ?User $user = null;
+    private ?Customer $customer = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     private ?Location $location = null;
@@ -100,14 +100,14 @@ class Booking
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getCustomer(): ?Customer
     {
-        return $this->user;
+        return $this->customer;
     }
 
-    public function setUser(?User $user): self
+    public function setCustomer(?Customer $customer): self
     {
-        $this->user = $user;
+        $this->customer = $customer;
 
         return $this;
     }

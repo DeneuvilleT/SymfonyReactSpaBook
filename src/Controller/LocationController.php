@@ -5,14 +5,11 @@ namespace App\Controller;
 
 use App\Entity\Location;
 use App\Repository\LocationRepository;
-// use App\Repository\RoomBedRepository;
-// use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 class LocationController extends AbstractController
 {

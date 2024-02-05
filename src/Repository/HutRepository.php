@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\TreeHouse;
+use App\Entity\Hut;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,14 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TreeHouse[]    findAll()
  * @method TreeHouse[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TreeHouseRepository extends ServiceEntityRepository
+class HutRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TreeHouse::class);
+        parent::__construct($registry, Hut::class);
     }
 
-    public function save(TreeHouse $entity, bool $flush = false): void
+    public function save(Hut $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class TreeHouseRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(TreeHouse $entity, bool $flush = false): void
+    public function remove(Hut $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
