@@ -6,6 +6,9 @@ use App\Entity\Comments;
 use App\Entity\Customer;
 use App\Entity\Products;
 use App\Entity\Addresses;
+use App\Entity\Cottage;
+use App\Entity\Hut;
+use App\Entity\Location;
 use App\Entity\Orders;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -59,6 +62,9 @@ class AdminController extends AbstractDashboardController
         yield from $this->yieldMenuItem('Commentaires', 'fas fa-list', Comments::class, $encodedRole, $tokenRequest);
         yield from $this->yieldMenuItem('Adresses', 'fas fa-list', Addresses::class, $encodedRole, $tokenRequest);
         yield from $this->yieldMenuItem('Commandes', 'fas fa-list', Orders::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Cabanes', 'fas fa-list', Hut::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Gites', 'fas fa-list', Cottage::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Locations', 'fas fa-list', Location::class, $encodedRole, $tokenRequest);
     }
 
     private function yieldMenuItem(string $label, string $icon, $entityClass, $encodedRole, $tokenRequest): iterable
