@@ -94,12 +94,16 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Orders::class)]
     private Collection $orders;
 
+    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Bookings::class)]
+    private Collection $bookings;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->addresses = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getUid(): ?string
@@ -300,6 +304,36 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($order->getCustomer() === $this) {
                 $order->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bookings>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Bookings $booking): static
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings->add($booking);
+            $booking->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Bookings $booking): static
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getCustomer() === $this) {
+                $booking->setCustomer(null);
             }
         }
 
