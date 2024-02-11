@@ -2,20 +2,18 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Cottage;
-
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use App\Entity\CategoriesCottage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 
-class CottageCrudController extends AbstractCrudController
+class CategoriesCottageCrudController extends AbstractCrudController
 {
-
     public static function getEntityFqcn(): string
     {
-        return Cottage::class;
+        return CategoriesCottage::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -34,9 +32,9 @@ class CottageCrudController extends AbstractCrudController
         return [
             TextField::new('name', 'Nom'),
             TextEditorField::new('description', 'Description'),
-            MoneyField::new('price_one_night', 'Prix unitaire')
+            MoneyField::new('price_one_night', 'Prix pour une nuit')
                 ->setCurrency('EUR')
-                ->setNumDecimals(2)
+                ->setNumDecimals(2),
         ];
     }
 }

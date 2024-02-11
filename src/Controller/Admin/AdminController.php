@@ -6,10 +6,12 @@ use App\Entity\Comments;
 use App\Entity\Customer;
 use App\Entity\Products;
 use App\Entity\Addresses;
-use App\Entity\Cottage;
-use App\Entity\Hut;
-use App\Entity\Location;
+use App\Entity\Bookings;
+use App\Entity\CategoriesCottage;
+use App\Entity\Covers;
+use App\Entity\LocationTypes;
 use App\Entity\Orders;
+use App\Entity\Periods;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;;
@@ -28,7 +30,7 @@ class AdminController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Mes-reves.com');
+            ->setTitle('Cabane et gîte au naturel');
     }
 
     public function configureMenuItems(): iterable
@@ -57,14 +59,23 @@ class AdminController extends AbstractDashboardController
             }
         }
 
-        yield from $this->yieldMenuItem('Produits', 'fas fa-list', Products::class, $encodedRole, $tokenRequest);
+        yield MenuItem::section('Donnés clients');
         yield from $this->yieldMenuItem('Clients', 'fas fa-list', Customer::class, $encodedRole, $tokenRequest);
-        yield from $this->yieldMenuItem('Commentaires', 'fas fa-list', Comments::class, $encodedRole, $tokenRequest);
         yield from $this->yieldMenuItem('Adresses', 'fas fa-list', Addresses::class, $encodedRole, $tokenRequest);
+
+        yield MenuItem::section('Facturations & Commandes');
         yield from $this->yieldMenuItem('Commandes', 'fas fa-list', Orders::class, $encodedRole, $tokenRequest);
-        yield from $this->yieldMenuItem('Cabanes', 'fas fa-list', Hut::class, $encodedRole, $tokenRequest);
-        yield from $this->yieldMenuItem('Gites', 'fas fa-list', Cottage::class, $encodedRole, $tokenRequest);
-        yield from $this->yieldMenuItem('Locations', 'fas fa-list', Location::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Réservations', 'fas fa-list', Bookings::class, $encodedRole, $tokenRequest);
+
+        yield MenuItem::section('Paramétrages des locations');
+        yield from $this->yieldMenuItem('Gites et cabanes', 'fas fa-list', CategoriesCottage::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Locations', 'fas fa-list', LocationTypes::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Périodes de disponibilité', 'fas fa-list', Periods::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Images', 'fas fa-list', Covers::class, $encodedRole, $tokenRequest);
+
+        yield MenuItem::section('Autres');
+        yield from $this->yieldMenuItem('Commentaires', 'fas fa-list', Comments::class, $encodedRole, $tokenRequest);
+        yield from $this->yieldMenuItem('Produits', 'fas fa-list', Products::class, $encodedRole, $tokenRequest);
     }
 
     private function yieldMenuItem(string $label, string $icon, $entityClass, $encodedRole, $tokenRequest): iterable

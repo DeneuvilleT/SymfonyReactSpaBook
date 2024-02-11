@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-
 class CustomerCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

@@ -2,20 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Addresses;
+use App\Entity\Bookings;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class AddressesCrudController extends AbstractCrudController
+class BookingsCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Addresses::class;
+        return Bookings::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -31,30 +30,34 @@ class AddressesCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $typeChoices = [
-            'Adresse de livraison' => 0,
-            'Adresse de facturation' => 1,
-        ];
-
         return [
-            TextField::new('alias', 'Alias'),
-            TextField::new('address', 'Adresse'),
-            TextField::new('city', 'Ville'),
-            TextField::new('zip_code', 'Code postal'),
-            IntegerField::new('phone', 'Téléphone'),
-            ChoiceField::new('type', 'Type')
-                ->setChoices($typeChoices)
-                ->setCustomOption('choice_label', function ($value, $key, $index) {
-                    return $value === 1 ? 'Adresse de facturation' : 'Adresse de livraison';
-                }),
+            MoneyField::new('total_price', 'Prix')
+                ->setCurrency('EUR')
+                ->setNumDecimals(2),
+            IntegerField::new('quantity_traveller', 'Nombre de voyageur'),
             DateTimeField::new('created_at', 'Créée le'),
+            AssociationField::new('location_type', 'Gites et cabanes')
+                ->formatValue(function ($value, $entity) {
+                    return $value ? $value->getCategoriesCottage()->getName() : '';
+                })
+                ->setFormTypeOption('choice_label', function ($value, $key, $index) {
+                    return $value ? $value->getCategoriesCottage()->getName() : '';
+                }),
             AssociationField::new('customer', 'Client')
                 ->formatValue(function ($value, $entity) {
                     return $value ? $value->getFirstname() . ' ' . $value->getLastname() : '';
                 })
                 ->setFormTypeOption('choice_label', function ($value, $key, $index) {
                     return $value ? $value->getFirstname() . ' ' . $value->getLastname() : '';
+                }),
+            AssociationField::new('period', 'Périodes')
+                ->formatValue(function ($value, $entity) {
+                    return $value ? $value->getStartAt()->format('Y-m-d') . ' à ' . $value->getEndAt()->format('Y-m-d') : '';
                 })
+                ->setFormTypeOption('choice_label', function ($value, $key, $index) {
+                    return $value ? $value->getStartAt()->format('Y-m-d') . ' à ' . $value->getEndAt()->format('Y-m-d') : '';
+                }),
+
         ];
     }
 }
