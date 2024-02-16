@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\LocationRepository;
+use DateTime;
+use App\Repository\LocationTypesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,5 +27,35 @@ class ReactController extends AbstractController
                 'clean' => false
             ]);
         }
+    }
+
+    #[Route(
+        '/location/search',
+        name: 'app_home_search',
+        methods: ['GET', 'POST']
+    )]
+    public function searchBar(Request $request, LocationTypesRepository $localRepo)
+    {
+        $datas = json_decode($request->getContent(), true);
+
+        $queryAccomodation = (int) $datas["accommodation"];
+        $queryBegin = new DateTime($datas["begin"]);
+        $queryEnd = new DateTime($datas["end"]);
+        $queryCapacity = (int) $datas["capacity"];
+        $querySanitary = $datas["hasSanitary"] === "false" ? false : true;
+        $queryPool = $datas["hasPool"] === "false" ? false : true;
+        $queryAnimal = $datas["animalAccepted"] === "false" ? false : true;
+        $queryGarden = $datas["hasGarden"] === "false" ? false : true;
+
+        $localRepo->searchLocations(
+            $queryAccomodation,
+            $queryBegin,
+            $queryEnd,
+            $queryCapacity,
+            $querySanitary,
+            $queryPool,
+            $queryAnimal,
+            $queryGarden
+        );
     }
 }

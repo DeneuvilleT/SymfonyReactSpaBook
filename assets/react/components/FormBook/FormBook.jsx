@@ -32,7 +32,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
           // return after ? location.reload() : (location.href = "/");
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
         setIcone("line-md:arrow-right-circle");
         return setMsgsErr([...JSON.parse(err.response.data).errors]);
       }
@@ -42,7 +42,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
   const handleInputChange = (e) => {
     setMsgsErr([]);
     const { name, value, type, checked } = e.target;
-    const updatedValue = type === 'checkbox' ? checked : value;
+    const updatedValue = type === "checkbox" ? checked : value;
     const updatedFormData = { ...formData, [name]: updatedValue };
 
     setFormData(updatedFormData);
@@ -61,6 +61,8 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
                 <input
                   type={input.type}
                   name={input.name}
+                  {...(input.type === "number" ? { min: "0" } : {})}
+                  {...(input.type === "number" ? { max: "6" } : {})}
                   id={`post_${input.name}`}
                   value={formData[key]}
                   placeholder={!hasLabel ? input.label.toLowerCase() : ""}
@@ -95,13 +97,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
             <div key={key}>
               {hasLabel ? <label htmlFor={`post_${input.name}`}>{input.label}</label> : <></>}
 
-              <input
-                type={input.type}
-                name={input.name}
-                id={`post_${input.name}`}
-                value={formData[key]}
-                onChange={handleInputChange}
-              />
+              <input type={input.type} name={input.name} id={`post_${input.name}`} value={formData[key]} onChange={handleInputChange} />
             </div>
           ) : (
             <Fragment key={key}></Fragment>

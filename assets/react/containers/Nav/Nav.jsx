@@ -11,15 +11,15 @@ const Nav = () => {
   const { isLog, status } = useSelector((state) => ({ ...state.auth }));
   const token = localStorage.getItem(`${location.origin}_bear_token`);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const productsStatus = useSelector(getProductsStatus);
+  // const productsStatus = useSelector(getProductsStatus);
 
-  useEffect(() => {
-    if (productsStatus === "idle") {
-      dispatch(fetchProducts());
-    }
-  }, [productsStatus, dispatch]);
+  // useEffect(() => {
+  //   if (productsStatus === "idle") {
+  //     dispatch(fetchProducts());
+  //   }
+  // }, [productsStatus, dispatch]);
 
   const handleAdmin = async () => {
     try {
@@ -43,8 +43,8 @@ const Nav = () => {
       </h1>
 
       <ul>
-        <Link to={"/"}>Produits</Link>
-        <Link to={"/cart"}>Panier</Link>
+        {/* <Link to={"/"}>Produits</Link>
+        <Link to={"/cart"}>Panier</Link> */}
 
         {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
         <Link to={"/register"}>Inscription</Link>

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\LocationTypes;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +22,14 @@ class LocationTypesRepository extends ServiceEntityRepository
         parent::__construct($registry, LocationTypes::class);
     }
 
-//    /**
-//     * @return LocationTypes[] Returns an array of LocationTypes objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function searchLocations(int $accommodation, DateTime $begin, DateTime $end, int $capacity, bool $hasSanitary, bool $hasPool, bool $animalAccepted, bool $hasGarden): array
+    {
+        $query = $this
+            ->createQueryBuilder("l")
+            ->having("l.capacity >= :capacity")
+            ->setParameter("capacity", $capacity)
+            ->getQuery()->getResult();
 
-//    public function findOneBySomeField($value): ?LocationTypes
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        dd($query);
+    }
 }
