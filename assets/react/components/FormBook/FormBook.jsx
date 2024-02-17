@@ -1,11 +1,14 @@
 import React, { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 import { Icon } from "@iconify/react";
 
 import styles from "./formBook.styles.scss";
 
-const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
+const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success, set }) => {
+  const dispatch = useDispatch();
+
   const initialFormData = Object.fromEntries(
     Object.entries(inputs).map(([key, input]) => [key, key === "type" ? input.value || 0 : input.value || ""])
   );
@@ -28,9 +31,10 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         setMsgsErr([]);
 
         if (response.status === 200) {
-          console.log(response.data)
+          console.log(response.data);
+          set ? set(response.data) : null;
           setIcone("lets-icons:search-light");
-          // return after ? location.reload() : (location.href = "/");
+          return after ? location.reload() : (location.href = "/");
         }
       } catch (err) {
         console.log(err);

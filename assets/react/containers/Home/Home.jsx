@@ -1,9 +1,14 @@
 import React from "react";
 import FormBook from "../../components/FormBook/FormBook";
+import { useDispatch } from "react-redux";
 
 import styles from "./home.styles.scss";
+import { setLocations } from "../../Store/slices/locationsSlices";
 
 const Home = () => {
+
+  const dispatch = useDispatch();
+
   return (
     <main className={styles.home}>
 
@@ -63,7 +68,9 @@ const Home = () => {
               type: "checkbox",
               value : false
             },
+            
           }}
+          set={dispatch(setLocations())}
         />
       </section>
 
