@@ -23,11 +23,12 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
       setCanSave(false);
       try {
         setIcone("svg-spinners:90-ring-with-bg");
-
+        console.log(formData);
         const response = await axios.post(url, formData);
         setMsgsErr([]);
 
         if (response.status === 200) {
+          console.log(response)
           setIcone("lets-icons:search-light");
           // return after ? location.reload() : (location.href = "/");
         }
@@ -42,11 +43,25 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
   const handleInputChange = (e) => {
     setMsgsErr([]);
     const { name, value, type, checked } = e.target;
-    const updatedValue = type === "checkbox" ? checked : value;
+    let updatedValue;
+
+    if (type === "checkbox") {
+      updatedValue = checked;
+    } else {
+      updatedValue = value;
+    }
+
     const updatedFormData = { ...formData, [name]: updatedValue };
 
     setFormData(updatedFormData);
-    setCanSave(Object.values(updatedFormData).every((val) => val !== "") ? true : false);
+
+    const canSaveUpdated = Object.entries(updatedFormData)
+      .filter(([name, value]) => {
+        return inputs[name].required && inputs[name].type !== "checkbox";
+      })
+      .every(([name, value]) => value !== "");
+
+    setCanSave(canSaveUpdated);
   };
 
   return (

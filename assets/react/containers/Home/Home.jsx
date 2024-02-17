@@ -14,9 +14,9 @@ const Home = () => {
           hasLabel={true}
           after={false}
           inputs={{
-            accommodation: {
+            cottage: {
               label: "Type d'hébergement :",
-              name: "accommodation",
+              name: "cottage",
               type: "select",
               value: "0",
               option: [
@@ -43,25 +43,25 @@ const Home = () => {
               label: "Sanitaire personnel",
               name: "hasSanitary",
               type: "checkbox",
-              value : "false"
+              value : false
             },
             hasPool: {
               label: "Piscine",
               name: "hasPool",
               type: "checkbox",
-              value : "false"
+              value : false
             },
             animalAccepted: {
               label: "Animaux",
               name: "animalAccepted",
               type: "checkbox",
-              value : "false"
+              value : false
             },
             hasGarden: {
               label: "Jardin",
               name: "hasGarden",
               type: "checkbox",
-              value : "false"
+              value : false
             },
           }}
         />

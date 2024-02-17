@@ -25,6 +25,7 @@ class CategoriesCottage
     #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 6)]
     private ?string $price_one_night = null;
 
+    
     #[ORM\OneToMany(mappedBy: 'categories_cottage', targetEntity: Covers::class)]
     private Collection $covers;
 

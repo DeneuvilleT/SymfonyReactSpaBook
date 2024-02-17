@@ -17,6 +17,9 @@ class LocationTypes
     private ?int $id = null;
 
     #[ORM\Column]
+    private ?bool $type = null;
+
+    #[ORM\Column]
     private ?int $capacity = null;
 
     #[ORM\Column(nullable: true)]
@@ -51,6 +54,18 @@ class LocationTypes
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isType(): ?bool
+    {
+        return $this->type;
+    }
+
+    public function setType(bool $type): static
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     public function getCapacity(): ?int

@@ -22,14 +22,33 @@ class LocationTypesRepository extends ServiceEntityRepository
         parent::__construct($registry, LocationTypes::class);
     }
 
-    public function searchLocations(int $accommodation, DateTime $begin, DateTime $end, int $capacity, bool $hasSanitary, bool $hasPool, bool $animalAccepted, bool $hasGarden): array
+    public function searchLocations(bool $type, DateTime $begin, DateTime $end, int $capacity, bool $hasSanitary, bool $hasPool, bool $animalAccepted, bool $hasGarden): array
     {
+        // dd($type, $begin, $end, $capacity, $hasSanitary, $hasPool, $animalAccepted, $hasGarden);
         $query = $this
             ->createQueryBuilder("l")
-            ->having("l.capacity >= :capacity")
-            ->setParameter("capacity", $capacity)
-            ->getQuery()->getResult();
+            ->andWhere("l.type = :type")
+            // ->andWhere("l.begin >= :begin")
+            // ->andWhere("l.end >= :end")
+            ->andWhere("l.capacity >= :capacity")
+            ->andWhere("l.has_sanitary >= :hasSanitary")
+            ->andWhere("l.has_pool >= :hasPool")
+            ->andWhere("l.animal_accepted >= :animalAccepted")
+            ->andWhere("l.has_garden >= :hasGarden")
+            ->setParameters([
+                "type" => $type,
+                // "begin" => $begin,
+                // "end" => $end,
+                "capacity" => $capacity,
+                "hasSanitary" => $hasSanitary,
+                "hasPool" => $hasPool,
+                "animalAccepted" => $animalAccepted,
+                "hasGarden" => $hasGarden,
+            ])
+            ->getQuery()
+            ->getResult();
 
-        dd($query);
+        return $query;
+        //dd($type, $capacity, $query);
     }
 }

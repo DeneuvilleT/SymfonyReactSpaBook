@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class LocationTypesCrudController extends AbstractCrudController
 {
@@ -30,7 +31,17 @@ class LocationTypesCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $typeChoices = [
+            'Gites' => 1,
+            'Cabane' => 0,
+        ];
+
         return [
+            ChoiceField::new('type', 'Type')
+            ->setChoices($typeChoices)
+            ->setCustomOption('choice_label', function ($value, $key, $index) {
+                return $value === 1 ? 'Gite' : 'Cabane';
+            }),
             IntegerField::new('capacity', 'Capacité'),
             BooleanField::new('has_sanitary', 'Sanitaire individuel'),
             BooleanField::new('has_garden', 'Jardin'),
