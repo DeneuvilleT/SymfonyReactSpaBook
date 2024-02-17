@@ -28,7 +28,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         setMsgsErr([]);
 
         if (response.status === 200) {
-          console.log(response)
+          console.log(response.data)
           setIcone("lets-icons:search-light");
           // return after ? location.reload() : (location.href = "/");
         }

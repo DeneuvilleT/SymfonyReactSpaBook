@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CategoriesCottage;
+use App\Entity\Periods;
 use DateTime;
 use App\Repository\LocationTypesRepository;
 use Doctrine\Common\Collections\Collection;
@@ -82,8 +83,14 @@ class ReactController extends AbstractController
                 'has_pool' => $location->isHasPool(),
                 'animal_accpeted' => $location->isAnimalAccepted(),
                 'tree_height' => $location->getTreeHeight(),
-                'cottages' => $this->getCottagesData($location->getCategoriesCottage()),
-                // BOOKINGS
+                'cottages' => [
+                   'name' => $location->getCategoriesCottage()->getName(),
+                   'description' => $location->getCategoriesCottage()->getDescription(),
+                   'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
+                   'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
+                   'periods' => $this->getPeriodsData($location->getCategoriesCottage()->getPeriods())
+                ],
+                // 'bookings' => $this->getBookingsData($location->getBookings()),
             ];
 
             $data[] = $locationData;
@@ -94,22 +101,52 @@ class ReactController extends AbstractController
         return new Response($jsonContent);
     }
 
-    private function getCottagesData(CategoriesCottage $cottages)
+    private function getBookingsData(Collection $bookings)
     {
-        $cottageData = [];
+        $bookingsData = [];
 
-        /** @var \App\Entity\CategoriesCottage $cottage */
-        foreach ($cottages as $cottage) {
-            $cottageData[] = [
-                'id' => $cottage->getId(),
-                'name' => $cottage->getName(),
-                'description' => $cottage->getDescription(),
-                'price_one_night' => $cottage->getPriceOneNight(),
-                // PERIODS
-                // COVERS
+        /** @var \App\Entity\Bookings $booking */
+        foreach ($bookings as $booking) {
+            $bookingsData[] = [
+                'id' => $booking->getId(),
+                // 'customer' => $booking->getCustomer(),
+                'period' => $booking->getPeriod(),
+                'quantity_traveller  ' => $booking->getQuantityTraveller(),
+                'total_price' => $booking->getTotalPrice(),
+            ];
+        }
+        return $bookingsData;
+    }
+
+    private function getCoversData(Collection $covers)
+    {
+        $coversData = [];
+
+        /** @var \App\Entity\Covers $cover */
+        foreach ($covers as $cover) {
+            $coversData[] = [
+                'id' => $cover->getId(),
+                'priority' => $cover->getPriority(),
+                'path' => $cover->getPath(),
             ];
         }
 
-        return $cottageData;
+        return $coversData;
+    }
+
+    private function getPeriodsData(Collection $periods)
+    {
+        $periodsData = [];
+
+        /** @var \App\Entity\Periods $period */
+        foreach ($periods as $period) {
+            $periodsData[] = [
+                'id' => $period->getId(),
+                'start' => $period->getStartAt(),
+                'end' => $period->getEndAt(),
+            ];
+        }
+
+        return $periodsData;
     }
 }
