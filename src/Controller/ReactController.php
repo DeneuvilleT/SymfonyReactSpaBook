@@ -83,7 +83,7 @@ class ReactController extends AbstractController
                 'has_pool' => $location->isHasPool(),
                 'animal_accpeted' => $location->isAnimalAccepted(),
                 'tree_height' => $location->getTreeHeight(),
-                'cottages' => [
+                'cottage' => [
                    'name' => $location->getCategoriesCottage()->getName(),
                    'description' => $location->getCategoriesCottage()->getDescription(),
                    'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),

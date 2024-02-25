@@ -1,17 +1,15 @@
 import React from "react";
 import FormBook from "../../components/FormBook/FormBook";
-import { useDispatch } from "react-redux";
+
+import { useSelector } from "react-redux";
 
 import styles from "./home.styles.scss";
-import { setLocations } from "../../Store/slices/locationsSlices";
 
 const Home = () => {
-
-  const dispatch = useDispatch();
+  const { locations } = useSelector((state) => ({ ...state.location }));
 
   return (
     <main className={styles.home}>
-
       <section>
         <FormBook
           url={"/location/search"}
@@ -48,33 +46,65 @@ const Home = () => {
               label: "Sanitaire personnel",
               name: "hasSanitary",
               type: "checkbox",
-              value : false
+              value: false,
             },
             hasPool: {
               label: "Piscine",
               name: "hasPool",
               type: "checkbox",
-              value : false
+              value: false,
             },
             animalAccepted: {
               label: "Animaux",
               name: "animalAccepted",
               type: "checkbox",
-              value : false
+              value: false,
             },
             hasGarden: {
               label: "Jardin",
               name: "hasGarden",
               type: "checkbox",
-              value : false
+              value: false,
             },
-            
           }}
-          set={dispatch(setLocations())}
         />
-      </section>
 
-      <hr />
+        <hr />
+
+        {/* Afficher les locations */}
+        {locations.length !== 0 ? (
+          <aside className={styles.locations}>
+            <h2>Locations trouvées :</h2>
+            <ul>
+              {locations.map((location) => (
+                <>
+                  <li
+                    key={location.id}
+                    style={{ backgroundImage: `url('${window.location.origin}/uploads/images/${location.cottage.covers[0].path}')` }}
+                  >
+                    <h3>{location.cottage.name}</h3>
+                    <p dangerouslySetInnerHTML={{ __html: location.cottage.description }} />
+                  </li>
+
+                  {location.cottage.covers.length !== 0 ? (
+                    <ul>
+                      {location.cottage.covers.map((cover) => (
+                        <li>
+                          <img src={`${window.location.origin}/uploads/images/${cover.path}`} alt={`Photo ${location.cottage.name}`} />{" "}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ))}
+            </ul>
+          </aside>
+        ) : (
+          <></>
+        )}
+      </section>
     </main>
   );
 };

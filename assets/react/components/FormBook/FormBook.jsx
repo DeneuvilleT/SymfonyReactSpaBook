@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
+import { setLocations } from "../../Store/slices/locationsSlices";
 import axios from "axios";
 
 import { Icon } from "@iconify/react";
 
 import styles from "./formBook.styles.scss";
 
-const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success, set }) => {
+const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
   const dispatch = useDispatch();
 
   const initialFormData = Object.fromEntries(
@@ -26,15 +27,13 @@ const FormBook = ({ url, btnSubmit, hasLabel, after, inputs, success, set }) => 
       setCanSave(false);
       try {
         setIcone("svg-spinners:90-ring-with-bg");
-        console.log(formData);
+        // console.log(formData);
         const response = await axios.post(url, formData);
         setMsgsErr([]);
 
         if (response.status === 200) {
-          console.log(response.data);
-          set ? set(response.data) : null;
+          dispatch(setLocations(response.data));
           setIcone("lets-icons:search-light");
-          return after ? location.reload() : (location.href = "/");
         }
       } catch (err) {
         console.log(err);

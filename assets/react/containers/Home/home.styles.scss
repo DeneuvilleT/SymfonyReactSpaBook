@@ -35,6 +35,51 @@
   }
 
   hr {
-    width: 60%;
+    margin: auto;
+    width: 80%;
+  }
+}
+
+.locations {
+  h2 {
+    max-width: 80%;
+    margin: 20px auto;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  li {
+    background-size: cover;
+    list-style-type: none;
+    max-width: 33.33%;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  h3 {
+    color: white;
+    font-size: 2.5em;
+    padding-bottom: 25px;
+    backdrop-filter: blur(2.5px) brightness(55%);
+    padding: 20px;
+  }
+
+  p {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    backdrop-filter: blur(2.5px) brightness(55%);
+    padding: 20px;
+  }
+
+  p div {
+    color: white;
+    font-size: 1.5em;
   }
 }

@@ -5,11 +5,12 @@ const initialState = {
 };
 
 const locationsSlice = createSlice({
-  name: "loation",
+  name: "location",
   initialState,
   reducers: {
     setLocations(state, action) {
-      console.log(action)
+      state.locations = [...action.payload];
+      console.log(state.locations)
     },
   },
 });

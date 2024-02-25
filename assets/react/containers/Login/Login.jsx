@@ -10,7 +10,7 @@ import styles from "./login.styles.scss";
 
 const Login = ({ isLog }) => {
   const dispatch = useDispatch();
-  const naigate = useNavigate();
+  const navigate = useNavigate();
 
   const [msgErr, setMsgErr] = useState("");
   const [icone, setIcone] = useState("line-md:arrow-right-circle");
@@ -41,7 +41,7 @@ const Login = ({ isLog }) => {
 
         if (response.status === 200) {
           dispatch(login(response.data));
-          return naigate("/");
+          return navigate("/");
         } else {
           return setMsgErr(response.data.message);
         }
