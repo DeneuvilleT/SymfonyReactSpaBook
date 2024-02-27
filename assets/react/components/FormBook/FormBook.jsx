@@ -19,6 +19,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
   const [canSave, setCanSave] = useState(false);
   const [msgsErr, setMsgsErr] = useState([]);
   const [msgSuccess, setMsgSuccess] = useState(success);
+  const [inputValues, setInputValues] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,15 +57,21 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
 
     const updatedFormData = { ...formData, [name]: updatedValue };
 
+    // Entre les valeurs séléctionnés dans l'objet
     setFormData(updatedFormData);
 
+    // Gére les inputs checkbox pour true et false
     const canSaveUpdated = Object.entries(updatedFormData)
       .filter(([name, value]) => {
         return inputs[name].required && inputs[name].type !== "checkbox";
       })
       .every(([name, value]) => value !== "");
 
+    // Dévérouille le bouton submit quand toutes les valeurs sont séléctionnés
     setCanSave(canSaveUpdated);
+
+    // Cache les labels quand une valeur est sélectionnée
+    setInputValues({ ...inputValues, [name]: updatedValue });
   };
 
   return (
@@ -73,8 +80,6 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
         {Object.entries(inputs).map(([key, input]) =>
           input.type !== "checkbox" ? (
             <div key={key}>
-              {hasLabel && input.type !== "hidden" ? <label htmlFor={`post_${input.name}`}>{input.label}</label> : <></>}
-
               {input.type !== "select" ? (
                 <input
                   type={input.type}
@@ -97,6 +102,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
               ) : (
                 <></>
               )}
+              {!hasLabel || (hasLabel && !inputValues[input.name]) ? <label htmlFor={`post_${input.name}`}>{input.label}</label> : <></>}
             </div>
           ) : (
             <Fragment key={key}></Fragment>

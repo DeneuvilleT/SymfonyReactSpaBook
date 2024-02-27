@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\CategoriesCottage;
-use App\Entity\Periods;
 use DateTime;
 use App\Repository\LocationTypesRepository;
 use Doctrine\Common\Collections\Collection;
