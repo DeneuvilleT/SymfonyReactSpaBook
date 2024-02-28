@@ -7,6 +7,8 @@
 
   width: 65vw;
   height: 100%;
+  max-width: 1360px;
+
   box-shadow: 0 0.3px 0.7px rgba(0, 0, 0, 0.126),
     0 0.9px 1.7px rgba(0, 0, 0, 0.179), 0 1.8px 3.5px rgba(0, 0, 0, 0.224),
     0 3.7px 7.3px rgba(0, 0, 0, 0.277), 0 10px 20px rgba(0, 0, 0, 0.4);
@@ -38,7 +40,7 @@
 
   aside:first-child label {
     color: #666;
-    font-size: 1.25em;
+    font-size: 1.5em;
     letter-spacing: 0.07em;
     position: absolute;
     top: 6px;
@@ -48,6 +50,7 @@
     cursor: pointer;
     pointer-events: none;
     transition: color 0.25s ease-in-out, background-color 0.25s ease-in;
+    min-width: 185px;
   }
 
   aside:nth-child(2) label {
@@ -93,6 +96,7 @@
     cursor: pointer;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     font-family: Lato, sans-serif;
+    min-width: 200px;
   }
 
   select:focus + label,

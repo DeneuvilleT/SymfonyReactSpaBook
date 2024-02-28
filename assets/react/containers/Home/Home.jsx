@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
@@ -9,8 +10,11 @@ const Home = () => {
 
   return (
     <main className={styles.home}>
-      <section>
+      <h1>
+        <Link to={"/"}>Cabane et gîte au naturel</Link>
+      </h1>
 
+      <section>
         {/* Afficher les locations */}
         {locations.length !== 0 ? (
           <aside className={styles.locations}>

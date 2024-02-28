@@ -1,10 +1,10 @@
 .header {
-  backdrop-filter: blur(20px);
-  background-image: linear-gradient(19deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 77%, rgb(0 0 0 / 64%)), url(/public/images/background_1.jpg);
+  background-image: linear-gradient(19deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 77%, rgb(0 0 0 / 64%)), url(/public/images/background_3.jpg);
+  background-position-y: -580px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  box-shadow: inset 0px -20px 20px rgba(0, 0, 0, 0.3);
   height: 400px;
   width: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: inset 0px -20px 20px rgba(0, 0, 0, 0.3);
-  background-size: cover;
 }

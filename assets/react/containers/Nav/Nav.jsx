@@ -42,10 +42,7 @@ const Nav = () => {
     <nav className={styles.nav}>
       
       <ul>
-        <h1>{/* <Link to={"/"}>Cabane et gîte au naturel</Link> */}</h1>
-        {/* <Link to={"/"}>Produits</Link>
-        <Link to={"/cart"}>Panier</Link> */}
-
+     
         {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
         <Link to={"/register"}>Inscription</Link>
 
