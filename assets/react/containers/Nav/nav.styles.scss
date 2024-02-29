@@ -34,14 +34,10 @@
     text-decoration: none;
     text-shadow: 0 0 10px #000;
     padding: 10px;
-    border: #ffc600 2px solid;
+    border: #ffc600 1px solid;
     border-radius: 10px;
     backdrop-filter: none;
     transition: backdrop-filter 0.25s ease-in-out;
-  }
-
-  ul a:hover {
-    backdrop-filter: blur(10px);
   }
 
   ul a:active {
