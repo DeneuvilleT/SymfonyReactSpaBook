@@ -40,7 +40,10 @@ const Home = () => {
                       <ul className={styles.thumbails}>
                         {location.cottage.covers.map((cover) => (
                           <li key={cover.id}>
-                            <img src={`${window.location.origin}/uploads/images/${cover.path}`} alt={`Photo ${location.cottage.name}`} />{" "}
+                            <div
+                              style={{ backgroundImage: `url('${window.location.origin}/uploads/images/${cover.path}')` }}
+                            ></div>
+                            {/* <img src={`${window.location.origin}/uploads/images/${cover.path}`} alt={`Photo ${location.cottage.name}`} />{" "} */}
                           </li>
                         ))}
                       </ul>
