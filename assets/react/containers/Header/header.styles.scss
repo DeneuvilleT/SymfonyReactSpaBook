@@ -1,14 +1,7 @@
 .header {
-  background-image: linear-gradient(19deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 77%, rgb(0 0 0 / 64%)), url(/public/images/CABANE/background_header.jpg);
-  background-position-y: -525px;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  box-shadow: inset 0px -20px 20px rgba(0, 0, 0, 0.3);
-  height: 400px;
+  height: 25vh;
   width: 100%;
-
-  :hover ul a {
-    backdrop-filter: blur(10px);
-  }
 }

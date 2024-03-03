@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from "./containers/Header/Header";
 import Home from "./containers/Home/Home";
+import Footer from "./containers/Footer/Footer";
 import Product from "./components/Product/Product";
 import Logup from "./containers/Logup/Logup";
 import Logout from "./containers/Logout/Logout";
@@ -52,7 +53,7 @@ const App = ({ container }) => {
         <Route path="/notFound" element={<Notfound />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

@@ -29,13 +29,25 @@ html {
   background-color: #f1f1f1;
   font-family: Lato, sans-serif;
   font-weight: 200;
-  font-size: 62.5%;
   color: #333;
 
-  body > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+body > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  background-image: url(/public/images/CABANE/background_header.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  }
+
+body > div:nth-child(2) {
+  display: none;
+  }
+
+  main {
+    min-height: 75vh;
   }
 }
