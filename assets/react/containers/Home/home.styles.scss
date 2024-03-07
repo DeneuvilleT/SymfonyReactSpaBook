@@ -69,6 +69,7 @@
 // Accueil
 .welcome {
   display: flex;
+  gap: 40px;
   margin: auto;
   max-width: 1360px;
 
@@ -93,6 +94,7 @@
     list-style-type: none;
     overflow: hidden;
     gap: 10px;
+    padding-top: 15px;
   }
 }
 
@@ -244,6 +246,13 @@
     border-radius: 10px;
     width: 275px;
     height: 205px;
+    cursor: pointer;
+    transform: scale3d(1, 1, 1);
+    transition: transform 0.5s ease-in-out;
+  }
+
+  li:hover {
+    transform: scale3d(1.05, 1.05, 1.05);
   }
 }
 

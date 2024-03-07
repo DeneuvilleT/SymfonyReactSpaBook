@@ -3,7 +3,7 @@
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;                                            
+  scroll-behavior: smooth;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -31,20 +31,21 @@ html {
   font-weight: 200;
   color: #333;
 
-body > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+  body > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 
-  background-image: url(/public/images/CABANE/background_header.jpg);
-  background-attachment: fixed;
-  background-size: cover;
-  min-height: 100vh;
+    background-image: url(/public/images/CABANE/background_header.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+    position: relative;
   }
 
-body > div:nth-child(2) {
-  display: none;
+  body > div:nth-child(2) {
+    display: none;
   }
 
   main {

@@ -17,6 +17,7 @@ import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
 import UserComments from "./containers/ProfileBridge/UserComments/UserComments";
 import UserOrders from "./containers/ProfileBridge/UserOrders/UserOrders";
 import Notif from "./components/Notif/Notif";
+import Slider from "./components/Slider/Slider";
 
 import { useDispatch } from "react-redux";
 import { clearCart } from "./Store/slices/cartSlices";
@@ -33,6 +34,7 @@ const App = ({ container }) => {
 
   return (
     <>
+      <Slider />
       <Header />
       <Notif />
       <Routes>

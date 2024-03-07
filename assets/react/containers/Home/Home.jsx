@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSlider } from "../../Store/slices/sliderSlices";
 
 import styles from "./home.styles.scss";
 import faces from "../../../../public/images/FACES/face.jpg";
 
 const Home = () => {
   const { locations } = useSelector((state) => ({ ...state.location }));
+
+  const dispatch = useDispatch();
 
   return (
     <main className={styles.home}>
@@ -42,7 +45,11 @@ const Home = () => {
                 {location.cottage.covers.length !== 0 ? (
                   <ul className={styles.thumbails}>
                     {location.cottage.covers.map((cover) => (
-                      <li key={cover.id} style={{ backgroundImage: `url('${window.location.origin}/uploads/images/${cover.path}')` }}></li>
+                      <li
+                        onClick={() => dispatch(setSlider(location.cottage.covers))}
+                        key={cover.id}
+                        style={{ backgroundImage: `url('${window.location.origin}/uploads/images/${cover.path}')` }}
+                      ></li>
                     ))}
                   </ul>
                 ) : (
