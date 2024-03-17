@@ -42,7 +42,6 @@ const Nav = () => {
     <nav className={styles.nav}>
       
       <ul>
-     
         {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
         <Link to={"/register"}>Inscription</Link>
 

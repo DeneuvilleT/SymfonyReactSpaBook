@@ -28,16 +28,15 @@
 }
 
 .slider {
+  
   position: absolute;
   inset: 80px 200px 80px 80px;
   background-color: #ccc;
   border-radius: 20px;
   z-index: 1001;
-  top: 25%;
-  left: 25%;
-  transform: translate(-20%, -15%);
-  max-width: 90vw;
-  max-height: 90vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .sliderSlides {
@@ -72,20 +71,21 @@
 }
 
 .sliderSlides:nth-child(3) {
-  left: calc(50% + 30vw);
-  top: 55%;
+  left: calc(50% + 240px);
+  background-size: cover;
 }
 .sliderSlides:nth-child(4) {
-  left: calc(50% + 35vw);
+  left: calc(50% + 500px);
+  background-size: cover;
 }
 .sliderSlides:nth-child(5) {
-  left: calc(50% + 40vw);
-  top: 45%;
+  left: calc(50% + 760px);
+  background-size: cover;
 }
 .sliderSlides:nth-child(6) {
-  left: calc(50% + 45vw);
+  left: calc(50% + 1020px);
+  background-size: cover;
   opacity: 0;
-  top: 35%;
 }
 
 .buttons {

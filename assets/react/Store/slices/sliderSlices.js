@@ -9,7 +9,6 @@ const sliderSlice = createSlice({
   initialState,
   reducers: {
     setSlider(state, action) {
-      console.log(action.payload)
       state.slides = action.payload;
     },
     resetSlider(state, action) {

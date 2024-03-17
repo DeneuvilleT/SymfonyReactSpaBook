@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <main className={styles.home}>
       <h1>
-        <Link to={"/"}>Cabane et gîte au naturel</Link>
+        <Link to={"/"}>Cabane et gite au naturel</Link>
       </h1>
 
       <section>
@@ -28,9 +28,8 @@ const Home = () => {
                   <div
                     className={styles.imgBox}
                     style={{
-                      backgroundImage: `url('${window.location.origin}/uploads/images/${
-                        location.cottage.covers.find((x) => x.priority === 1)?.path || ""
-                      }')`,
+                      backgroundImage: `url('${window.location.origin}/uploads/images/${location.cottage.covers.find((x) => x.priority === 1)?.path || ""
+                        }')`,
                     }}
                   ></div>
 
@@ -46,7 +45,7 @@ const Home = () => {
                   <ul className={styles.thumbails}>
                     {location.cottage.covers.map((cover) => (
                       <li
-                        onClick={() => dispatch(setSlider(location.cottage.covers))}
+                        onClick={() => { dispatch(setSlider(location.cottage.covers)) }}
                         key={cover.id}
                         style={{ backgroundImage: `url('${window.location.origin}/uploads/images/${cover.path}')` }}
                       ></li>

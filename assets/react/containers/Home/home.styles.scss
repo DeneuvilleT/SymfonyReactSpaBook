@@ -30,9 +30,9 @@
   h1 a {
     color: blanchedalmond;
     font-family: Poppins, sans-serif;
-    font-size: 3vw;
+    font-size: 4vw;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     text-align: center;
 
@@ -48,9 +48,9 @@
 
     padding: 5px 50px;
     margin-top: -5px;
-    border-left: 1px solid #99999973;
-    border-right: 1px solid #99999973;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px -5px 15px;
+    // border-left: 1px solid #99999973;
+    // border-right: 1px solid #99999973;
+    box-shadow: 0px 20px 20px rgb(157 157 157 / 14%);
   }
 
   h3 {
@@ -114,8 +114,8 @@
     height: 78%;
     background-size: cover;
     border-radius: 15px;
-    border-bottom: 10px solid #f1f1f1;
-    box-shadow: rgb(0 0 0 / 14%) 1px 5px 5px;
+    // border-bottom: 10px solid #f1f1f1c4;
+    // box-shadow: rgb(0 0 0 / 14%) 1px 5px 5px;
   }
 
   .imgBox::before {
@@ -146,7 +146,7 @@
     display: flex;
     position: relative;
     width: 100%;
-    min-height: 30vh;
+    min-height: 32vh;
     background-color: #fbcd7742;
     border-radius: 15px;
     border-top-left-radius: 0;
@@ -212,7 +212,7 @@
 
   .content h3 {
     color: #fff;
-    font-size: 1vw;
+    font-size: 2vw;
     font-weight: 600;
     padding: 0px 20px 0px;
     text-shadow: 0 0 10px #b1b1b1;

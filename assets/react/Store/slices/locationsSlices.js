@@ -10,7 +10,6 @@ const locationsSlice = createSlice({
   reducers: {
     setLocations(state, action) {
       state.locations = [...action.payload];
-      console.log(state.locations)
     },
   },
 });
