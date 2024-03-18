@@ -17,7 +17,15 @@
   min-height: 120px;
   width: 100%;
 
-  h3 {
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 30px 0;
+  }
+
+  div h3 {
     color: #f1f1f1;
     text-transform: uppercase;
     font-size: 4vw;
@@ -26,13 +34,25 @@
     font-weight: 900;
     padding-bottom: 30px;
     border-bottom: 15px solid #75ff2f;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  div address {
+    color: #fff;
+    font-size: 1.125em;
+    font-style: normal;
+    letter-spacing: 0.08em;
+    line-height: 27px;
+    text-shadow: 0 0px 10px rgba(0, 0, 0, 0.6);
   }
 
   iframe {
     border: 0;
-    height: 30vh;
+    height: 35vh;
     width: 30vw;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 2px;
+    border-radius: 20px;
   }
 }
 
@@ -50,6 +70,8 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   grid-gap: 60px;
+  max-width: 1360px;
+  margin: auto;
 }
 
 .footerSecAboutUs {
@@ -62,6 +84,8 @@
 
   p {
     color: #555;
+    line-height: 30px;
+    font-size: 1.1em;
   }
 }
 
@@ -69,17 +93,26 @@
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(4, 50px);
+  gap: 20px;
 
   li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     list-style: none;
+    border-radius: 5px;
+    padding: 7.5px 7.5px 4.5px;
+    border: 1px solid transparent;
+    transition: border 0.5s ease-in;
   }
 
-  li a {
+  li:hover {
+    border-color: #999999a9;
   }
 
-  li a li {
-    color: #fff;
-    font-size: 20px;
+  li:active {
+    box-shadow: inset rgba(0, 0, 0, 0.3) 0px 0px 2px;
   }
 }
 
@@ -101,7 +134,14 @@
     color: #555;
     text-decoration: none;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 7.5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.3s ease-in;
+  }
+
+  ul li a:hover {
+    border-color: #555;
   }
 }
 
@@ -127,18 +167,22 @@
     align-items: center;
     gap: 10px;
     color: #555;
-    font-size: 20px;
+    font-size: 1em;
     text-decoration: none;
+    transition: color 0.25s ease-in-out;
+  }
+
+  ul li a:hover {
+    color: #333;
   }
 }
 
 .footerCopyrightText {
   width: 100%;
   background-color: #f1f1f1;
-  padding: 20px 100px 30px;
+
   text-align: center;
   color: #555;
-  border: 1px solid rgba(0, 0, 0, 0.15);
 
   p,
   span {
@@ -148,7 +192,11 @@
   }
 
   p {
+    margin: auto;
+    max-width: 1360px;
+    padding: 20px 100px 30px;
     gap: 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
   }
 }
 
