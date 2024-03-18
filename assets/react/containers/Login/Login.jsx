@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Icon } from "@iconify/react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { login } from "../../Store/slices/authSlices";
+import { Icon } from "@iconify/react";
+import Logup from "../Logup/Logup";
 
+import axios from "axios";
 import styles from "./login.styles.scss";
 
 const Login = ({ isLog }) => {
@@ -52,30 +53,46 @@ const Login = ({ isLog }) => {
     }
   };
 
+  const handleChangeForm = () => {
+    document.body.classList.add('slide');
+  }
+
   return (
-    <main className={styles.login}>
-      {isLog ? (
-        <div>
-          <Icon icon="line-md:emoji-smile-wink" width="60" height="60" />
-          <h2>Vous êtes déjà connecté</h2>
-        </div>
-      ) : (
-        <>
-          <h2>Connexion</h2>
+    <main className={styles.formLog}>
+      <div className={styles.formContainer}>
+        {isLog ? (
+          <Logup />
+        ) : (
+          <>
+            <div className={styles.formBoxContainer}>
+              <h2>Vous possédez déjà un compte ?</h2>
 
-          <form onSubmit={handleSubmit}>
-            <input type="email" name="_email" value={formData._email} onChange={handleInputChange} />
+              <button onClick={() => handleChangeForm()} className={styles.formSignInBtn}>Connexion</button>
 
-            <input type="password" name="_password" value={formData._password} onChange={handleInputChange} />
+              {/* <form onSubmit={handleSubmit}>
+                <input type="email" name="_email" value={formData._email} onChange={handleInputChange} />
 
-            <span>{msgErr}</span>
+                <input type="password" name="_password" value={formData._password} onChange={handleInputChange} />
 
-            <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
-              Se connecter <Icon icon={icone} color="white" width="30" height="30" />
-            </button>
-          </form>
-        </>
-      )}
+                <span>{msgErr}</span>
+
+                <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
+                  Se connecter <Icon icon={icone} color="white" width="30" height="30" />
+                </button>
+              </form> */}
+
+            </div>
+
+            <div className={styles.formBoxContainer}>
+              <h2>Vous ne disposez pas de compte ?</h2>
+              <button className={styles.formSignUpBtn}>Inscription</button>
+            </div>
+
+            <div className={styles.formBox}></div>
+          </>
+        )}
+      </div>
+
     </main>
   );
 };

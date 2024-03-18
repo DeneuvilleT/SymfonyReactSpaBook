@@ -14,10 +14,10 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
 
   const token = localStorage.getItem(`${location.origin}_bear_token`);
 
-  const [icone,           setIcone] = useState("line-md:arrow-right-circle");
-  const [formData,     setFormData] = useState(initialFormData);
-  const [canSave,       setCanSave] = useState(false);
-  const [msgsErr,       setMsgsErr] = useState([]);
+  const [icone, setIcone] = useState("line-md:arrow-right-circle");
+  const [formData, setFormData] = useState(initialFormData);
+  const [canSave, setCanSave] = useState(false);
+  const [msgsErr, setMsgsErr] = useState([]);
   const [msgSuccess, setMsgSuccess] = useState(success);
 
   const handleSubmit = async (e) => {

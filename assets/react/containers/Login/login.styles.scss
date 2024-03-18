@@ -1,84 +1,63 @@
-.login {
+.formLog {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  width: 100%;
+}
 
-  max-width: 1450px;
-  margin: 50px auto 20px auto;
-  width: 90%;
-  font-size: 1.25em;
+.formContainer {
+  width: 60vw;
+  height: 55vh;
+  max-width: 1360px;
+  background-color: rgba(0, 0, 0, 0.125);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formBoxContainer {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
 
   h2 {
-    font-size: 26px;
-    margin-bottom: 40px;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 3;
-    flex: 1;
-  }
-
-  input {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
-    border-radius: 20px;
-    padding: 10px 20px;
-    border: none;
-    max-width: 320px;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 10px;
   }
 
   button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-
-    border: none;
-    border-radius: 20px;
-    background-color: green;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-    filter: brightness(1);
     cursor: pointer;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1.1em;
+    font-weight: 500;
 
-    color: #fff;
-    text-decoration: none;
-    max-width: 320px;
-
-    outline: none;
-    padding: 5px 10px 5px 20px;
-    margin-top: 15px;
-    transition: filter 0.25s;
-    user-select: none;
   }
+}
 
-  button:disabled {
-    background-color: #999;
-    cursor: default;
-  }
+.formSignInBtn {
+}
 
-  button:disabled:hover {
-    filter: brightness(1);
-  }
+.formSignUpBtn {
+}
 
-  button:disabled:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-  }
-
-  span {
-    padding-left: 15px;
-    color: #c10000;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-  }
-
-  div h2 {
-    margin-bottom: 0;
-  }
+.formBox {
+  position: absolute;
+  left: 25%;
+  width: 25vw;
+  height: 65vh;
+  background-color: #fff;
+  z-index: 1000;
+  box-shadow: rgba(0, 0, 0, 0.30) 0px 5px 25px;
 }
