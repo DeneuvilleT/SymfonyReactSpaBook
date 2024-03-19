@@ -1,27 +1,16 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
-import { getProductsStatus, fetchProducts } from "../../Store/slices/productsSlices";
+import { useSelector } from "react-redux";
 
 import FormBook from "../../components/FormBook/FormBook";
 
 import styles from "./nav.styles.scss";
+import axios from "axios";
 
-const Nav = () => {
+const Nav = ({ handleHideHeader }) => {
+
   const { isLog, status } = useSelector((state) => ({ ...state.auth }));
   const token = localStorage.getItem(`${location.origin}_bear_token`);
-
-  // const dispatch = useDispatch();
-
-  // const productsStatus = useSelector(getProductsStatus);
-
-  // useEffect(() => {
-  //   if (productsStatus === "idle") {
-  //     dispatch(fetchProducts());
-  //   }
-  // }, [productsStatus, dispatch]);
 
   const handleAdmin = async () => {
     try {
@@ -40,10 +29,12 @@ const Nav = () => {
 
   return (
     <nav className={styles.nav}>
-      
+
       <ul>
+
         {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
-        <Link to={"/register"}>Inscription</Link>
+
+        <Link to={"/login#register"} onClick={() => handleHideHeader()}>Inscription</Link>
 
         {status === "ROLE_SUPER_ADMIN" ? (
           <a target="_blank" style={{ cursor: "pointer" }} onClick={handleAdmin}>
@@ -53,7 +44,8 @@ const Nav = () => {
           <></>
         )}
 
-        {isLog ? <Link to={"/logout"}>Déconnexion</Link> : <Link to={"/login"}>Connexion</Link>}
+        {isLog ? <Link to={"/logout"}>Déconnexion</Link> : <Link to={"/login"} onClick={() => handleHideHeader()} >Connexion</Link>}
+
       </ul>
 
       <aside className={styles.locations}>

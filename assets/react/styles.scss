@@ -49,6 +49,7 @@ html {
   }
 
   main {
-    min-height: 75vh;
+    min-height: 100vh;
+    z-index: 2;
   }
 }

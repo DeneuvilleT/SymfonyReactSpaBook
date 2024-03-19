@@ -48,7 +48,7 @@ const Footer = () => {
             <h2>Site</h2>
             <ul>
               <li><Link to={"/login"}>Connexion</Link></li>
-              <li><Link to={"/register"}>Inscription</Link></li>
+              <li><Link to={"/login#register"}>Inscription</Link></li>
               <li><Link to={"/profile"}>Mon compte</Link></li>
               <li><Link to={"/"}>Accueil</Link></li>
             </ul>

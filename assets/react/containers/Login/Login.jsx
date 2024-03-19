@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
@@ -8,10 +8,13 @@ import Logup from "../Logup/Logup";
 
 import axios from "axios";
 import styles from "./login.styles.scss";
+import { useRef } from "react";
 
 const Login = ({ isLog }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const formLog = useRef(null);
 
   const [msgErr, setMsgErr] = useState("");
   const [icone, setIcone] = useState("line-md:arrow-right-circle");
@@ -20,6 +23,27 @@ const Login = ({ isLog }) => {
     _email: "",
     _password: "",
   });
+
+  useEffect(() => {
+    const handleLinkClickForm = () => {
+      if (location.hash === '#/login#register') {
+        formLog.current.classList.add(styles.formSlide);
+        console.log("first")
+      } else if (location.hash === '#/login') {
+        formLog.current.classList.remove(styles.formSlide);
+      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+
+    window.addEventListener('click', handleLinkClickForm);
+
+    return () => {
+      window.removeEventListener('click', handleLinkClickForm);
+    };
+  }, [formLog])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,45 +78,50 @@ const Login = ({ isLog }) => {
   };
 
   const handleChangeForm = () => {
-    document.body.classList.add('slide');
+    formLog.current.classList.toggle(styles.formSlide);
   }
 
   return (
-    <main className={styles.formLog}>
+    <main ref={formLog} className={styles.formLog}>
       <div className={styles.formContainer}>
-        {isLog ? (
-          <Logup />
-        ) : (
-          <>
-            <div className={styles.formBoxContainer}>
-              <h2>Vous possédez déjà un compte ?</h2>
+        {/* {isLog ? (
+          
+        ) : ( */}
+        <>
+          <div className={styles.formBoxContainer}>
+            <h2>Vous possédez déjà un compte ?</h2>
 
-              <button onClick={() => handleChangeForm()} className={styles.formSignInBtn}>Connexion</button>
+            <button onClick={() => handleChangeForm()} className={styles.formSignInBtn}>Connexion</button>
+          </div>
 
-              {/* <form onSubmit={handleSubmit}>
-                <input type="email" name="_email" value={formData._email} onChange={handleInputChange} />
+          <div className={styles.formBoxContainer}>
+            <h2>Vous ne disposez pas de compte ?</h2>
+            <button onClick={() => handleChangeForm()} className={styles.formSignUpBtn}>Inscription</button>
+          </div>
 
-                <input type="password" name="_password" value={formData._password} onChange={handleInputChange} />
+          <div className={styles.formBox}>
+            <div className={styles.formSigIn}>
+              <h3>Connectez-vous</h3>
+              <form onSubmit={handleSubmit}>
+                <input type="email" placeholder="Email" name="_email" value={formData._email} onChange={handleInputChange} />
+
+                <input type="password" name="_password" placeholder="Mot de passe" value={formData._password} onChange={handleInputChange} />
 
                 <span>{msgErr}</span>
 
                 <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
                   Se connecter <Icon icon={icone} color="white" width="30" height="30" />
                 </button>
-              </form> */}
-
+              </form>
             </div>
 
-            <div className={styles.formBoxContainer}>
-              <h2>Vous ne disposez pas de compte ?</h2>
-              <button className={styles.formSignUpBtn}>Inscription</button>
+            <div className={styles.formSignUp}>
+              <Logup />
             </div>
-
-            <div className={styles.formBox}></div>
-          </>
-        )}
+          </div>
+        </>
+        {/* )} */}
       </div>
-
     </main>
   );
 };

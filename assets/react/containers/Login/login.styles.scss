@@ -2,15 +2,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: green;
+  background-color: #f1f1f1d4;
   width: 100%;
+  transition: 1s;
 }
 
 .formContainer {
   width: 60vw;
   height: 55vh;
   max-width: 1360px;
-  background-color: rgba(0, 0, 0, 0.125);
+  backdrop-filter: blur(10px);
+  background-color: rgb(0 0 0 / 13%);
 
   display: flex;
   justify-content: center;
@@ -42,22 +44,119 @@
     color: #333;
     font-size: 1.1em;
     font-weight: 500;
-
   }
-}
-
-.formSignInBtn {
-}
-
-.formSignUpBtn {
 }
 
 .formBox {
   position: absolute;
-  left: 25%;
+  left: 10%;
   width: 25vw;
   height: 65vh;
   background-color: #fff;
   z-index: 1000;
-  box-shadow: rgba(0, 0, 0, 0.30) 0px 5px 25px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 25px;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+  overflow: hidden;
+
+  .formSigIn,
+  .formSignUp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    transition: 0.5s;
+    background: #fff;
+  }
+
+  .formSignUp {
+    top: 100%;
+    transition-delay: 0s;
+  }
+
+  .formSigIn {
+    top: 0;
+    transition-delay: 1s;
+  }
+
+  .formSigIn form,
+  .formSignUp form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    width: 100%;
+  }
+
+  .formSigIn h3,
+  .formSignUp h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 0 50px;
+    margin-bottom: 40px;
+    color: #333;
+  }
+
+  .formSigIn form input,
+  .formSignUp form input {
+    width: 100%;
+    min-width: 300px;
+    min-height: 35px;
+    margin-bottom: 15px;
+    padding: 10px;
+    outline: none;
+    flex: none;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    border: 1px solid #333;
+    letter-spacing: 0.1em;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .formSigIn form button,
+  .formSignUp form button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: green;
+    border: none;
+    color: #fff;
+
+    padding: 10px;
+    max-width: 170px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-top: 20px;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .formSignUp form button {
+    background-color: #f43648 !important;
+  }
+}
+
+.formSlide {
+  // background-color: #f43648;
+
+  .formBox {
+    left: 50%;
+  }
+
+  .formBox .formSignIn {
+    top: -100%;
+    transition-delay: 0s;
+  }
+
+  .formBox .formSignUp {
+    top: 0;
+    transition-delay: 1s;
+  }
 }
