@@ -25,25 +25,16 @@ const Login = ({ isLog }) => {
   });
 
   useEffect(() => {
-    const handleLinkClickForm = () => {
-      if (location.hash === '#/login#register') {
-        formLog.current.classList.add(styles.formSlide);
-        console.log("first")
-      } else if (location.hash === '#/login') {
-        formLog.current.classList.remove(styles.formSlide);
-      }
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    };
-
-    window.addEventListener('click', handleLinkClickForm);
-
-    return () => {
-      window.removeEventListener('click', handleLinkClickForm);
-    };
-  }, [formLog])
+    if (location.hash === '#/login#register') {
+      formLog.current.classList.add(styles.formSlide);
+    } else {
+      formLog.current.classList.remove(styles.formSlide);
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [location.hash])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

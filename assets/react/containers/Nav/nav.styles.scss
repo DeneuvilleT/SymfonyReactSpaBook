@@ -36,7 +36,7 @@
     letter-spacing: 0.07em;
     text-decoration: none;
     // text-shadow: 0 0 10px #000;
-    padding: 10px;
+    padding: 7.5px 10px 7.5px 15px;
     // border: #ffc600 1px solid;
     border-radius: 10px;
 
@@ -48,6 +48,7 @@
     backdrop-filter: blur(20px);
   }
 
+  ul a[href="#/login#register"]::after,
   ul a[href="#/register"]::after {
     display: inline-block;
     width: 2em;

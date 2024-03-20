@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -12,14 +12,22 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
+  const titleContainer = useRef(null);
+
   return (
     <main className={styles.home}>
-      <h1>
-        <Link to={"/"}>Cabane et gite au naturel</Link>
-      </h1>
+
+      <div ref={titleContainer} role="title">
+        <h1>
+          <span>Cabane</span>
+          <div>
+            <span>et gite</span>
+            <span>au naturel</span>
+          </div>
+        </h1>
+      </div>
 
       <section>
-        {/* Afficher les locations */}
         {locations.length !== 0 ? (
           <ul className={styles.locations}>
             {locations.map((location) => (
@@ -59,7 +67,7 @@ const Home = () => {
           </ul>
         ) : (
           <article className={styles.welcome}>
-            <img src={faces} />
+            {/* <img src={faces} />
             <p>
               Bienvenue sur notre plateforme de location de gîtes et cabanes, où la nature est au cœur de votre séjour ! Plongez dans un monde où la
               tranquillité règne et où chaque souffle de vent vous transporte dans une aventure en harmonie avec la nature.
@@ -78,7 +86,7 @@ const Home = () => {
               <br />
               Réservez dès aujourd'hui et laissez-vous séduire par la magie de la nature dans l'un de nos gîtes ou cabanes. Laissez-nous vous aider à
               créer des souvenirs inoubliables dans des environnements naturels exceptionnels. Bienvenue dans votre havre de paix.
-            </p>
+            </p> */}
           </article>
         )}
       </section>
