@@ -4,21 +4,39 @@
   align-items: center;
   background-color: #f1f1f1d4;
   width: 100%;
+  height: 100vh;
+  min-height: 768px;
   transition: 1s;
 }
 
+.formLog.formSlide {
+  .formBox {
+    left: 50%;
+  }
+
+  .formBox .formSignIn {
+    top: -100%;
+    transition-delay: 0s;
+  }
+
+  .formBox .formSignUp {
+    top: 0;
+    transition-delay: 1s;
+  }
+}
+
 .formContainer {
+  position: relative;
   width: 60vw;
   height: 55vh;
   max-width: 1360px;
-  backdrop-filter: blur(20px) brightness(.75);
-
+  backdrop-filter: blur(20px) brightness(0.75);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.formBoxContainer {
+.formContainerBox {
   position: relative;
   width: 50%;
   height: 100%;
@@ -60,6 +78,7 @@
   left: 10%;
   width: 25vw;
   height: 65vh;
+  min-height: 500px;
   background-color: #fff;
   z-index: 1000;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 25px;
@@ -67,7 +86,7 @@
   transition-delay: 0.5s;
   overflow: hidden;
 
-  .formSigIn,
+  .formSignIn,
   .formSignUp {
     position: absolute;
     top: 0;
@@ -87,12 +106,12 @@
     transition-delay: 0s;
   }
 
-  .formSigIn {
+  .formSignIn {
     top: 0;
     transition-delay: 1s;
   }
 
-  .formSigIn form,
+  .formSignIn form,
   .formSignUp form {
     display: flex;
     flex-direction: column;
@@ -100,7 +119,7 @@
     width: 100%;
   }
 
-  .formSigIn h3,
+  .formSignIn h3,
   .formSignUp h3 {
     font-size: 1.5em;
     font-weight: 600;
@@ -109,7 +128,7 @@
     color: #333;
   }
 
-  .formSigIn form input,
+  .formSignIn form input,
   .formSignUp form input {
     width: 100%;
     min-width: 300px;
@@ -126,7 +145,7 @@
     box-shadow: none !important;
   }
 
-  .formSigIn form button,
+  .formSignIn form button,
   .formSignUp form button {
     display: flex;
     align-items: center;
@@ -148,23 +167,5 @@
 
   .formSignUp form button {
     background-color: #f43648 !important;
-  }
-}
-
-.formSlide {
-  // background-color: #f43648;
-
-  .formBox {
-    left: 50%;
-  }
-
-  .formBox .formSignIn {
-    top: -100%;
-    transition-delay: 0s;
-  }
-
-  .formBox .formSignUp {
-    top: 0;
-    transition-delay: 1s;
   }
 }
