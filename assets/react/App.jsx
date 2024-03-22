@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./containers/Header/Header";
 import Home from "./containers/Home/Home";
@@ -11,7 +11,6 @@ import Login from "./containers/Login/Login";
 import Cart from "./containers/Cart/Cart";
 import Notfound from "./components/PageNotFound/Notfound";
 import Authentication from "./utilities/Authentication";
-import ProductList from "./containers/ProductList/ProductsList";
 import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
 import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
 import UserComments from "./containers/ProfileBridge/UserComments/UserComments";
@@ -22,8 +21,26 @@ import Slider from "./components/Slider/Slider";
 import { useDispatch } from "react-redux";
 import { clearCart } from "./Store/slices/cartSlices";
 
+import styles from './containers/Header/header.styles.scss';
+
 const App = ({ container }) => {
+
   const dispatch = useDispatch();
+  const locationHook = useLocation();
+  const headerDom = useRef(null);
+
+  useEffect(() => {
+    if (location.hash === '#/login#register' || location.hash === '#/login') {
+      headerDom.current.classList.add(styles.hide);
+    } else {
+      headerDom.current.classList.remove(styles.hide);
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+  }, [locationHook]);
 
   useEffect(() => {
     if (container.dataset.clean) {
@@ -35,8 +52,8 @@ const App = ({ container }) => {
   return (
     <>
       <Slider />
-      <Header />
       <Notif />
+      <Header headerDom={headerDom} />
       <Routes>
         <Route path="/" element={<Authentication child={Home} auth={false} />} />
         <Route path="product/:id" element={<Authentication child={Product} auth={false} />} />

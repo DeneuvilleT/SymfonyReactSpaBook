@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setSlider } from "../../Store/slices/sliderSlices";
 
+import Logo from "../../components/Logo/Logo";
 import styles from "./home.styles.scss";
 import faces from "../../../../public/images/FACES/face.jpg";
 
@@ -12,21 +12,9 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const titleContainer = useRef(null);
-
   return (
     <main className={styles.home}>
-
-      <div ref={titleContainer} role="title">
-        <h1>
-          <span>Cabane</span>
-          <div>
-            <span>et gite</span>
-            <span>au naturel</span>
-          </div>
-        </h1>
-      </div>
-
+      <Logo />
       <section>
         {locations.length !== 0 ? (
           <ul className={styles.locations}>

@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { login } from "../../Store/slices/authSlices";
 import { Icon } from "@iconify/react";
+
+import Logo from "../../components/Logo/Logo";
 import Logup from "../Logup/Logup";
 
 import axios from "axios";
 import styles from "./login.styles.scss";
-import { useRef } from "react";
 
 const Login = ({ isLog }) => {
   const dispatch = useDispatch();
@@ -73,41 +74,44 @@ const Login = ({ isLog }) => {
   }
 
   return (
-    <main ref={formLog} className={styles.formLog}>
-      <div className={styles.formContainer}>
-        <div className={styles.formContainerBox}>
-          <h2>Vous possédez déjà un compte ?</h2>
+    <>
+      <Logo page={"login"} />
+      <main ref={formLog} className={styles.formLog}>
+        <div className={styles.formContainer}>
+          <div className={styles.formContainerBox}>
+            <h2>Vous possédez déjà un compte ?</h2>
 
-          <button onClick={() => handleChangeForm()} className={styles.formSignInBtn}>Connexion</button>
-        </div>
-
-        <div className={styles.formContainerBox}>
-          <h2>Vous ne disposez pas de compte ?</h2>
-          <button onClick={() => handleChangeForm()} className={styles.formSignUpBtn}>Inscription</button>
-        </div>
-
-        <div className={styles.formBox}>
-          <div className={styles.formSignIn}>
-            <h3>Connectez-vous</h3>
-            <form onSubmit={handleSubmit}>
-              <input type="email" placeholder="Email" name="_email" value={formData._email} onChange={handleInputChange} />
-
-              <input type="password" name="_password" placeholder="Mot de passe" value={formData._password} onChange={handleInputChange} />
-
-              <span>{msgErr}</span>
-
-              <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
-                Se connecter <Icon icon={icone} color="white" width="30" height="30" />
-              </button>
-            </form>
+            <button onClick={() => handleChangeForm()} className={styles.formSignInBtn}>Connexion</button>
           </div>
 
-          <div className={styles.formSignUp}>
-            <Logup />
+          <div className={styles.formContainerBox}>
+            <h2>Vous ne disposez pas de compte ?</h2>
+            <button onClick={() => handleChangeForm()} className={styles.formSignUpBtn}>Inscription</button>
+          </div>
+
+          <div className={styles.formBox}>
+            <div className={styles.formSignIn}>
+              <h3>Connectez-vous</h3>
+              <form onSubmit={handleSubmit}>
+                <input type="email" placeholder="Email" name="_email" value={formData._email} onChange={handleInputChange} />
+
+                <input type="password" name="_password" placeholder="Mot de passe" value={formData._password} onChange={handleInputChange} />
+
+                <span>{msgErr}</span>
+
+                <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
+                  Se connecter <Icon icon={icone} color="white" width="30" height="30" />
+                </button>
+              </form>
+            </div>
+
+            <div className={styles.formSignUp}>
+              <Logup />
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 

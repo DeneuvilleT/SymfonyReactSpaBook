@@ -11,6 +11,7 @@ Encore.setOutputPath("public/build/")
   .addStyleEntry("styles", [
     "./assets/react/styles.scss",
     "./assets/react/components/FormBook/formBook.styles.scss",
+    "./assets/react/components/Logo/logo.styles.scss",
     "./assets/react/components/Form/form.styles.scss",
     "./assets/react/components/Notif/notif.styles.scss",
     "./assets/react/containers/Home/home.styles.scss",
