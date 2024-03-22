@@ -36,16 +36,16 @@ const AddNewAddress = ({ userId }) => {
           name: "phone",
           type: "tel",
         },
-        type: {
-          label: "Type d'adresse",
-          name: "type",
-          type: "select",
-          value: "0",
-          option: [
-            { value: "0", text: "Adresse de livraison" },
-            { value: "1", text: "Adresse de facturation" },
-          ],
-        },
+        // type: {
+        //   label: "Type d'adresse",
+        //   name: "type",
+        //   type: "select",
+        //   value: "0",
+        //   option: [
+        //     { value: "0", text: "Adresse de livraison" },
+        //     { value: "1", text: "Adresse de facturation" },
+        //   ],
+        // },
       }}
     />
   );

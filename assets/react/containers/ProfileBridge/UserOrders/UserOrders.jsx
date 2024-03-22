@@ -45,7 +45,7 @@ const UserOrders = ({ infos }) => {
     case "succeeded":
       return (
         <main className={styles.userOrders}>
-          <h2>Vos commandes</h2>
+          <h2>Vos réservations</h2>
 
           <section>
             {orders.length ? (
@@ -69,7 +69,7 @@ const UserOrders = ({ infos }) => {
               ))
             ) : (
               <h3>
-                <Icon icon="line-md:emoji-frown-open" color="#333" width="60" height="60" /> Vous n'avez pas encore passé de commmande.
+                <Icon icon="line-md:emoji-frown-open" color="#333" width="60" height="60" /> Vous n'avez pas encore de réservations.
               </h3>
             )}
           </section>

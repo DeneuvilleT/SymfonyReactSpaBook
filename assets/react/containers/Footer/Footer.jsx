@@ -42,6 +42,7 @@ const Footer = () => {
           <div className={styles.footerQuickLinks}>
             <h2>Support</h2>
             <ul>
+              <li><Link to={"/about_us"}>Qui sommes-nous</Link></li>
               <li><Link to={"/"}>Mentions légales</Link></li>
               <li><Link to={"/"}>CGV</Link></li>
               <li><Link to={"/"}>Moyens de paiement</Link></li>

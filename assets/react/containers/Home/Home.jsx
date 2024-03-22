@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setSlider } from "../../Store/slices/sliderSlices";
 
-import Logo from "../../components/Logo/Logo";
 import styles from "./home.styles.scss";
 import faces from "../../../../public/images/FACES/face_2.jpg";
 
@@ -15,7 +14,6 @@ const Home = () => {
 
   return (
     <main className={styles.home}>
-      <Logo />
       <section>
         {locations.length !== 0 ? (
           <ul className={styles.locations}>
@@ -74,7 +72,7 @@ const Home = () => {
                 <h2>
                   Profitez de la <span>nature</span>
                   <br />
-                  pour vous détendre
+                  et détendez-vous
                 </h2>
                 <p>
                   <span>

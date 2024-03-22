@@ -75,7 +75,7 @@ const Login = ({ isLog }) => {
 
   return (
     <>
-      <Logo page={"login"} />
+      {/* <Logo page={"login"} /> */}
       <main ref={formLog} className={styles.formLog}>
         <div className={styles.formContainer}>
           <div className={styles.formContainerBox}>

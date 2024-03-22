@@ -6,7 +6,8 @@
   align-items: center;
   background-color: transparent;
   padding: 0 5vw;
-  gap: 20px;
+  gap: 3vh;
+  // gap: 45px;
 
   h1 {
     padding: 10px 0;
@@ -36,13 +37,16 @@
     letter-spacing: 0.07em;
     text-decoration: none;
     padding: 7.5px 10px 7.5px 15px;
-    background-color: hsl(0deg 0% 57.15% / 69%);
+    background-color: hsl(0deg 0% 57% / 45%);
     backdrop-filter: blur(20px) brightness(0.75);
-    transition: backdrop-filter 0.25s ease-in-out;
+    transition: backdrop-filter 0.25s ease-in-out,
+      background-color 0.25s ease-in-out;
+    border-radius: 7px;
+    overflow: hidden;
   }
-
-  ul a:active {
-    backdrop-filter: blur(20px);
+  ul a:active,
+  ul a:hover {
+    background-color: hsl(0deg 0% 57.15% / 69%);
   }
 
   ul a[href="#/login#register"]::after,
@@ -80,6 +84,11 @@
   }
 
   > aside {
-    background-color: hsl(0deg 0% 71.8% / 83.1%);
+    background-color: hsla(0,0%,57%,.45);
+    margin-bottom: 30px;
+  }
+
+  form aside:nth-child(2) {
+    padding-bottom: 20px;
   }
 }

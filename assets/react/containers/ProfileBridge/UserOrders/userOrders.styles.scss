@@ -1,13 +1,13 @@
 .userOrders {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 50px;
-  margin: 50px auto;
+  padding: 20px 15vw;
   width: 100%;
-  max-width: 1450px;
-  font-size: 1em;
+  min-height: 50vh;
+  background-color: #f1f1f1f1;
 
   h2 {
     font-size: 26px;

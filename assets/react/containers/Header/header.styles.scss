@@ -1,4 +1,7 @@
 .header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -7,6 +10,7 @@
   width: 100%;
   z-index: 2;
   transition: height 0.75s ease-in;
+  margin: -215px 0 0;
 }
 
 .header.hide {

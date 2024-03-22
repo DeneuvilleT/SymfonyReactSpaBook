@@ -1,14 +1,18 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
+
 import { setLocations } from "../../Store/slices/locationsSlices";
-import axios from "axios";
 
 import { Icon } from "@iconify/react";
 
 import styles from "./formBook.styles.scss";
+import axios from "axios";
 
 const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const initialFormData = Object.fromEntries(
     Object.entries(inputs).map(([key, input]) => [key, key === "type" ? input.value || 0 : input.value || ""])
@@ -26,6 +30,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
 
     if (canSave) {
       setCanSave(false);
+
       try {
         setIcone("svg-spinners:90-ring-with-bg");
         // console.log(formData);
@@ -34,6 +39,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
 
         if (response.status === 200) {
           dispatch(setLocations(response.data));
+          navigate('/');
           setIcone("lets-icons:search-light");
         }
       } catch (err) {

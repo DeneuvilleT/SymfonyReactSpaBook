@@ -1,0 +1,57 @@
+.logo {
+  position: sticky;
+  top: 31%;
+  z-index: 3;
+  margin-bottom: 30px;
+  padding-bottom: 7.5px;
+  border-bottom: 10px solid #69340e;
+  transform: translateX(-275%);
+  transition: position 0.5s ease-in-out;
+
+  h1 {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background-color: transparent;
+    width: 100%;
+    overflow: hidden;
+    min-height: 200px;
+    width: 285px;
+    padding-right: 40px;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  h1 > span:first-child {
+    transform: rotate(-90deg);
+    height: fit-content;
+    font-size: 1.5em;
+    position: absolute;
+    top: 70px;
+    left: -25px;
+  }
+
+  h1 > div {
+    padding-bottom: 10px;
+  }
+
+  h1 a span {
+    text-transform: uppercase;
+    font-size: 1.25em;
+  }
+}
+
+@media (max-height: 632px) {
+  .logo {
+    position: absolute;
+    top: 51%;
+  }
+}
+
+.logo.loginLogo {
+  position: absolute;
+  top: 1%;
+}

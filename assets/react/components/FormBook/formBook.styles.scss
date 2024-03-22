@@ -18,7 +18,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: center;
     gap: 20px;
   }
 
@@ -31,7 +31,7 @@
 
   aside {
     justify-content: center;
-    padding: 10px 0 20px;
+    padding: 13px 0;
     gap: 30px;
   }
 
@@ -90,7 +90,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border-radius: 1ex;
     cursor: pointer;
     min-width: 200px;
     outline: 2px solid transparent;
