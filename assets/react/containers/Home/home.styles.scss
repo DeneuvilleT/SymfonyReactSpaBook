@@ -14,11 +14,12 @@
     margin: 0;
     width: 100%;
     min-height: 100vh;
+    margin-top: -250px;
   }
 
   h3 {
     font-size: 4em;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
     color: #212529;
   }
@@ -27,17 +28,82 @@
     margin: auto;
     width: 80%;
   }
+
+  div[role="figure"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #017143;
+    clip-path: circle(600px at right 900px);
+  }
 }
 
 // Accueil
 .welcome {
+  position: relative;
   display: flex;
-  gap: 40px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   margin: auto;
   max-width: 1360px;
 
-  img {
-    max-width: 25%;
+  .textBox {
+    position: relative;
+    max-width: 700px;
+    margin-left: 25px;
+  }
+
+  .textBox h2 {
+    font-family: "Poppins", sans-serif;
+    color: #333;
+    font-size: 4em;
+    line-height: 1.4em;
+    font-weight: 600;
+  }
+
+  .textBox h2 span {
+    color: #017143;
+    font-size: 1.2em;
+    font-weight: 900;
+  }
+
+  .textBox p {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+    font-size: 1.1em;
+  }
+
+  .textBox a {
+    display: inline-block;
+    color: #333;
+    background-color: #017143;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 40px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    max-width: fit-content;
+    margin-top: 20px;
+    padding: 8px 20px;
+  }
+
+  .imageBox {
+    width: 600px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 50px;
+    margin-top: 50px;
+  }
+
+  .imageBox img {
+    max-width: 340px;
+    border-radius: 40px;
   }
 }
 

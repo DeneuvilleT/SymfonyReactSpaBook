@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { clearCart } from "./Store/slices/cartSlices";
 
 import styles from './containers/Header/header.styles.scss';
+import AboutUs from "./containers/AboutUs/AboutUs";
 
 const App = ({ container }) => {
 
@@ -56,6 +57,7 @@ const App = ({ container }) => {
       <Header headerDom={headerDom} />
       <Routes>
         <Route path="/" element={<Authentication child={Home} auth={false} />} />
+        <Route path="/about_us" element={<Authentication child={AboutUs} auth={false} />} />
         <Route path="product/:id" element={<Authentication child={Product} auth={false} />} />
 
         <Route path="/cart" element={<Authentication child={Cart} auth={false} />} />
