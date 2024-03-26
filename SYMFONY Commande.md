@@ -115,6 +115,8 @@ php bin/console
 
 php bin/console cache:clear
 
+php bin/console cache:clear --env=dev
+
 # Affiche les options de php
 
 php bin/console debug:router

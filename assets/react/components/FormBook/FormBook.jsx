@@ -9,20 +9,21 @@ import { Icon } from "@iconify/react";
 import styles from "./formBook.styles.scss";
 import axios from "axios";
 
-const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
-
+const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const initialFormData = Object.fromEntries(
-    Object.entries(inputs).map(([key, input]) => [key, key === "type" ? input.value || 0 : input.value || ""])
+    Object.entries(inputs).map(([key, input]) => [
+      key,
+      key === "type" ? input.value || 0 : input.value || "",
+    ])
   );
 
   const [icone, setIcone] = useState("lets-icons:search-light");
   const [formData, setFormData] = useState(initialFormData);
   const [canSave, setCanSave] = useState(false);
   const [msgsErr, setMsgsErr] = useState([]);
-  const [msgSuccess, setMsgSuccess] = useState(success);
   const [inputValues, setInputValues] = useState({});
 
   const handleSubmit = async (e) => {
@@ -33,13 +34,12 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
 
       try {
         setIcone("svg-spinners:90-ring-with-bg");
-        // console.log(formData);
         const response = await axios.post(url, formData);
         setMsgsErr([]);
 
         if (response.status === 200) {
           dispatch(setLocations(response.data));
-          navigate('/');
+          navigate("/");
           setIcone("lets-icons:search-light");
         }
       } catch (err) {
@@ -98,7 +98,12 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
                   onChange={handleInputChange}
                 />
               ) : input.type !== "checkbox" ? (
-                <select name={input.name} value={formData[key]} onChange={handleInputChange} id={`post_${input.name}`}>
+                <select
+                  name={input.name}
+                  value={formData[key]}
+                  onChange={handleInputChange}
+                  id={`post_${input.name}`}
+                >
                   {input.option?.map((x, i) => (
                     <option key={i} value={x.value}>
                       {x.text}
@@ -108,7 +113,11 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
               ) : (
                 <></>
               )}
-              {!hasLabel || (hasLabel && !inputValues[input.name]) ? <label htmlFor={`post_${input.name}`}>{input.label}</label> : <></>}
+              {!hasLabel || (hasLabel && !inputValues[input.name]) ? (
+                <label htmlFor={`post_${input.name}`}>{input.label}</label>
+              ) : (
+                <></>
+              )}
             </div>
           ) : (
             <Fragment key={key}></Fragment>
@@ -125,9 +134,19 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
         {Object.entries(inputs).map(([key, input]) =>
           input.type === "checkbox" ? (
             <div key={key}>
-              {hasLabel ? <label htmlFor={`post_${input.name}`}>{input.label}</label> : <></>}
+              {hasLabel ? (
+                <label htmlFor={`post_${input.name}`}>{input.label}</label>
+              ) : (
+                <></>
+              )}
 
-              <input type={input.type} name={input.name} id={`post_${input.name}`} value={formData[key]} onChange={handleInputChange} />
+              <input
+                type={input.type}
+                name={input.name}
+                id={`post_${input.name}`}
+                value={formData[key]}
+                onChange={handleInputChange}
+              />
             </div>
           ) : (
             <Fragment key={key}></Fragment>
@@ -140,7 +159,12 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs, success }) => {
           <div className="error-messages">
             {msgsErr.map((err, index) => (
               <span key={index}>
-                <Icon icon="line-md:alert-twotone" color="white" width="23" height="23" />
+                <Icon
+                  icon="line-md:alert-twotone"
+                  color="white"
+                  width="23"
+                  height="23"
+                />
                 {err}
               </span>
             ))}

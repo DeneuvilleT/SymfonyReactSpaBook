@@ -8,6 +8,9 @@ const locationsSlice = createSlice({
   name: "location",
   initialState,
   reducers: {
+    setOneLocation(state, action) {
+      state.locations = [action.payload];
+    },
     setLocations(state, action) {
       state.locations = [...action.payload];
     },
@@ -17,6 +20,6 @@ const locationsSlice = createSlice({
   },
 });
 
-export const { setLocations, deleteLocations } = locationsSlice.actions;
+export const { setLocations, deleteLocations, setOneLocation } = locationsSlice.actions;
 
 export default locationsSlice.reducer;

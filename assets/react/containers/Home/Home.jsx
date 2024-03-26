@@ -6,6 +6,7 @@ import { setSlider } from "../../Store/slices/sliderSlices";
 
 import styles from "./home.styles.scss";
 import faces from "../../../../public/images/FACES/face_2.jpg";
+import Filters from "../../components/Filters/Filters";
 
 const Home = () => {
   const { locations } = useSelector((state) => ({ ...state.location }));
@@ -41,6 +42,7 @@ const Home = () => {
                         __html: location.cottage.description,
                       }}
                     />
+                    <Filters location={location} />
                   </div>
                 </div>
 
