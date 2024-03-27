@@ -41,6 +41,11 @@
       rgba(117, 255, 47, 1) 100%
     );
     clip-path: circle(600px at right 900px);
+    transition: clip-path 1s ease-in-out;
+  }
+
+  div[role="figure"].hide {
+    clip-path: circle(0 at right 900px);
   }
 }
 
@@ -53,6 +58,12 @@
   width: 100%;
   margin: 60px auto;
   max-width: 1360px;
+  min-height: 615px;
+  height: auto;
+  opacity: 1;
+  transition: height 1.5s ease-in-out, min-height 1.5s ease-in-out,
+    overflow 1.5s ease-in-out, margin 1.5s ease-in-out, opacity 1.5s ease-in-out;
+  transition-delay: 0.25s;
 
   .textBox {
     position: relative;
@@ -132,6 +143,14 @@
   .imageBox img:hover {
     transform: scale3d(1.05, 1.05, 1.05);
   }
+}
+
+.welcome.hide {
+  opacity: 0;
+  margin: 0 auto;
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 // Locations
@@ -335,7 +354,7 @@
   }
 
   .cardsLoc {
-    margin-left: 5px;
+    margin-left: 20px;
   }
 }
 

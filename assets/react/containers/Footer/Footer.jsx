@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 import styles from "./footer.styles.scss";
 
 const Footer = () => {
-
   return (
     <>
       <div className={styles.reinsurance}>
-
         <div>
           <h3>
-            Trouvez<br />nous
+            Trouvez
+            <br />
+            nous
           </h3>
 
           <address>
@@ -33,42 +33,111 @@ const Footer = () => {
         <div className={styles.footerContainer}>
           <div className={styles.footerSecAboutUs}>
             <h2>A propos</h2>
-            <p>Retrouvez-nous sur les différents <br /> réseaux sociaux</p>
+            <p>
+              Retrouvez-nous sur les différents <br /> réseaux sociaux
+            </p>
             <ul className={styles.footerSocialLinks}>
-              <li><Link to={"/"}><Icon icon="icomoon-free:instagram" width="2em" height="2em" style={{ color: 'black' }} /></Link></li>
-              <li><Link to={"/"}><Icon icon="icomoon-free:facebook2" width="2em" height="2em" style={{ color: 'black' }} /></Link></li>
+              <li>
+                <Link to={"/"}>
+                  <Icon
+                    icon="icomoon-free:instagram"
+                    width="2em"
+                    height="2em"
+                    style={{ color: "black" }}
+                  />
+                </Link>
+              </li>
+              <li>
+                <Link to={"/"}>
+                  <Icon
+                    icon="icomoon-free:facebook2"
+                    width="2em"
+                    height="2em"
+                    style={{ color: "black" }}
+                  />
+                </Link>
+              </li>
             </ul>
           </div>
           <div className={styles.footerQuickLinks}>
             <h2>Support</h2>
             <ul>
-              <li><Link to={"/about_us"}>Qui sommes-nous</Link></li>
-              <li><Link to={"/"}>Mentions légales</Link></li>
-              <li><Link to={"/"}>CGV</Link></li>
-              <li><Link to={"/"}>Moyens de paiement</Link></li>
+              <li>
+                <Link to={"/about_us"}>Qui sommes-nous</Link>
+              </li>
+              <li>
+                <Link to={"/"}>Mentions légales</Link>
+              </li>
+              <li>
+                <Link to={"/"}>CGV</Link>
+              </li>
+              <li>
+                <Link to={"/"}>Moyens de paiement</Link>
+              </li>
             </ul>
           </div>
           <div className={styles.footerQuickLinks}>
             <h2>Site</h2>
             <ul>
-              <li><Link to={"/login"}>Connexion</Link></li>
-              <li><Link to={"/login#register"}>Inscription</Link></li>
-              <li><Link to={"/profile"}>Mon compte</Link></li>
-              <li><Link to={"/"}>Accueil</Link></li>
+              <li>
+                <Link to={"/login"}>Connexion</Link>
+              </li>
+              <li>
+                <Link to={"/login#register"}>Inscription</Link>
+              </li>
+              <li>
+                <Link to={"/profile"}>Mon compte</Link>
+              </li>
+              <li>
+                <Link to={"/"}>Accueil</Link>
+              </li>
             </ul>
           </div>
           <div className={styles.footerContact}>
             <h2>Nous contacter</h2>
             <ul>
-              <li><a href="tel:0323565150"><Icon icon="bi:phone" width="1.2em" height="1.2em" style={{ color: 'black' }} />03.23.56.51.50</a></li>
-              <li><a href="mailto:contact@cabaneetgiteaunaturel.com"><Icon icon="cib:mail-ru" width="1.2em" height="1.2em" style={{ color: 'black' }} />contact@cabaneetgiteaunaturel.com</a></li>
+              <li>
+                <a href="tel:0323565150">
+                  <Icon
+                    icon="bi:phone"
+                    width="1.2em"
+                    height="1.2em"
+                    style={{ color: "black" }}
+                  />
+                  03.23.56.51.50
+                </a>
+              </li>
+              <li>
+                <a href="mailto:contact@cabaneetgiteaunaturel.com">
+                  <Icon
+                    icon="cib:mail-ru"
+                    width="1.2em"
+                    height="1.2em"
+                    style={{ color: "black" }}
+                  />
+                  contact@cabaneetgiteaunaturel.com
+                </a>
+              </li>
             </ul>
           </div>
         </div>
       </footer>
 
       <div className={styles.footerCopyrightText}>
-        <p><span>Copyright&nbsp;<Icon icon="la:copyright" width="1.2em" height="1.2em" style={{ color: '#555' }} />&nbsp;2024</span><span>Pause et nature</span><span>Tous droits réservés</span></p>
+        <p id="section1">
+          <span>
+            Copyright&nbsp;
+            <Icon
+              icon="la:copyright"
+              width="1.2em"
+              height="1.2em"
+              style={{ color: "#555" }}
+            />
+            &nbsp;2024
+          </span>
+          <span>Pause et nature</span>
+          <span>Tous droits réservés</span>
+        </p>
       </div>
     </>
   );

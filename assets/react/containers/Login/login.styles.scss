@@ -29,6 +29,7 @@
   position: relative;
   width: 60vw;
   height: 55vh;
+  max-height: 700px;
   max-width: 1360px;
   backdrop-filter: blur(20px) brightness(0.75);
   display: flex;
@@ -78,6 +79,8 @@
   left: 10%;
   width: 25vw;
   height: 65vh;
+  max-width: 580px;
+  max-height: 800px;
   min-height: 500px;
   background-color: #fff;
   z-index: 1000;

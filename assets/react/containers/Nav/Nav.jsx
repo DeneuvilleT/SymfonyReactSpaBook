@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { hideHeader } from "../../utilities";
 
 import FormBook from "../../components/FormBook/FormBook";
 
 import styles from "./nav.styles.scss";
 import axios from "axios";
 
-const Nav = ({ handleHideHeader }) => {
-
+const Nav = () => {
   const { isLog, status } = useSelector((state) => ({ ...state.auth }));
   const token = localStorage.getItem(`${location.origin}_bear_token`);
 
@@ -29,23 +29,32 @@ const Nav = ({ handleHideHeader }) => {
 
   return (
     <nav className={styles.nav}>
-
       <ul>
-
         {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
 
-        <Link to={"/login#register"} onClick={() => handleHideHeader()}>Inscription</Link>
+        <Link to={"/login#register"} onClick={() => hideHeader()}>
+          Inscription
+        </Link>
 
         {status === "ROLE_SUPER_ADMIN" ? (
-          <a target="_blank" style={{ cursor: "pointer" }} onClick={handleAdmin}>
+          <a
+            target="_blank"
+            style={{ cursor: "pointer" }}
+            onClick={handleAdmin}
+          >
             Administration
           </a>
         ) : (
           <></>
         )}
 
-        {isLog ? <Link to={"/logout"}>Déconnexion</Link> : <Link to={"/login"} onClick={() => handleHideHeader()} >Connexion</Link>}
-
+        {isLog ? (
+          <Link to={"/logout"}>Déconnexion</Link>
+        ) : (
+          <Link to={"/login"} onClick={() => hideHeader()}>
+            Connexion
+          </Link>
+        )}
       </ul>
 
       <aside className={styles.locations}>

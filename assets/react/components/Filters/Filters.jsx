@@ -3,17 +3,16 @@ import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
 
 import { setOneLocation } from "../../Store/slices/locationsSlices";
-
-import styles from "../../containers/Header/header.styles.scss";
+import { hideHeader } from "../../utilities";
 
 const Filters = ({ location }) => {
   const dispatch = useDispatch();
 
   const selectLocation = () => {
-    const headerDom = document.querySelector("header");
-    headerDom.classList.toggle(styles.hide);
-
-    dispatch(setOneLocation(location));
+    hideHeader();
+    setTimeout(() => {
+      dispatch(setOneLocation(location));
+    }, 1000);
   };
 
   return (

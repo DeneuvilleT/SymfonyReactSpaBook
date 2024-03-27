@@ -1,7 +1,10 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 import { deleteLocations } from "../../Store/slices/locationsSlices";
+import { hideHeader } from "../../utilities";
+
 import styles from "./logo.styles.scss";
 
 const Logo = ({ page }) => {
@@ -9,12 +12,22 @@ const Logo = ({ page }) => {
 
   const dispatch = useDispatch();
 
+  const handleBackToHome = () => {
+    hideHeader(false);
+
+    setTimeout(() => {
+      dispatch(deleteLocations());
+    }, 1000);
+  };
+
   return (
     <Link
       to={"/"}
       ref={titleContainer}
       className={`${styles.logo} ${page === "login" ? styles.loginLogo : ""}`}
-      onClick={() => dispatch(deleteLocations())}
+      onClick={() => {
+        handleBackToHome();
+      }}
     >
       <h1>
         <span>Cabane</span>
