@@ -14,7 +14,7 @@ const Home = () => {
       <section>
         <div
           role="figure"
-          className={`${locations.length !== 0 ? styles.hide : ""}`}
+          className={`${(locations.length !== 0) ? styles.hide : ""}`}
         ></div>
         <article
           className={`${styles.welcome} ${

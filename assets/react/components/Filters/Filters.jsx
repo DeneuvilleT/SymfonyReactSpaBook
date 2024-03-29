@@ -9,10 +9,8 @@ const Filters = ({ location }) => {
   const dispatch = useDispatch();
 
   const selectLocation = () => {
+    dispatch(setOneLocation(location));
     hideHeader();
-    setTimeout(() => {
-      dispatch(setOneLocation(location));
-    }, 1000);
   };
 
   return (
