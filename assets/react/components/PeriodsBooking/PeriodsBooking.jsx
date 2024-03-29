@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./periodsBooking.styles.scss";
-import Calendar from "../Calendar/Calendar";;
+import Calendar from "../Calendar/Calendar";
 
 const PeriodsBooking = () => {
   const { choiceLocation, locations } = useSelector((state) => ({
@@ -9,6 +9,27 @@ const PeriodsBooking = () => {
   }));
 
   const period = useRef(null);
+  const [dateStartSelectionnee, setDateStartSelectionnee] = useState(null);
+  const [dateEndSelectionnee, setDateEndSelectionnee] = useState(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    console.log(dateEndSelectionnee, dateStartSelectionnee);
+    if (dateEndSelectionnee !== null && dateStartSelectionnee !== null) {
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+  }, [dateEndSelectionnee, dateStartSelectionnee]);
+
+  const handleDateStartSelection = (date) => {
+    setDateStartSelectionnee(date);
+    setDateEndSelectionnee(null);
+  };
+
+  const handleDateEndSelection = (date) => {
+    setDateEndSelectionnee(date);
+  };
 
   const convertirTimestamp = (timestamp) => {
     const date = new Date(timestamp * 1000);
@@ -19,10 +40,6 @@ const PeriodsBooking = () => {
   useEffect(() => {
     if (choiceLocation) {
       period.current.classList.add(styles.activeBooking);
-      console.log(
-        convertirTimestamp(locations[0].cottage.periods[0].start.timestamp),
-        convertirTimestamp(locations[0].cottage.periods[0].end.timestamp)
-      );
     } else {
       period.current.classList.remove(styles.activeBooking);
     }
@@ -38,7 +55,26 @@ const PeriodsBooking = () => {
           dateFin={convertirTimestamp(
             locations[0].cottage.periods[0].end.timestamp
           )}
+          onStartDateSelection={handleDateStartSelection}
+          title={"Date d'arrivée"}
+          container={"bookStart"}
         />
+
+        {dateStartSelectionnee ? (
+          <Calendar
+            dateDebut={dateStartSelectionnee}
+            dateFin={convertirTimestamp(
+              locations[0].cottage.periods[0].end.timestamp
+            )}
+            onEndDateSelection={handleDateEndSelection}
+            title={"Date de départ"}
+            container={"bookEnd"}
+          />
+        ) : (
+          <></>
+        )}
+
+        {ready ? <button>Suivant</button> : <></>}
       </div>
     </section>
   );

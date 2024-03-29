@@ -1,0 +1,100 @@
+.calendar {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 70px;
+  width: 100%;
+
+  h5 {
+    text-transform: capitalize;
+    font-size: 1.4em;
+  }
+
+  article {
+    width: 260px;
+    height: 235px;
+  }
+
+  button {
+  }
+}
+
+.rowCalendar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .days,
+  .dates {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .days {
+    border-bottom: 1px solid #999;
+    margin-bottom: 5px;
+  }
+
+  .dates {
+    justify-content: flex-start;
+  }
+
+  .days span,
+  .dates span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 37px;
+    height: 35px;
+    text-align: start;
+  }
+
+  .dates span {
+    color: inherit;
+    user-select: none;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: background-color 0.15s ease-in-out,
+      border-radius 0.25s ease-in-out;
+  }
+
+  .dates span.available {
+    user-select: initial;
+    cursor: pointer;
+    color: #0da72c;
+  }
+
+  .dates span.available.dateActive,
+  .dates span.available:hover {
+    background-color: #0bd333d5;
+    border-radius: 10px;
+  }
+
+  .dates span.available.dateActive b,
+  .dates span.available:hover b {
+    text-shadow: 0 0 20px rgb(0 0 0);
+    color: #fff;
+  }
+}
+
+.calendar[id="bookEnd"] {
+  .dates span.available {
+    user-select: initial;
+    cursor: pointer;
+    color: #0d3ea7;
+  }
+
+  .dates span.available.dateActive,
+  .dates span.available:hover {
+    background-color: #0b3ad3d5;
+    border-radius: 10px;
+  }
+
+  .dates span.available.dateActive b,
+  .dates span.available:hover b {
+    text-shadow: 0 0 20px rgb(0 0 0);
+    color: #fff;
+  }
+}

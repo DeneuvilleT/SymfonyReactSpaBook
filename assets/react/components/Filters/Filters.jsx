@@ -5,18 +5,24 @@ import { useDispatch } from "react-redux";
 import { setOneLocation } from "../../Store/slices/locationsSlices";
 import { hideHeader } from "../../utilities";
 
+import styles from "../../containers/Home/home.styles.scss";
+
 const Filters = ({ location }) => {
+
   const dispatch = useDispatch();
 
-  const selectLocation = () => {
+  const selectLocation = (node) => {
     dispatch(setOneLocation(location));
     hideHeader();
+    node.classList.toggle(styles.locationActive);
   };
 
   return (
     <ul>
       <div role="figure">
-        <span onClick={() => selectLocation()}>Réserver</span>
+        <span onClick={(e) => selectLocation(e.currentTarget)}>
+          Réserver
+        </span>
       </div>
       {location.has_garden ? (
         <li>

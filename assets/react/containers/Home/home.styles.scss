@@ -15,7 +15,7 @@
     width: 100%;
   }
 
-  h3 {
+  > h3 {
     font-size: 4em;
     font-weight: 600;
     line-height: 1.2;
@@ -46,6 +46,16 @@
 
   div[role="figure"].hide {
     clip-path: circle(0 at right 900px);
+  }
+
+  div[role="figure"] span {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  div[role="figure"] .locationActive {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 
@@ -162,6 +172,7 @@
   gap: 100px;
   max-width: 1450px;
   margin: auto;
+  width: 100%;
 
   li {
     display: flex;
@@ -375,13 +386,5 @@
 @media (max-width: 1920px) {
   .locations .thumbails {
     width: 50%;
-  }
-}
-
-@media (max-width: 1500px) {
-  .home {
-    h1 a {
-      font-size: 6vw;
-    }
   }
 }

@@ -10,6 +10,7 @@ Encore.setOutputPath("public/build/")
   .addEntry("app", "./assets/react/index.js")
   .addStyleEntry("styles", [
     "./assets/react/styles.scss",
+    "./assets/react/components/Calendar/calendar.styles.scss",
     "./assets/react/components/PeriodsBooking/periodsBooking.styles.scss",
     "./assets/react/components/FormBook/formBook.styles.scss",
     "./assets/react/components/Logo/logo.styles.scss",

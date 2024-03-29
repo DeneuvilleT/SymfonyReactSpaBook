@@ -31,7 +31,11 @@ const Locations = ({ locations }) => {
                 }}
               ></div>
 
-              <div className={`${styles.content} ${choiceLocation ? styles.contentActive : ''}`}>
+              <div
+                className={`${styles.content} ${
+                  choiceLocation ? styles.contentActive : ""
+                }`}
+              >
                 <span>
                   <h3>{location.cottage.name}</h3>
                 </span>
