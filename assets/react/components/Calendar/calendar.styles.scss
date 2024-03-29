@@ -14,9 +14,6 @@
     width: 260px;
     height: 235px;
   }
-
-  button {
-  }
 }
 
 .rowCalendar {
@@ -39,6 +36,10 @@
 
   .dates {
     justify-content: flex-start;
+  }
+
+  .dates:nth-child(2) {
+    justify-content: flex-end;
   }
 
   .days span,

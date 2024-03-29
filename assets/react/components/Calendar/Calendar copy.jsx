@@ -11,9 +11,6 @@ const Calendar = ({
 }) => {
   // Convertir les dates en objets Date
   const debut = new Date(dateDebut);
-  if (container === "bookEnd") {
-    debut.setDate(debut.getDate() + 1);
-  }
   const fin = new Date(dateFin);
 
   // Tableau pour stocker les mois entre les deux dates

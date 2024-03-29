@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import styles from "./periodsBooking.styles.scss";
 import Calendar from "../Calendar/Calendar";
+import styles from "./periodsBooking.styles.scss";
 
 const PeriodsBooking = () => {
   const { choiceLocation, locations } = useSelector((state) => ({
@@ -14,7 +14,7 @@ const PeriodsBooking = () => {
   const [dateEndSelectionnee, setDateEndSelectionnee] = useState(null);
 
   useEffect(() => {
-    console.log(dateEndSelectionnee, dateStartSelectionnee);
+    // console.log(dateEndSelectionnee, dateStartSelectionnee);
     if (dateEndSelectionnee !== null && dateStartSelectionnee !== null) {
       setReady(true);
     } else {
@@ -74,7 +74,9 @@ const PeriodsBooking = () => {
           <></>
         )}
 
-        {ready ? <button>Suivant</button> : <></>}
+        <aside className={`${ready ? styles.activeBtn : ""}`}>
+          <button>Finaliser votre réservation</button>
+        </aside>
       </div>
     </section>
   );
