@@ -42,9 +42,11 @@ const Calendar = ({
     return date >= debut && date <= fin;
   };
 
-  const resetChoiceDate = () => {
+  const resetChoiceDate = (endDate = false) => {
     const datesActive = document.querySelectorAll(
-      `.${styles.available}.${styles.dateActive}`
+      endDate
+        ? `#bookEnd .${styles.available}.${styles.dateActive}`
+        : `.${styles.available}.${styles.dateActive}`
     );
 
     datesActive.length !== 0
@@ -60,6 +62,7 @@ const Calendar = ({
     }
 
     if (onEndDateSelection) {
+      resetChoiceDate(true);
       onEndDateSelection(date);
     }
 

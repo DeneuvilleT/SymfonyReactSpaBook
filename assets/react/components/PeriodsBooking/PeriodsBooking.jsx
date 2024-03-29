@@ -9,9 +9,9 @@ const PeriodsBooking = () => {
   }));
 
   const period = useRef(null);
+  const [ready, setReady] = useState(false);
   const [dateStartSelectionnee, setDateStartSelectionnee] = useState(null);
   const [dateEndSelectionnee, setDateEndSelectionnee] = useState(null);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     console.log(dateEndSelectionnee, dateStartSelectionnee);
