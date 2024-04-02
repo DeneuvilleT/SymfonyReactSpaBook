@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\CategoriesCottage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
@@ -32,9 +33,11 @@ class CategoriesCottageCrudController extends AbstractCrudController
         return [
             TextField::new('name', 'Nom'),
             TextEditorField::new('description', 'Description'),
+            IntegerField::new('period_minimum', 'Période de résérvation minimum'),
             MoneyField::new('price_one_night', 'Prix pour une nuit')
                 ->setCurrency('EUR')
                 ->setNumDecimals(2),
+            TextEditorField::new('privacy', 'Réglement'),
         ];
     }
 }

@@ -1,22 +1,24 @@
 .logout {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 50px;
+  padding: 20px 15vw;
+  width: 100%;
+  min-height: 50vh;
+  background-color: #f1f1f1f1;
+
+  div {
     display: flex;
-    align-items: center;
-    gap: 25px;
-    max-width: 1450px;
-    margin: 50px auto 20px auto;
-  
-    div {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-  
-    h2 {
-      font-size: 26px;
-    }
-  
-    h3 {
-      font-size: 20px;
-    }
+    flex-direction: column;
+    gap: 20px;
   }
-  
+
+  h2 {
+    font-size: 26px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+}

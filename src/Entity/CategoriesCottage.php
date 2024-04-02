@@ -32,6 +32,12 @@ class CategoriesCottage
     #[ORM\OneToMany(mappedBy: 'categories_cottage', targetEntity: Periods::class)]
     private Collection $periods;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $privacy = null;
+
+    #[ORM\Column]
+    private ?int $period_minimum = null;
+
     public function __construct()
     {
         $this->covers = new ArrayCollection();
@@ -135,6 +141,30 @@ class CategoriesCottage
                 $period->setCategoriesCottage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrivacy(): ?string
+    {
+        return $this->privacy;
+    }
+
+    public function setPrivacy(?string $privacy): static
+    {
+        $this->privacy = $privacy;
+
+        return $this;
+    }
+
+    public function getPeriodMinimum(): ?int
+    {
+        return $this->period_minimum;
+    }
+
+    public function setPeriodMinimum(int $period_minimum): static
+    {
+        $this->period_minimum = $period_minimum;
 
         return $this;
     }

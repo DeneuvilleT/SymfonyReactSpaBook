@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+
 import Calendar from "../Calendar/Calendar";
 import styles from "./periodsBooking.styles.scss";
 
@@ -12,9 +13,10 @@ const PeriodsBooking = () => {
   const [ready, setReady] = useState(false);
   const [dateStartSelectionnee, setDateStartSelectionnee] = useState(null);
   const [dateEndSelectionnee, setDateEndSelectionnee] = useState(null);
+  const [periodsStart, setPeriodsStart] = useState([]);
+  const [periodsEnd, setPeriodsEnd] = useState([]);
 
   useEffect(() => {
-    // console.log(dateEndSelectionnee, dateStartSelectionnee);
     if (dateEndSelectionnee !== null && dateStartSelectionnee !== null) {
       setReady(true);
     } else {
@@ -22,8 +24,20 @@ const PeriodsBooking = () => {
     }
   }, [dateEndSelectionnee, dateStartSelectionnee]);
 
+  useEffect(() => {
+    if (choiceLocation) {
+      period.current.classList.add(styles.activeBooking);
+      convertirTimestamp(locations[0].cottage.periods);
+    } else {
+      period.current.classList.remove(styles.activeBooking);
+    }
+  }, [choiceLocation]);
+
   const handleDateStartSelection = (date) => {
     setDateStartSelectionnee(date);
+
+    // Appliquer la periode minimum de résérvation
+    date.setDate(date.getDate() + locations[0].cottage.period_minimum);
     setDateEndSelectionnee(null);
   };
 
@@ -32,29 +46,24 @@ const PeriodsBooking = () => {
   };
 
   const convertirTimestamp = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    date.setHours(date.getHours() + 1);
-    return date;
-  };
+    timestamp.forEach((period) => {
+      const periodStart = new Date(period.start.timestamp * 1000);
+      const periodEnd = new Date(period.end.timestamp * 1000);
 
-  useEffect(() => {
-    if (choiceLocation) {
-      period.current.classList.add(styles.activeBooking);
-    } else {
-      period.current.classList.remove(styles.activeBooking);
-    }
-  }, [choiceLocation]);
+      periodStart.setHours(periodStart.getHours() + 1);
+      periodEnd.setHours(periodEnd.getHours() + 1);
+
+      setPeriodsStart((prevPeriodsStart) => [...prevPeriodsStart, periodStart]);
+      setPeriodsEnd((prevPeriodsEnd) => [...prevPeriodsEnd, periodEnd]);
+    });
+  };
 
   return (
     <section ref={period} className={styles.periodsBooking}>
       <div>
         <Calendar
-          dateDebut={convertirTimestamp(
-            locations[0].cottage.periods[0].start.timestamp
-          )}
-          dateFin={convertirTimestamp(
-            locations[0].cottage.periods[0].end.timestamp
-          )}
+          dateDebut={periodsStart}
+          dateFin={periodsEnd}
           onStartDateSelection={handleDateStartSelection}
           title={"Date d'arrivée"}
           container={"bookStart"}
@@ -62,10 +71,8 @@ const PeriodsBooking = () => {
 
         {dateStartSelectionnee ? (
           <Calendar
-            dateDebut={dateStartSelectionnee}
-            dateFin={convertirTimestamp(
-              locations[0].cottage.periods[0].end.timestamp
-            )}
+            dateDebut={[dateStartSelectionnee]}
+            dateFin={periodsEnd}
             onEndDateSelection={handleDateEndSelection}
             title={"Date de départ"}
             container={"bookEnd"}

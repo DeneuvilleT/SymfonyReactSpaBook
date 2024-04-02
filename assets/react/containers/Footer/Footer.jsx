@@ -17,13 +17,13 @@ const Footer = () => {
           </h3>
 
           <address>
-            Azur Gardens, 4 Rue Chez Chabot <br />
+            Pause et nature, 2 Rue Chez Chabot <br />
             17460 RIOUX
           </address>
         </div>
 
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2788.733631479978!2d-0.7031512870695933!3d45.656170720487346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480106b7cc0a6ec5%3A0x2e47e8dea565f34e!2sAZUR%20GARDENS!5e0!3m2!1sfr!2sfr!4v1709745045453!5m2!1sfr!2sfr"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2788.7438566742367!2d-0.7057089065955706!3d45.655965396504214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480106b7cfba3297%3A0xa8962e90c6a4ce45!2s2%20Rue%20de%20Chez%20Chabot%2C%2017460%20Rioux!5e0!3m2!1sfr!2sfr!4v1711875847016!5m2!1sfr!2sfr"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         ></iframe>

@@ -83,8 +83,10 @@ class ReactController extends AbstractController
                 'tree_height' => $location->getTreeHeight(),
                 'cottage' => [
                    'name' => $location->getCategoriesCottage()->getName(),
+                   'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),
                    'description' => $location->getCategoriesCottage()->getDescription(),
                    'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
+                   'privacy' => $location->getCategoriesCottage()->getPrivacy(),
                    'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
                    'periods' => $this->getPeriodsData($location->getCategoriesCottage()->getPeriods())
                 ],

@@ -9,40 +9,63 @@ const Calendar = ({
   title,
   container,
 }) => {
-  // Convertir les dates en objets Date
-  const debut = new Date(dateDebut);
-  if (container === "bookEnd") {
-    debut.setDate(debut.getDate() + 1);
-  }
-  const fin = new Date(dateFin);
 
-  // Tableau pour stocker les mois entre les deux dates
-  let moisEntreDates = [];
+  const debuts = dateDebut.map((date) => {
+    const debut = new Date(date);
+    debut.setHours(0, 0, 0, 0);
+    return debut;
+  });
 
-  // Fonction pour obtenir les mois entre deux dates
-  const obtenirMoisEntreDates = (dateDebut, dateFin) => {
-    let mois = [];
-    let moisActuel = new Date(dateDebut.getFullYear(), dateDebut.getMonth(), 1);
+  const fins = dateFin.map((date) => {
+    const fin = new Date(date);
+    return fin;
+  });
 
-    while (moisActuel < dateFin) {
-      mois.push(new Date(moisActuel));
+
+  // Fusionner les mois avec les mêmes dates
+  let moisMap = new Map();
+
+  for (let i = 0; i < debuts.length; i++) {
+    const debut = debuts[i];
+    const fin = fins[i];
+
+    let moisActuel = new Date(debut.getFullYear(), debut.getMonth(), 1);
+
+    while (moisActuel < fin) {
+      const key = moisActuel.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
+
+      if (!moisMap.has(key)) {
+        moisMap.set(key, {
+          debut: new Date(moisActuel),
+          fin: new Date(moisActuel.getFullYear(), moisActuel.getMonth() + 1, 0),
+          debutPeriode: debut,
+        });
+      }
+
       moisActuel.setMonth(moisActuel.getMonth() + 1);
     }
+  }
 
-    return mois;
+  // Convertir l'objet Map en tableau et le trier par ordre chronologique
+  const moisEntreDates = Array.from(moisMap.values()).sort(
+    (a, b) => a.debut - b.debut
+  );
+
+
+  const isInMonth = (date, mois) => {
+    return (
+      date.getMonth() === mois.debut.getMonth() &&
+      date.getFullYear() === mois.debut.getFullYear()
+    );
   };
 
-  // Obtenir les mois entre les deux dates
-  moisEntreDates = obtenirMoisEntreDates(debut, fin);
 
-  // Fonction pour vérifier si une date est dans le mois en cours
-  const estDansLeMois = (date, mois) => {
-    return date.getMonth() === mois.getMonth();
-  };
 
-  // Fonction pour vérifier si une date est entre les deux dates spécifiées
-  const estDansLaPlage = (date) => {
-    return date >= debut && date <= fin;
+  const isInPeriod = (date, debut) => {
+    return date >= debut;
   };
 
   const resetChoiceDate = (endDate = false) => {
@@ -57,16 +80,18 @@ const Calendar = ({
       : null;
   };
 
-  // Fonction pour gérer la sélection de la date
+
   const handleDateSelection = (date, node) => {
-    if (onStartDateSelection) {
+    const selectedDate = new Date(date);
+
+    if (onStartDateSelection && container !== "bookEnd") {
       resetChoiceDate();
-      onStartDateSelection(date);
+      onStartDateSelection(selectedDate);
     }
 
-    if (onEndDateSelection) {
+    if (onEndDateSelection && container === "bookEnd") {
       resetChoiceDate(true);
-      onEndDateSelection(date);
+      onEndDateSelection(selectedDate);
     }
 
     node.classList.add(styles.dateActive);
@@ -80,62 +105,87 @@ const Calendar = ({
   return (
     <>
       <h4>{title}</h4>
+      
       <div id={container} className={styles.calendar}>
-        {moisEntreDates.map((mois, index) => (
-          <article key={index}>
+
+        {moisEntreDates.map((month, IndexMonth) => (
+          <article key={IndexMonth}>
             <h5>
-              {mois.toLocaleString("default", {
+              {month.debut.toLocaleString("default", {
                 month: "long",
                 year: "numeric",
               })}
             </h5>
 
+
             <div className={styles.rowCalendar}>
               <div className={styles.days}>
                 {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map(
-                  (jour, jourIndex) => (
-                    <span key={jourIndex}>{jour}</span>
+                  (jour, dayIndex) => (
+                    <span key={dayIndex}>{jour}</span>
                   )
                 )}
               </div>
-              {Array.from({ length: 6 }, (_, i) => i).map((_, semaineIndex) => (
-                <div className={styles.dates} key={semaineIndex}>
+
+
+              {Array.from({ length: 6 }, (_, i) => i).map((_, weekIndex) => (
+
+                <div className={styles.dates} key={weekIndex}>
+
                   {Array.from({ length: 7 }, (_, i) => i).map(
-                    (_, jourIndex) => {
-                      const premierJourDuMois = new Date(
-                        mois.getFullYear(),
-                        mois.getMonth(),
+                    (_, dayIndex) => {
+                      const firstDayMonth = new Date(
+                        month.debut.getFullYear(),
+                        month.debut.getMonth(),
                         1
                       );
-                      const premierJourSemaine = premierJourDuMois.getDay();
-                      const joursDansLeMois =
-                        new Date(
-                          mois.getFullYear(),
-                          mois.getMonth() + 1,
-                          0
-                        ).getDate();
+                      const firstDaysWeek = firstDayMonth.getDay();
+                      const dayInTheMonth = new Date(
+                        month.debut.getFullYear(),
+                        month.debut.getMonth() + 1,
+                        0
+                      ).getDate();
 
                       const jour =
-                        jourIndex - premierJourSemaine + 1 + semaineIndex * 7;
+                        dayIndex - firstDaysWeek + 1 + weekIndex * 7;
 
                       return (
-                        estDansLeMois(
-                          new Date(mois.getFullYear(), mois.getMonth(), jour),
-                          mois
+                        isInMonth(
+                          new Date(
+                            month.debut.getFullYear(),
+                            month.debut.getMonth(),
+                            jour
+                          ),
+                          month
                         ) && (
                           <span
-                            key={jourIndex}
+                            key={dayIndex}
+                            datatype={dayIndex}
                             className={`${
-                              estDansLaPlage(new Date(mois.getFullYear(), mois.getMonth(), jour))
+                              isInPeriod(
+                                new Date(
+                                  month.debut.getFullYear(),
+                                  month.debut.getMonth(),
+                                  jour
+                                ),
+                                month.debutPeriode
+                              )
                                 ? styles.available
                                 : ""
                             }`}
                             onClick={(e) =>
-                              estDansLaPlage(new Date(mois.getFullYear(), mois.getMonth(), jour))
+                              isInPeriod(
+                                new Date(
+                                  month.debut.getFullYear(),
+                                  month.debut.getMonth(),
+                                  jour
+                                ),
+                                month.debutPeriode
+                              )
                                 ? handleDateSelection(
                                     new Date(
-                                      mois.getFullYear(),
-                                      mois.getMonth(),
+                                      month.debut.getFullYear(),
+                                      month.debut.getMonth(),
                                       jour
                                     ),
                                     e.currentTarget
@@ -143,11 +193,20 @@ const Calendar = ({
                                 : null
                             }
                           >
-                            {estDansLaPlage(new Date(mois.getFullYear(), mois.getMonth(), jour))
-                              ? <b>{jour}</b>
-                              :  jour > 0 && jour <= joursDansLeMois
-                              ? jour
-                              : ""}
+                            {isInPeriod(
+                              new Date(
+                                month.debut.getFullYear(),
+                                month.debut.getMonth(),
+                                jour
+                              ),
+                              month.debutPeriode
+                            ) ? (
+                              <b>{jour}</b>
+                            ) : jour > 0 && jour <= dayInTheMonth ? (
+                              jour
+                            ) : (
+                              ""
+                            )}
                           </span>
                         )
                       );

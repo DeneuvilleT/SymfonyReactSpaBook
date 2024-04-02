@@ -11,6 +11,7 @@ const Calendar = ({
 }) => {
   // Convertir les dates en objets Date
   const debut = new Date(dateDebut);
+  if (container === "bookEnd") debut.setDate(debut.getDate() + 1);
   const fin = new Date(dateFin);
 
   // Tableau pour stocker les mois entre les deux dates
@@ -76,6 +77,7 @@ const Calendar = ({
 
   return (
     <>
+      {console.log(dateDebut, dateFin)}
       <h4>{title}</h4>
       <div id={container} className={styles.calendar}>
         {moisEntreDates.map((mois, index) => (
@@ -105,12 +107,11 @@ const Calendar = ({
                         1
                       );
                       const premierJourSemaine = premierJourDuMois.getDay();
-                      const joursDansLeMois =
-                        new Date(
-                          mois.getFullYear(),
-                          mois.getMonth() + 1,
-                          0
-                        ).getDate();
+                      const joursDansLeMois = new Date(
+                        mois.getFullYear(),
+                        mois.getMonth() + 1,
+                        0
+                      ).getDate();
 
                       const jour =
                         jourIndex - premierJourSemaine + 1 + semaineIndex * 7;
@@ -123,12 +124,24 @@ const Calendar = ({
                           <span
                             key={jourIndex}
                             className={`${
-                              estDansLaPlage(new Date(mois.getFullYear(), mois.getMonth(), jour))
+                              estDansLaPlage(
+                                new Date(
+                                  mois.getFullYear(),
+                                  mois.getMonth(),
+                                  jour
+                                )
+                              )
                                 ? styles.available
                                 : ""
                             }`}
                             onClick={(e) =>
-                              estDansLaPlage(new Date(mois.getFullYear(), mois.getMonth(), jour))
+                              estDansLaPlage(
+                                new Date(
+                                  mois.getFullYear(),
+                                  mois.getMonth(),
+                                  jour
+                                )
+                              )
                                 ? handleDateSelection(
                                     new Date(
                                       mois.getFullYear(),
@@ -140,11 +153,19 @@ const Calendar = ({
                                 : null
                             }
                           >
-                            {estDansLaPlage(new Date(mois.getFullYear(), mois.getMonth(), jour))
-                              ? <b>{jour}</b>
-                              :  jour > 0 && jour <= joursDansLeMois
-                              ? jour
-                              : ""}
+                            {estDansLaPlage(
+                              new Date(
+                                mois.getFullYear(),
+                                mois.getMonth(),
+                                jour
+                              )
+                            ) ? (
+                              <b>{jour}</b>
+                            ) : jour > 0 && jour <= joursDansLeMois ? (
+                              jour
+                            ) : (
+                              ""
+                            )}
                           </span>
                         )
                       );
