@@ -17,30 +17,29 @@ import UserComments from "./containers/ProfileBridge/UserComments/UserComments";
 import UserOrders from "./containers/ProfileBridge/UserOrders/UserOrders";
 import Notif from "./components/Notif/Notif";
 import Slider from "./components/Slider/Slider";
+import Privacy from "./components/Privacy/Privacy";
 
 import { useDispatch } from "react-redux";
 import { clearCart } from "./Store/slices/cartSlices";
 
-import styles from './containers/Header/header.styles.scss';
+import styles from "./containers/Header/header.styles.scss";
 import AboutUs from "./containers/AboutUs/AboutUs";
 
 const App = ({ container }) => {
-
   const dispatch = useDispatch();
   const locationHook = useLocation();
   const headerDom = useRef(null);
 
   useEffect(() => {
-    if (location.hash === '#/login#register' || location.hash === '#/login') {
+    if (location.hash === "#/login#register" || location.hash === "#/login") {
       headerDom.current.classList.add(styles.hide);
     } else {
       headerDom.current.classList.remove(styles.hide);
     }
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
-
   }, [locationHook]);
 
   useEffect(() => {
@@ -53,23 +52,57 @@ const App = ({ container }) => {
   return (
     <>
       <Slider />
+      <Privacy />
       <Notif />
       <Header headerDom={headerDom} />
       <Routes>
-        <Route path="/" element={<Authentication child={Home} auth={false} />} />
-        <Route path="/about_us" element={<Authentication child={AboutUs} auth={false} />} />
-        <Route path="product/:id" element={<Authentication child={Product} auth={false} />} />
+        <Route
+          path="/"
+          element={<Authentication child={Home} auth={false} />}
+        />
+        <Route
+          path="/about_us"
+          element={<Authentication child={AboutUs} auth={false} />}
+        />
+        <Route
+          path="product/:id"
+          element={<Authentication child={Product} auth={false} />}
+        />
 
-        <Route path="/cart" element={<Authentication child={Cart} auth={false} />} />
+        <Route
+          path="/cart"
+          element={<Authentication child={Cart} auth={false} />}
+        />
 
-        <Route path="/profile" element={<Authentication child={ProfileBridge} auth={true} />} />
-        <Route path="/user/datas" element={<Authentication child={UserDatas} auth={true} />} />
-        <Route path="/user/orders" element={<Authentication child={UserOrders} auth={true} />} />
-        <Route path="/user/comments" element={<Authentication child={UserComments} auth={true} />} />
+        <Route
+          path="/profile"
+          element={<Authentication child={ProfileBridge} auth={true} />}
+        />
+        <Route
+          path="/user/datas"
+          element={<Authentication child={UserDatas} auth={true} />}
+        />
+        <Route
+          path="/user/orders"
+          element={<Authentication child={UserOrders} auth={true} />}
+        />
+        <Route
+          path="/user/comments"
+          element={<Authentication child={UserComments} auth={true} />}
+        />
 
-        <Route path="/register" element={<Authentication child={Logup} auth={false} />} />
-        <Route path="/login" element={<Authentication child={Login} auth={false} />} />
-        <Route path="/logout" element={<Authentication child={Logout} auth={true} />} />
+        <Route
+          path="/register"
+          element={<Authentication child={Logup} auth={false} />}
+        />
+        <Route
+          path="/login"
+          element={<Authentication child={Login} auth={false} />}
+        />
+        <Route
+          path="/logout"
+          element={<Authentication child={Logout} auth={true} />}
+        />
 
         <Route path="/notFound" element={<Notfound />} />
         <Route path="*" element={<Notfound />} />
