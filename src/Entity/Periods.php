@@ -25,7 +25,7 @@ class Periods
     #[ORM\ManyToOne(inversedBy: 'periods')]
     private ?CategoriesCottage $categories_cottage = null;
 
-    #[ORM\OneToMany(mappedBy: 'period', targetEntity: Bookings::class)]
+    #[ORM\OneToMany(mappedBy: 'period', targetEntity: Bookings::class, orphanRemoval:true, cascade:['persist'])]
     private Collection $bookings;
 
     public function __construct()

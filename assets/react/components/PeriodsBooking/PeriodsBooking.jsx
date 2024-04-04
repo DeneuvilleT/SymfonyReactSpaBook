@@ -19,19 +19,19 @@ const PeriodsBooking = () => {
   const [ready, setReady] = useState(false);
   const [privacyChecked, setPrivacyChecked] = useState(false);
 
-  const [dateStartSelectionnee, setDateStartSelectionnee] = useState(null);
+  const [perdiodsStartUpdated, setPerdiodsStartUpdated] = useState(null);
   const [dateEndSelectionnee, setDateEndSelectionnee] = useState(null);
 
   const [periodsStart, setPeriodsStart] = useState([]);
   const [periodsEnd, setPeriodsEnd] = useState([]);
 
   useEffect(() => {
-    if (dateEndSelectionnee !== null && dateStartSelectionnee !== null) {
+    if (dateEndSelectionnee !== null && perdiodsStartUpdated !== null) {
       setReady(true);
     } else {
       setReady(false);
     }
-  }, [dateEndSelectionnee, dateStartSelectionnee]);
+  }, [dateEndSelectionnee, perdiodsStartUpdated]);
 
   useEffect(() => {
     if (choiceLocation) {
@@ -42,12 +42,17 @@ const PeriodsBooking = () => {
     }
   }, [choiceLocation]);
 
-  const handleDateStartSelection = (date) => {
-    setDateStartSelectionnee(date);
-
+  const handleDateStartSelection = (date, position) => {
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
     // Appliquer la periode minimum de résérvation
     date.setDate(date.getDate() + locations[0].cottage.period_minimum);
-    setDateEndSelectionnee(null);
+
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    // Créer une nouvelle copie de periodsStart et met à jour la date sélectionnée
+    const newPerdiodStart = [...periodsStart];
+    newPerdiodStart[position] = date;
+
+    setPerdiodsStartUpdated(newPerdiodStart);
   };
 
   const handleDateEndSelection = (date) => {
@@ -103,9 +108,14 @@ const PeriodsBooking = () => {
           container={"bookStart"}
         />
 
-        {dateStartSelectionnee ? (
+        {perdiodsStartUpdated ? (
+          // (console.log(
+          //   ["DateStart ==>", [dateStartSelectionnee]],
+          //   ["PeriodsEnd ==>", periodsEnd]
+          // ),
+
           <Calendar
-            dateDebut={[dateStartSelectionnee]}
+            dateDebut={perdiodsStartUpdated}
             dateFin={periodsEnd}
             onEndDateSelection={handleDateEndSelection}
             title={"Date de départ"}
