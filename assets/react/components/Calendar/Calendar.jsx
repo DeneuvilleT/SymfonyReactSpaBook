@@ -25,7 +25,6 @@ const Calendar = ({
 
   const handleDateSelection = (date, node, position) => {
     const selectedDate = new Date(date);
-    console.log(selectedDate.getDate())
 
     if (onStartDateSelection && container !== "bookEnd") {
       resetChoiceDate();

@@ -53,7 +53,7 @@
   }
 
   .dates span {
-    color: inherit;
+    color: #cacaca;
     user-select: none;
     background-color: transparent;
     border-radius: 5px;
@@ -81,9 +81,6 @@
 }
 
 .calendar[id="bookEnd"] {
-
-  padding-top: 40px;
-  border-top: 1px solid #999;
 
   .dates span.available {
     user-select: initial;
