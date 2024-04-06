@@ -48,7 +48,10 @@ const PeriodsBooking = () => {
 
   const handleDateStartSelection = (date, position) => {
     const tempBookingMini = locations[0].cottage.period_minimum;
-    const trueEndDate =  new Date(periodsEndForDepartureDate[position].getTime() + tempBookingMini * 24 * 60 * 60 * 1000);
+    const trueEndDate = new Date(
+      periodsEndForDepartureDate[position].getTime() +
+        tempBookingMini * 24 * 60 * 60 * 1000
+    );
 
     const diffTime = Math.abs(date - trueEndDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -62,7 +65,7 @@ const PeriodsBooking = () => {
     const newPerdiodsStart = [...periodsStart];
     newPerdiodsStart[position] = date;
 
-    if (diffDays === (tempBookingMini+1)) {
+    if (diffDays === tempBookingMini + 1) {
       setPerdiodsStartUpdated(newPerdiodsStart[position]);
       setPerdiodsEndUpdated(newPerdiodsStart[position]);
     } else {
@@ -75,10 +78,81 @@ const PeriodsBooking = () => {
     setDateEndSelectionnee(date);
   };
 
+  const arePeriodConsecutiv = (periods) => {
+    let results = [...periods];
+    const periodsCheck = [];
+
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    // Parcourir le tableau à partir du deuxième élément
+    for (let i = 1; i < periods.length; i++) {
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      // Extraire les périodes actuelle et précédente
+      const prevPeriods = periods[i - 1];
+      const currentPeriod = periods[i];
+
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      // Convertir les timestamps Unix en objets Date
+      const endPrevPeriod = new Date(prevPeriods.end.timestamp * 1000);
+      const startPeriodCurrent = new Date(currentPeriod.start.timestamp * 1000);
+
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      // Extraire les dates pour comparer uniquement le jour, le mois et l'année
+      const endPeriodPrevDate = new Date(
+        endPrevPeriod.getFullYear(),
+        endPrevPeriod.getMonth(),
+        endPrevPeriod.getDate()
+      );
+      const startPeriodCurrentDate = new Date(
+        startPeriodCurrent.getFullYear(),
+        startPeriodCurrent.getMonth(),
+        startPeriodCurrent.getDate()
+      );
+
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      // Calculer la date qui suit la fin de la période précédente
+      const tomorrowEndPeriodPrev = new Date(endPeriodPrevDate);
+      tomorrowEndPeriodPrev.setDate(tomorrowEndPeriodPrev.getDate() + 1);
+
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      // Vérifier si la date suivant la fin de la période précédente est égale à la date de début de la période actuelle
+      const areConsecutiv =
+        tomorrowEndPeriodPrev.getTime() === startPeriodCurrentDate.getTime();
+
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      // Stocker la réponse dans le tableau de réponses
+      periodsCheck.push({
+        periodPrev: prevPeriods,
+        periodCurrent: currentPeriod,
+        areConsecutiv: areConsecutiv,
+      });
+    }
+
+    periodsCheck.forEach((period) => {
+      if (period.areConsecutiv) {
+        const fusionPeriod = {
+          end: period.periodCurrent.end,
+          id: period.periodCurrent.id,
+          start: period.periodPrev.start,
+        };
+
+        results = results.filter(
+          (p) =>
+            p.id !== period.periodCurrent.id && p.id !== period.periodPrev.id
+        );
+
+        results.push(fusionPeriod);
+      }
+    });
+
+    return results;
+  };
+
   const convertTimestamp = (timestamp) => {
     const tempBookingMini = locations[0].cottage.period_minimum - 1;
 
-    timestamp.forEach((period) => {
+    const periods = arePeriodConsecutiv(timestamp);
+
+    periods.forEach((period) => {
       const periodStart = new Date(period.start.timestamp * 1000);
       const periodEnd = new Date(period.end.timestamp * 1000);
 
@@ -154,16 +228,6 @@ const PeriodsBooking = () => {
         />
 
         {perdiodsStartUpdated ? (
-          // (console.log(
-          //   ["DateStart ==>", [dateStartSelectionnee]],
-          //   ["PeriodsEnd ==>", periodsEnd]
-          // ),
-
-          // (console.log(
-          //   ["DateStart ==>", [perdiodsStartUpdated]],
-          //   ["PeriodsEnd ==>", [perdiodsEndUpdated]]
-          // ),
-          // (
           <Calendar
             dateDebut={[perdiodsStartUpdated]}
             dateFin={[perdiodsEndUpdated]}
@@ -172,7 +236,6 @@ const PeriodsBooking = () => {
             container={"bookEnd"}
           />
         ) : (
-          // ))
           <></>
         )}
 
