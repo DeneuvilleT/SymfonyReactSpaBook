@@ -293,26 +293,31 @@
     width: 100%;
     height: 100%;
     padding-right: 20px;
-    background: rgb(1, 113, 67);
-    background: linear-gradient(155deg, #017143, #0da72c 70%, #5ce219);
-    clip-path: circle(250px at right 255px);
+    background: linear-gradient(155deg, #017143, #0da72c 70%, #349b00);
+    clip-path: ellipse(20% 65% at 90% 70%);
     border-bottom-right-radius: 15px;
     z-index: 0;
     transition: clip-path 0.75s ease-in-out;
   }
 
   .content > ul div[role="figure"]:hover {
-    clip-path: circle(265px at right 265px);
+    clip-path: ellipse(23% 68% at 90% 70%);
   }
 
   .content > ul div[role="figure"] span {
+    opacity: 1;
+    pointer-events: initial;
     cursor: pointer;
-    padding-top: 20px;
-    font-size: 1.5em;
+    padding-top: 27px;
+    padding-right: 7px;
+    letter-spacing: 0.55px;
+    font-size: 1.75em;
+    font-style: italic;
     font-weight: 600;
     color: #f6f6f6;
     text-shadow: 0 0 20px #00000085;
-    transition: color 0.25s ease-in, text-shadow 0.5s ease-in;
+    transition: color 0.25s ease-in, text-shadow 0.5s ease-in,
+      opacity 0.5s ease-in-out;
   }
 
   .content > ul div[role="figure"]:hover span {
@@ -322,6 +327,26 @@
 
   .content > ul div[role="figure"]:active span {
     color: #e9e9e9;
+  }
+
+  .content > ul div[role="figure"].locationActive {
+    background: linear-gradient(155deg, #017143, #0da72c 70%, #349b00);
+    clip-path: ellipse(25% 70% at 90% 70%);
+  }
+
+  .content > ul div[role="figure"].locationActive span {
+    font-size: 1.5em;
+    line-height: 27px;
+    font-weight: 400;
+    text-align: end;
+    color: #fcfcfc;
+    text-shadow: none;
+    pointer-events: none;
+  }
+
+  .content > ul div[role="figure"].locationActive span strong {
+    font-style: normal;
+    font-size: 1.9em;
   }
 
   .content > ul li {

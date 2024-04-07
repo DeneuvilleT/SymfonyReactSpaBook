@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
 
@@ -8,12 +8,16 @@ import { hideHeader } from "../../utilities";
 import styles from "../../containers/Home/home.styles.scss";
 
 const Filters = ({ location }) => {
-
   const dispatch = useDispatch();
+
+  const [content, setContent] = useState("Réserver");
 
   const selectLocation = (node) => {
     dispatch(setOneLocation(location));
     hideHeader();
+
+    setContent(`${location.cottage.price_one_night / 100} €`);
+    node.parentElement.classList.toggle(styles.locationActive);
     node.classList.toggle(styles.locationActive);
   };
 
@@ -21,7 +25,15 @@ const Filters = ({ location }) => {
     <ul>
       <div role="figure">
         <span onClick={(e) => selectLocation(e.currentTarget)}>
-          Réserver
+          {content !== "Réserver" ? (
+            <>
+              <strong>{content.replace(".", ",")}</strong>
+              <br />
+              la nuit
+            </>
+          ) : (
+            <>{content}</>
+          )}
         </span>
       </div>
       {location.has_garden ? (

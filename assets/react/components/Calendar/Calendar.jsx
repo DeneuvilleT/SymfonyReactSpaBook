@@ -179,7 +179,7 @@ const Calendar = ({
                             )
                               ? handleDateSelection(
                                   currentDate,
-                                  e.currentTarget, 
+                                  e.currentTarget,
                                   debuts.indexOf(month.debutPeriode)
                                 )
                               : null
