@@ -59,6 +59,17 @@
     opacity: 1;
   }
 
+  > div > aside:first-child {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+
+    padding: 0 20px 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #999;
+  }
+
   aside button {
     display: inline-block;
     background: rgb(1, 113, 67);
@@ -106,6 +117,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    font-size: 1.15em;
   }
 
   aside p svg {

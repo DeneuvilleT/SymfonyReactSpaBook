@@ -23,8 +23,8 @@ const Filters = ({ location }) => {
 
   return (
     <ul>
-      <div role="figure">
-        <span onClick={(e) => selectLocation(e.currentTarget)}>
+      <div role="figure" className={`${!location.is_available ? styles.locationOff : ''}`}>
+        <span onClick={(e) => location.is_available ? selectLocation(e.currentTarget) : null}>
           {content !== "Réserver" ? (
             <>
               <strong>{content.replace(".", ",")}</strong>
@@ -32,7 +32,7 @@ const Filters = ({ location }) => {
               la nuit
             </>
           ) : (
-            <>{content}</>
+            <>{location.is_available ? content : "Indisponible"}</>
           )}
         </span>
       </div>

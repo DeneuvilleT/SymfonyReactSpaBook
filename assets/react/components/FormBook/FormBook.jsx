@@ -2,7 +2,10 @@ import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 
-import { setLocations } from "../../Store/slices/locationsSlices";
+import {
+  setLocations,
+  deleteLocations,
+} from "../../Store/slices/locationsSlices";
 
 import { Icon } from "@iconify/react";
 
@@ -30,21 +33,29 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
     e.preventDefault();
 
     if (canSave) {
-      setCanSave(false);
+      setIcone("svg-spinners:90-ring");
 
       try {
-        setIcone("svg-spinners:90-ring-with-bg");
         const response = await axios.post(url, formData);
         setMsgsErr([]);
 
         if (response.status === 200) {
-          dispatch(setLocations(response.data));
-          navigate("/");
-          setIcone("lets-icons:search-light");
+          if (response.data.length !== 0) {
+            navigate("/");
+            setTimeout(() => {
+              dispatch(setLocations(response.data));
+              setIcone("lets-icons:search-light");
+            }, 1000);
+          } else {
+            dispatch(deleteLocations());
+            setIcone("lets-icons:search-light");
+            return setMsgsErr([
+              "Aucun hébergement n'a été trouvé, vous pouvez réessayer avec d'autres paramètres",
+            ]);
+          }
         }
       } catch (err) {
         console.log(err);
-        setIcone("line-md:arrow-right-circle");
         return setMsgsErr([...JSON.parse(err.response.data).errors]);
       }
     }
@@ -53,6 +64,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
   const handleInputChange = (e) => {
     setMsgsErr([]);
     const { name, value, type, checked } = e.target;
+
     let updatedValue;
 
     if (type === "checkbox") {
@@ -104,6 +116,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
                   onChange={handleInputChange}
                   id={`post_${input.name}`}
                 >
+                  <option value="" disabled></option>
                   {input.option?.map((x, i) => (
                     <option key={i} value={x.value}>
                       {x.text}
@@ -126,7 +139,12 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
 
         <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
           {btnSubmit}
-          <Icon icon={icone} color="white" width="30" height="30" />
+          <Icon
+            icon={icone}
+            color="white"
+            width={icone === "lets-icons:search-light" ? "30" : "20"}
+            height={icone === "lets-icons:search-light" ? "30" : "20"}
+          />
         </button>
       </aside>
 
@@ -159,12 +177,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
           <div className="error-messages">
             {msgsErr.map((err, index) => (
               <span key={index}>
-                <Icon
-                  icon="line-md:alert-twotone"
-                  color="white"
-                  width="23"
-                  height="23"
-                />
+                <Icon icon="uiw:warning" color="white" width="25" height="25" />
                 {err}
               </span>
             ))}

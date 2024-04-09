@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\LocationTypes;
 use DateTime;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\LocationTypes;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<LocationTypes>
@@ -22,33 +22,43 @@ class LocationTypesRepository extends ServiceEntityRepository
         parent::__construct($registry, LocationTypes::class);
     }
 
-    public function searchLocations(bool $type, DateTime $begin, DateTime $end, int $capacity, bool $hasSanitary, bool $hasPool, bool $animalAccepted, bool $hasGarden): array
+    public function searchLocations(?bool $type, DateTime $begin, DateTime $end, int $capacity, bool $hasSanitary, bool $hasPool, bool $animalAccepted, bool $hasGarden): array
     {
-        // dd($type, $begin, $end, $capacity, $hasSanitary, $hasPool, $animalAccepted, $hasGarden);
-        $query = $this
-            ->createQueryBuilder("l")
-            ->andWhere("l.type = :type")
-            // ->andWhere("l.begin >= :begin")
-            // ->andWhere("l.end >= :end")
-            ->andWhere("l.capacity >= :capacity")
+        $query = $this->createQueryBuilder("l");
+
+        $type === null ? $query->andWhere("l.type IN (0, 1)") : $query->andWhere("l.type = :type");
+
+        // ->andWhere("l.begin >= :begin")
+        // ->andWhere("l.end >= :end")
+        $query->andWhere("l.capacity >= :capacity")
             ->andWhere("l.has_sanitary >= :hasSanitary")
             ->andWhere("l.has_pool >= :hasPool")
             ->andWhere("l.animal_accepted >= :animalAccepted")
-            ->andWhere("l.has_garden >= :hasGarden")
-            ->setParameters([
-                "type" => $type,
-                // "begin" => $begin,
-                // "end" => $end,
-                "capacity" => $capacity,
-                "hasSanitary" => $hasSanitary,
-                "hasPool" => $hasPool,
-                "animalAccepted" => $animalAccepted,
-                "hasGarden" => $hasGarden,
-            ])
-            ->getQuery()
-            ->getResult();
+            ->andWhere("l.has_garden >= :hasGarden");
 
-        return $query;
-        //dd($type, $capacity, $query);
+        $parameters = [
+            // "begin" => $begin,
+            // "end" => $end,
+            "capacity" => $capacity,
+            "hasSanitary" => $hasSanitary,
+            "hasPool" => $hasPool,
+            "animalAccepted" => $animalAccepted,
+            "hasGarden" => $hasGarden,
+        ];
+
+        if ($type !== null) {
+            $parameters["type"] = $type;
+        }
+
+        $query->setParameters($parameters);
+
+        $results = $query->getQuery()->getResult();
+
+        $arrayResults = [];
+        foreach ($results as $result) {
+            $arrayResults[] = $result;
+        }
+
+        return $arrayResults;
     }
 }

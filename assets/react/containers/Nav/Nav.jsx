@@ -68,8 +68,8 @@ const Nav = () => {
               label: "Type d'hébergement :",
               name: "cottage",
               type: "select",
-              value: "0",
               option: [
+                { value: 'null', text: "Cabane et gite" },
                 { value: "0", text: "Cabane" },
                 { value: "1", text: "Gite" },
               ],

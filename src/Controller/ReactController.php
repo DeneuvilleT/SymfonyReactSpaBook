@@ -47,8 +47,7 @@ class ReactController extends AbstractController
         $serializer = new Serializer($normalizers, $encoders);
 
         $datas = json_decode($request->getContent(), true);
-
-        $queryType = boolval($datas["cottage"]);
+        $queryType = $datas["cottage"] !== 'null' ? boolval($datas["cottage"]) : null;
         $queryBegin = new DateTime($datas["begin"]);
         $queryEnd = new DateTime($datas["end"]);
         $queryCapacity = (int) $datas["capacity"];
@@ -81,6 +80,7 @@ class ReactController extends AbstractController
                 'has_pool' => $location->isHasPool(),
                 'animal_accpeted' => $location->isAnimalAccepted(),
                 'tree_height' => $location->getTreeHeight(),
+                'is_available' => $location->isIsAvailable(),
                 'cottage' => [
                    'name' => $location->getCategoriesCottage()->getName(),
                    'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),

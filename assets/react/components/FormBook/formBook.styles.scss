@@ -36,7 +36,7 @@
   }
 
   aside:first-child label {
-    color: #666;
+    color: #2d2d2d;
     font-size: 0.8em;
     letter-spacing: 0.07em;
     position: absolute;
@@ -87,14 +87,14 @@
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
+    outline: none;
+    border-radius: 0;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
     min-width: 200px;
-    outline: 2px solid transparent;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-      outline 0.25s ease-in-out;
+    transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, border-radius 0.5s ease-in-out;
   }
 
   select:focus + label,
@@ -107,7 +107,8 @@
   input:not(input[type="checkbox"]) + label:hover,
   select:hover,
   input:not(input[type="checkbox"]):hover {
-    outline: 2px solid #e2e2e2ad;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   input[type="checkbox"] {
@@ -135,6 +136,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 6.5px;
+
     padding: 0.375rem 0.75rem;
     font-size: 1em;
     font-weight: 400;
@@ -150,10 +153,11 @@
     border: 1px solid transparent;
     border-radius: 0.75ex;
     background-color: #212529;
-    min-width: 100px;
-    min-height: 38px;
+    min-width: 126px;
+    min-height: 45px;
     cursor: pointer;
-    transition: background-color 0.25s ease-in;
+    transform: scale(1);
+    transition: background-color 0.25s ease-in, transform 0.25s ease-in-out;
   }
 
   button:disabled {
@@ -166,13 +170,16 @@
     filter: brightness(1);
   }
 
-  button:disabled:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+  button:active {
+    transform: scale(0.99);
   }
 
-  ul {
-    padding: 10px;
-    display: none !important;
+  button:disabled:active {
+    transform: scale(1);
+  }
+
+  > ul {
+    justify-content: center !important;
   }
 
   ul div {
@@ -185,12 +192,13 @@
     justify-content: space-between;
     gap: 20px;
 
-    background-color: #c10000;
+    background-color: #c17500;
     border-radius: 2ex;
     padding: 15px;
 
     color: #fff;
     font-size: 1em;
+    letter-spacing: 1px;
   }
 }
 

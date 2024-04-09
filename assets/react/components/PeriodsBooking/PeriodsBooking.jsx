@@ -214,9 +214,13 @@ const PeriodsBooking = () => {
       <div>
         <aside className={styles.activeBtn}>
           <p>
+            <Icon icon="entypo:users" style={{ color: "#333" }} />
+            Capacité maximum : <b>{locations[0].capacity} personne(s)</b>
+          </p>
+          <p>
             <Icon icon="icomoon-free:calendar" style={{ color: "#333" }} />
             Période de réservation minimum :{" "}
-            <b>{locations[0].cottage.period_minimum} jours</b>
+            <b>{locations[0].cottage.period_minimum} jour(s)</b>
           </p>
         </aside>
         <Calendar
