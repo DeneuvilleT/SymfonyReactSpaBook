@@ -11,11 +11,14 @@ const Home = () => {
 
   return (
     <main className={styles.home}>
+      <div role="switch"></div>
+
       <section>
         <div
           role="figure"
-          className={`${(locations.length !== 0) ? styles.hide : ""}`}
+          className={`${locations.length !== 0 ? styles.hide : ""}`}
         ></div>
+
         <article
           className={`${styles.welcome} ${
             locations.length !== 0 ? styles.hide : ""

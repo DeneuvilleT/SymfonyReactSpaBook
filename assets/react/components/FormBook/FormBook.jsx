@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   setLocations,
@@ -11,8 +11,10 @@ import { Icon } from "@iconify/react";
 
 import styles from "./formBook.styles.scss";
 import axios from "axios";
+import { displayLoader } from "../../utilities";
 
 const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
+  const { locations } = useSelector((state) => ({ ...state.location }));
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,11 +43,16 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
 
         if (response.status === 200) {
           if (response.data.length !== 0) {
+            if (locations.length !== 0) {
+              displayLoader();
+            }
+
             navigate("/");
+            
             setTimeout(() => {
               dispatch(setLocations(response.data));
               setIcone("lets-icons:search-light");
-            }, 1000);
+            }, 2000);
           } else {
             dispatch(deleteLocations());
             setIcone("lets-icons:search-light");

@@ -1,4 +1,5 @@
-import styles from "../containers/Header/header.styles.scss";
+import stylesHeader from "../containers/Header/header.styles.scss";
+import stylesHome from "../containers/Home/home.styles.scss";
 
 export const valueOk =
   /(?=.*[a-z])+(?=.*[A-Z])+(?=.*[0-9])+(?=.*[^A-Za-z0-9])+(?=.{8,})/;
@@ -33,13 +34,23 @@ export const hideHeader = (toHide = true) => {
   const headerDom = document.querySelector("header");
 
   if (toHide) {
-    headerDom.classList.toggle(styles.hide);
+    headerDom.classList.toggle(stylesHeader.hide);
   } else {
-    headerDom.classList.remove(styles.hide);
+    headerDom.classList.remove(stylesHeader.hide);
   }
 
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
+};
+
+export const displayLoader = () => {
+  const loader = document.querySelector('div[role="switch"]');
+
+  loader.classList.add(stylesHome.loading);
+
+  setTimeout(() => {
+    loader.classList.remove(stylesHome.loading);
+  }, 4000);
 };
