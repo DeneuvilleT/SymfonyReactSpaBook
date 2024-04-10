@@ -50,13 +50,8 @@ class BookingsCrudController extends AbstractCrudController
                 ->setFormTypeOption('choice_label', function ($value, $key, $index) {
                     return $value ? $value->getFirstname() . ' ' . $value->getLastname() : '';
                 }),
-            AssociationField::new('period', 'Périodes')
-                ->formatValue(function ($value, $entity) {
-                    return $value ? $value->getStartAt()->format('Y-m-d') . ' à ' . $value->getEndAt()->format('Y-m-d') : '';
-                })
-                ->setFormTypeOption('choice_label', function ($value, $key, $index) {
-                    return $value ? $value->getStartAt()->format('Y-m-d') . ' à ' . $value->getEndAt()->format('Y-m-d') : '';
-                }),
+            DateTimeField::new('start_at', 'De'),
+            DateTimeField::new('end_at', "Jusqu'au"),
 
         ];
     }

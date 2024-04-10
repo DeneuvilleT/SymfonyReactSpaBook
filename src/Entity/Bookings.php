@@ -20,8 +20,11 @@ class Bookings
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     private ?Customer $customer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'bookings')]
-    private ?Periods $period = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $start_at = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $end_at = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -61,14 +64,26 @@ class Bookings
         return $this;
     }
 
-    public function getPeriod(): ?Periods
+    public function getStartAt(): ?\DateTimeInterface
     {
-        return $this->period;
+        return $this->start_at;
     }
 
-    public function setPeriod(?Periods $period): static
+    public function setStartAt(\DateTimeInterface $start_at): static
     {
-        $this->period = $period;
+        $this->start_at = $start_at;
+
+        return $this;
+    }
+
+    public function getEndAt(): ?\DateTimeInterface
+    {
+        return $this->end_at;
+    }
+
+    public function setEndAt(\DateTimeInterface $end_at): static
+    {
+        $this->end_at = $end_at;
 
         return $this;
     }

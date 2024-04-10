@@ -82,15 +82,19 @@ class ReactController extends AbstractController
                 'tree_height' => $location->getTreeHeight(),
                 'is_available' => $location->isIsAvailable(),
                 'cottage' => [
-                   'name' => $location->getCategoriesCottage()->getName(),
-                   'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),
-                   'description' => $location->getCategoriesCottage()->getDescription(),
-                   'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
-                   'privacy' => $location->getCategoriesCottage()->getPrivacy(),
-                   'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
-                   'periods' => $this->getPeriodsData($location->getCategoriesCottage()->getPeriods())
+                    'name' => $location->getCategoriesCottage()->getName(),
+                    'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),
+                    'description' => $location->getCategoriesCottage()->getDescription(),
+                    'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
+                    'privacy' => $location->getCategoriesCottage()->getPrivacy(),
+                    'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
+
+                    /**
+                     * Filtrer les périodes déjà réservées
+                     */
+                    // 'periods' => $this->getPeriodsData($location->getCategoriesCottage()->getPeriods())
+                    'periods' => $this->checkBookings($location->getCategoriesCottage()->getPeriods(), $location->getBookings())
                 ],
-                // 'bookings' => $this->getBookingsData($location->getBookings()),
             ];
 
             $data[] = $locationData;
@@ -101,21 +105,46 @@ class ReactController extends AbstractController
         return new Response($jsonContent);
     }
 
+    private function checkBookings(Collection $periods, Collection $bookings)
+    {
+        $periodsDatas = $this->getPeriodsData($periods);
+        $bookingsDatas = $this->getBookingsData($bookings);
+
+        dd($bookingsDatas, $periodsDatas);
+    }
+
+
     private function getBookingsData(Collection $bookings)
     {
-        $bookingsData = [];
+        $bookingsDatas = [];
 
-        /** @var \App\Entity\Bookings $booking */
+        /** @var \App\Entity\Bookings $period */
         foreach ($bookings as $booking) {
-            $bookingsData[] = [
+            $bookingsDatas[] = [
                 'id' => $booking->getId(),
-                // 'customer' => $booking->getCustomer(),
-                'period' => $booking->getPeriod(),
-                'quantity_traveller  ' => $booking->getQuantityTraveller(),
-                'total_price' => $booking->getTotalPrice(),
+                'start' => $booking->getStartAt(),
+                'end' => $booking->getEndAt(),
             ];
         }
-        return $bookingsData;
+
+        return $bookingsDatas;
+    }
+
+
+    private function getPeriodsData(Collection $periods)
+    {
+        $periodsData = [];
+
+        /** @var \App\Entity\Periods $period */
+        foreach ($periods as $period) {
+            $periodsData[] = [
+                'id' => $period->getId(),
+                'start' => $period->getStartAt(),
+                'end' => $period->getEndAt(),
+            ];
+        }
+
+        return $periodsData;
     }
 
     private function getCoversData(Collection $covers)
@@ -132,21 +161,5 @@ class ReactController extends AbstractController
         }
 
         return $coversData;
-    }
-
-    private function getPeriodsData(Collection $periods)
-    {
-        $periodsData = [];
-
-        /** @var \App\Entity\Periods $period */
-        foreach ($periods as $period) {
-            $periodsData[] = [
-                'id' => $period->getId(),
-                'start' => $period->getStartAt(),
-                'end' => $period->getEndAt(),
-            ];
-        }
-
-        return $periodsData;
     }
 }
