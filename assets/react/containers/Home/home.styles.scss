@@ -5,6 +5,7 @@
   width: 100%;
   background-color: #f1f1f1f1;
   position: relative;
+  overflow: hidden;
 
   > section {
     display: flex;
@@ -85,20 +86,6 @@
   }
 }
 
-@keyframes loading {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
 // Accueil
 .welcome {
   position: relative;
@@ -108,12 +95,9 @@
   width: 100%;
   margin: 60px auto;
   max-width: 1360px;
-  min-height: 615px;
-  height: auto;
-  opacity: 1;
-  transition: height 1.5s ease-in-out, min-height 1.5s ease-in-out,
-    overflow 1.5s ease-in-out, margin 1.5s ease-in-out, opacity 1.5s ease-in-out;
-  transition-delay: 0.25s;
+  height: 615px;
+  transform: translateY(1);
+  transition: transform 3.5s ease-in-out;
 
   .textBox {
     position: relative;
@@ -196,11 +180,7 @@
 }
 
 .welcome.hide {
-  opacity: 0;
-  margin: 0 auto;
-  height: 0;
-  min-height: 0;
-  overflow: hidden;
+  transform: translateY(-850px);
 }
 
 // Locations
@@ -211,8 +191,10 @@
   justify-content: flex-start;
   gap: 100px;
   max-width: 1450px;
-  margin: auto;
+  margin: -750px auto auto;
   width: 100%;
+  transform: translateY(160vh);
+  transition: transform 3s ease-out;
 
   li {
     display: flex;
@@ -221,6 +203,24 @@
     overflow: hidden;
     gap: 10px;
     padding-top: 15px;
+  }
+}
+
+.locations.hide {
+  transform: translateY(1px);
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -9,21 +9,29 @@ import Locations from "../../components/Locations/Locations";
 const Home = () => {
   const { locations } = useSelector((state) => ({ ...state.location }));
 
+  const itemWelcomeOne = useRef(null);
+  const itemWelcomeTwo = useRef(null);
+
+  useEffect(() => {
+    if (locations.length !== 0) {
+      [itemWelcomeOne, itemWelcomeTwo].map((x) =>
+        x.current.classList.add(styles.hide)
+      );
+    } else {
+      [itemWelcomeOne, itemWelcomeTwo].map((x) =>
+        x.current.classList.remove(styles.hide)
+      );
+    }
+  }, [locations]);
+
   return (
     <main className={styles.home}>
       <div role="switch"></div>
 
       <section>
-        <div
-          role="figure"
-          className={`${locations.length !== 0 ? styles.hide : ""}`}
-        ></div>
+        <div ref={itemWelcomeOne} role="figure"></div>
 
-        <article
-          className={`${styles.welcome} ${
-            locations.length !== 0 ? styles.hide : ""
-          }`}
-        >
+        <article ref={itemWelcomeTwo} className={styles.welcome}>
           <div className={styles.textBox}>
             <h2>
               Profitez de la <span>nature</span>
@@ -57,7 +65,11 @@ const Home = () => {
           </div>
         </article>
 
-        {locations.length !== 0 ? <Locations locations={locations} /> : <></>}
+        {locations.length !== 0 ? (
+          <Locations locationsDatas={locations} />
+        ) : (
+          <></>
+        )}
       </section>
     </main>
   );

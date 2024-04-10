@@ -7,11 +7,11 @@ import {
   deleteLocations,
 } from "../../Store/slices/locationsSlices";
 
+import { displayLoader } from "../../utilities";
 import { Icon } from "@iconify/react";
 
 import styles from "./formBook.styles.scss";
 import axios from "axios";
-import { displayLoader } from "../../utilities";
 
 const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
   const { locations } = useSelector((state) => ({ ...state.location }));
@@ -48,10 +48,10 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
             }
 
             navigate("/");
-            
+
             setTimeout(() => {
-              dispatch(setLocations(response.data));
               setIcone("lets-icons:search-light");
+              dispatch(setLocations(response.data));
             }, 2000);
           } else {
             dispatch(deleteLocations());
@@ -82,9 +82,11 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
 
     const updatedFormData = { ...formData, [name]: updatedValue };
 
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
     // Entre les valeurs séléctionnés dans l'objet
     setFormData(updatedFormData);
 
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
     // Gére les inputs checkbox pour true et false
     const canSaveUpdated = Object.entries(updatedFormData)
       .filter(([name, value]) => {
@@ -92,9 +94,11 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
       })
       .every(([name, value]) => value !== "");
 
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
     // Dévérouille le bouton submit quand toutes les valeurs sont séléctionnés
     setCanSave(canSaveUpdated);
 
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
     // Cache les labels quand une valeur est sélectionnée
     setInputValues({ ...inputValues, [name]: updatedValue });
   };

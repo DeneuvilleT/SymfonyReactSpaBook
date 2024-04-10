@@ -14,10 +14,7 @@ const Logo = ({ page }) => {
 
   const handleBackToHome = () => {
     hideHeader(false);
-
-    setTimeout(() => {
-      dispatch(deleteLocations());
-    }, 1000);
+    dispatch(deleteLocations());
   };
 
   return (

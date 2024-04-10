@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSlider } from "../../Store/slices/sliderSlices";
 
-import Filters from "../Filters/Filters";
-import styles from "../../containers/Home/home.styles.scss";
 import PeriodsBooking from "../PeriodsBooking/PeriodsBooking";
+import Filters from "../Filters/Filters";
 
-const Locations = ({ locations }) => {
-  const { choiceLocation } = useSelector((state) => ({
+import styles from "../../containers/Home/home.styles.scss";
+
+const Locations = ({ locationsDatas }) => {
+  const { choiceLocation, locations } = useSelector((state) => ({
     ...state.location,
   }));
 
   const dispatch = useDispatch();
 
+  const locationContainer = useRef(null);
+
+  useEffect(() => {
+    if (locations.length !== 0) {
+      setTimeout(() => {
+        locationContainer.current.classList.add(styles.hide);
+      }, 2000);
+    }
+  }, [locations]);
+
   return (
     <>
-      <ul className={styles.locations}>
-        {locations.map((location) => (
+      <ul ref={locationContainer} className={styles.locations}>
+        {locationsDatas.map((location) => (
           <li key={location.id}>
             <div className={styles.cardsLoc}>
               <div
