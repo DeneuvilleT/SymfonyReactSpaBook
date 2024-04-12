@@ -4,18 +4,18 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./containers/Header/Header";
 import Home from "./containers/Home/Home";
 import Footer from "./containers/Footer/Footer";
-import Product from "./components/Product/Product";
+// import Product from "./components/Product/Product";
 import Logup from "./containers/Logup/Logup";
 import Logout from "./containers/Logout/Logout";
 import Login from "./containers/Login/Login";
-import Cart from "./containers/Cart/Cart";
+// import Cart from "./containers/Cart/Cart";
 import Notfound from "./components/PageNotFound/Notfound";
 import Authentication from "./utilities/Authentication";
 import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
 import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
-import UserComments from "./containers/ProfileBridge/UserComments/UserComments";
+// import UserComments from "./containers/ProfileBridge/UserComments/UserComments";
 import UserOrders from "./containers/ProfileBridge/UserOrders/UserOrders";
-import Notif from "./components/Notif/Notif";
+// import Notif from "./components/Notif/Notif";
 import Slider from "./components/Slider/Slider";
 import Privacy from "./components/Privacy/Privacy";
 
@@ -24,6 +24,7 @@ import { clearCart } from "./Store/slices/cartSlices";
 
 import styles from "./containers/Header/header.styles.scss";
 import AboutUs from "./containers/AboutUs/AboutUs";
+import Summary from "./containers/Summary/Summary";
 
 const App = ({ container }) => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const App = ({ container }) => {
     <>
       <Slider />
       <Privacy />
-      <Notif />
+      {/* <Notif /> */}
       <Header headerDom={headerDom} />
       <Routes>
         <Route
@@ -64,14 +65,19 @@ const App = ({ container }) => {
           path="/about_us"
           element={<Authentication child={AboutUs} auth={false} />}
         />
-        <Route
+        {/* <Route
           path="product/:id"
           element={<Authentication child={Product} auth={false} />}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/cart"
           element={<Authentication child={Cart} auth={false} />}
+        /> */}
+
+        <Route
+          path="/summary"
+          element={<Authentication child={Summary} auth={false} />}
         />
 
         <Route
@@ -86,15 +92,15 @@ const App = ({ container }) => {
           path="/user/orders"
           element={<Authentication child={UserOrders} auth={true} />}
         />
-        <Route
+        {/* <Route
           path="/user/comments"
           element={<Authentication child={UserComments} auth={true} />}
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/register"
           element={<Authentication child={Logup} auth={false} />}
-        />
+        /> */}
         <Route
           path="/login"
           element={<Authentication child={Login} auth={false} />}

@@ -1,17 +1,17 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import { Icon } from "@iconify/react";
+import axios from "axios";
 
 import {
   setLocations,
   deleteLocations,
 } from "../../Store/slices/locationsSlices";
-
 import { displayLoader } from "../../utilities";
-import { Icon } from "@iconify/react";
 
 import styles from "./formBook.styles.scss";
-import axios from "axios";
 
 const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
   const { locations } = useSelector((state) => ({ ...state.location }));

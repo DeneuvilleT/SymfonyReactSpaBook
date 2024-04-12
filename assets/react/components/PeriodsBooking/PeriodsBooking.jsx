@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+
 import { Icon } from "@iconify/react";
+
+import {
+  setDatesLocation,
+  setOnPrivacy,
+} from "../../Store/slices/locationsSlices";
 
 import Calendar from "../Calendar/Calendar";
 import styles from "./periodsBooking.styles.scss";
-import { setOnPrivacy } from "../../Store/slices/locationsSlices";
 
 const PeriodsBooking = () => {
   const { choiceLocation, locations } = useSelector((state) => ({
@@ -12,6 +18,7 @@ const PeriodsBooking = () => {
   }));
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const period = useRef(null);
   const btnPrivacy = useRef(null);
@@ -21,7 +28,9 @@ const PeriodsBooking = () => {
 
   const [perdiodsStartUpdated, setPerdiodsStartUpdated] = useState(null);
   const [perdiodsEndUpdated, setPerdiodsEndUpdated] = useState(null);
+
   const [dateEndSelectionnee, setDateEndSelectionnee] = useState(null);
+  const [dateStartSelectionnee, setDateStartSelectionnee] = useState(null);
 
   const [periodsStart, setPeriodsStart] = useState([]);
   const [periodsEndForArrivalDate, setPeriodsEndForArrivalDate] = useState([]);
@@ -40,7 +49,6 @@ const PeriodsBooking = () => {
   useEffect(() => {
     if (choiceLocation) {
       period.current.classList.add(styles.activeBooking);
-      console.log(locations[0].cottage.periods)
       convertTimestamp(locations[0].cottage.periods);
     } else {
       period.current.classList.remove(styles.activeBooking);
@@ -48,6 +56,11 @@ const PeriodsBooking = () => {
   }, [choiceLocation]);
 
   const handleDateStartSelection = (date, position) => {
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    // Enregistre la date de d'arrivée des clients
+    const trueStartDate = new Date(date);
+    setDateStartSelectionnee(trueStartDate);
+
     const tempBookingMini = locations[0].cottage.period_minimum;
     const trueEndDate = new Date(
       periodsEndForDepartureDate[position].getTime() +
@@ -156,7 +169,6 @@ const PeriodsBooking = () => {
     periods.forEach((period) => {
       const periodStart = new Date(period.start.timestamp * 1000);
       const periodEnd = new Date(period.end.timestamp * 1000);
-      console.log(periodStart, periodEnd)
 
       const diffTime = Math.abs(periodEnd - periodStart);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -193,22 +205,41 @@ const PeriodsBooking = () => {
     });
   };
 
+  const handleDisplayPrivacy = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(setOnPrivacy(locations[0].cottage.privacy));
+  };
+
   const handlePrivacyChecked = (e) => {
     e.stopPropagation();
-
-    if (e.currentTarget.checked) {
+    if (
+      e.currentTarget.checked &&
+      dateEndSelectionnee !== null &&
+      dateStartSelectionnee !== null
+    ) {
+      btnPrivacy.current.onclick = function () {
+        handleNavigateToSummary();
+      };
       btnPrivacy.current.disabled = false;
       setPrivacyChecked(true);
     } else {
+      btnPrivacy.current.onclick = null;
       btnPrivacy.current.disabled = true;
       setPrivacyChecked(false);
     }
   };
 
-  const handleDisplayPrivacy = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(setOnPrivacy(locations[0].cottage.privacy));
+  const handleNavigateToSummary = () => {
+    localStorage.setItem("location", JSON.stringify([locations[0]]));
+    localStorage.setItem("dates", JSON.stringify([dateStartSelectionnee, dateEndSelectionnee]));
+
+    dispatch(
+      setDatesLocation(
+        JSON.stringify([dateStartSelectionnee, dateEndSelectionnee])
+      )
+    );
+    navigate("/summary");
   };
 
   return (
@@ -257,7 +288,7 @@ const PeriodsBooking = () => {
             />
           </label>
           <button disabled ref={btnPrivacy}>
-            Finaliser votre réservation
+            Récapitulatif de votre réservation
           </button>
         </aside>
       </div>
