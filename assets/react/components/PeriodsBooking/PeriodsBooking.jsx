@@ -11,6 +11,7 @@ import {
 
 import Calendar from "../Calendar/Calendar";
 import styles from "./periodsBooking.styles.scss";
+import { creaDomElem, displayLoader } from "../../utilities";
 
 const PeriodsBooking = () => {
   const { choiceLocation, locations } = useSelector((state) => ({
@@ -22,8 +23,10 @@ const PeriodsBooking = () => {
 
   const period = useRef(null);
   const btnPrivacy = useRef(null);
+  const contentTraveller = useRef(null);
 
   const [ready, setReady] = useState(false);
+  const [qtyTraveller, setQtyTraveller] = useState(0);
   const [privacyChecked, setPrivacyChecked] = useState(false);
 
   const [perdiodsStartUpdated, setPerdiodsStartUpdated] = useState(null);
@@ -50,46 +53,74 @@ const PeriodsBooking = () => {
     if (choiceLocation) {
       period.current.classList.add(styles.activeBooking);
       convertTimestamp(locations[0].cottage.periods);
+      buildSelectTraveller();
     } else {
       period.current.classList.remove(styles.activeBooking);
     }
   }, [choiceLocation]);
 
-  const handleDateStartSelection = (date, position) => {
-    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
-    // Enregistre la date de d'arrivée des clients
-    const trueStartDate = new Date(date);
-    setDateStartSelectionnee(trueStartDate);
+  const convertTimestamp = (timestamp) => {
+    const tempBookingMini = locations[0].cottage.period_minimum - 1;
 
-    const tempBookingMini = locations[0].cottage.period_minimum;
-    const trueEndDate = new Date(
-      periodsEndForDepartureDate[position].getTime() +
-        tempBookingMini * 24 * 60 * 60 * 1000
-    );
+    const periods = arePeriodConsecutiv(timestamp);
 
-    const diffTime = Math.abs(date - trueEndDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    periods.forEach((period) => {
+      const periodStart = new Date(period.start.timestamp * 1000);
+      const periodEnd = new Date(period.end.timestamp * 1000);
 
-    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
-    // Appliquer la periode minimum de résérvation
-    date.setDate(date.getDate() + tempBookingMini);
+      const diffTime = Math.abs(periodEnd - periodStart);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
-    // Créer une nouvelle copie de periodsStart et met à jour la date sélectionnée
-    const newPerdiodsStart = [...periodsStart];
-    newPerdiodsStart[position] = date;
+      if (diffDays > tempBookingMini) {
+        /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+        // Retire des jours en rapport avec la durée minimum
+        periodEnd.setHours(periodEnd.getHours() + 1);
+        periodEnd.setDate(
+          periodEnd.getDate() - locations[0].cottage.period_minimum
+        );
+        setPeriodsEndForArrivalDate((prevPeriodsEnd) => [
+          ...prevPeriodsEnd,
+          periodEnd,
+        ]);
+      } else if (diffDays === tempBookingMini) {
+        periodEnd.setHours(periodEnd.getHours() + 1);
+        periodEnd.setDate(periodEnd.getDate() - tempBookingMini);
+        setPeriodsEndForArrivalDate((prevPeriodsEnd) => [
+          ...prevPeriodsEnd,
+          periodEnd,
+        ]);
+      } else {
+        periodEnd.setHours(periodEnd.getHours() + 1);
+      }
 
-    if (diffDays === tempBookingMini + 1) {
-      setPerdiodsStartUpdated(newPerdiodsStart[position]);
-      setPerdiodsEndUpdated(newPerdiodsStart[position]);
-    } else {
-      setPerdiodsStartUpdated(newPerdiodsStart[position]);
-      setPerdiodsEndUpdated(trueEndDate);
-    }
+      setPeriodsEndForDepartureDate((prevPeriodsEnd) => [
+        ...prevPeriodsEnd,
+        periodEnd,
+      ]);
+
+      periodStart.setHours(periodStart.getHours() + 1);
+      setPeriodsStart((prevPeriodsStart) => [...prevPeriodsStart, periodStart]);
+    });
   };
 
-  const handleDateEndSelection = (date) => {
-    setDateEndSelectionnee(date);
+  const buildSelectTraveller = () => {
+    if (locations[0].cottage.period_minimum !== 0) {
+      const choiceQtyTraveller = (e) => {
+        setQtyTraveller(Number(e.textContent));
+      };
+
+      for (
+        let index = 1;
+        index < locations[0].cottage.period_minimum;
+        index++
+      ) {
+        const option = creaDomElem("span", undefined, undefined, index);
+        option.onclick = function (e) {
+          choiceQtyTraveller(e.target);
+        };
+        contentTraveller.current.append(option);
+      }
+    }
   };
 
   const arePeriodConsecutiv = (periods) => {
@@ -161,48 +192,41 @@ const PeriodsBooking = () => {
     return results;
   };
 
-  const convertTimestamp = (timestamp) => {
-    const tempBookingMini = locations[0].cottage.period_minimum - 1;
+  const handleDateStartSelection = (date, position) => {
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    // Enregistre la date de d'arrivée des clients
+    const trueStartDate = new Date(date);
+    setDateStartSelectionnee(trueStartDate);
 
-    const periods = arePeriodConsecutiv(timestamp);
+    const tempBookingMini = locations[0].cottage.period_minimum;
+    const trueEndDate = new Date(
+      periodsEndForDepartureDate[position].getTime() +
+        tempBookingMini * 24 * 60 * 60 * 1000
+    );
 
-    periods.forEach((period) => {
-      const periodStart = new Date(period.start.timestamp * 1000);
-      const periodEnd = new Date(period.end.timestamp * 1000);
+    const diffTime = Math.abs(date - trueEndDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      const diffTime = Math.abs(periodEnd - periodStart);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    // Appliquer la periode minimum de résérvation
+    date.setDate(date.getDate() + tempBookingMini);
 
-      if (diffDays > tempBookingMini) {
-        /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
-        // Retire des jours en rapport avec la durée minimum
-        periodEnd.setHours(periodEnd.getHours() + 1);
-        periodEnd.setDate(
-          periodEnd.getDate() - locations[0].cottage.period_minimum
-        );
-        setPeriodsEndForArrivalDate((prevPeriodsEnd) => [
-          ...prevPeriodsEnd,
-          periodEnd,
-        ]);
-      } else if (diffDays === tempBookingMini) {
-        periodEnd.setHours(periodEnd.getHours() + 1);
-        periodEnd.setDate(periodEnd.getDate() - tempBookingMini);
-        setPeriodsEndForArrivalDate((prevPeriodsEnd) => [
-          ...prevPeriodsEnd,
-          periodEnd,
-        ]);
-      } else {
-        periodEnd.setHours(periodEnd.getHours() + 1);
-      }
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    // Créer une nouvelle copie de periodsStart et met à jour la date sélectionnée
+    const newPerdiodsStart = [...periodsStart];
+    newPerdiodsStart[position] = date;
 
-      setPeriodsEndForDepartureDate((prevPeriodsEnd) => [
-        ...prevPeriodsEnd,
-        periodEnd,
-      ]);
+    if (diffDays === tempBookingMini + 1) {
+      setPerdiodsStartUpdated(newPerdiodsStart[position]);
+      setPerdiodsEndUpdated(newPerdiodsStart[position]);
+    } else {
+      setPerdiodsStartUpdated(newPerdiodsStart[position]);
+      setPerdiodsEndUpdated(trueEndDate);
+    }
+  };
 
-      periodStart.setHours(periodStart.getHours() + 1);
-      setPeriodsStart((prevPeriodsStart) => [...prevPeriodsStart, periodStart]);
-    });
+  const handleDateEndSelection = (date) => {
+    setDateEndSelectionnee(date);
   };
 
   const handleDisplayPrivacy = (e) => {
@@ -216,7 +240,8 @@ const PeriodsBooking = () => {
     if (
       e.currentTarget.checked &&
       dateEndSelectionnee !== null &&
-      dateStartSelectionnee !== null
+      dateStartSelectionnee !== null &&
+      qtyTraveller !== 0
     ) {
       btnPrivacy.current.onclick = function () {
         handleNavigateToSummary();
@@ -232,7 +257,10 @@ const PeriodsBooking = () => {
 
   const handleNavigateToSummary = () => {
     localStorage.setItem("location", JSON.stringify([locations[0]]));
-    localStorage.setItem("dates", JSON.stringify([dateStartSelectionnee, dateEndSelectionnee]));
+    localStorage.setItem(
+      "dates",
+      JSON.stringify([dateStartSelectionnee, dateEndSelectionnee])
+    );
 
     dispatch(
       setDatesLocation(
@@ -256,6 +284,7 @@ const PeriodsBooking = () => {
             <b>{locations[0].cottage.period_minimum} jour(s)</b>
           </p>
         </aside>
+
         <Calendar
           dateDebut={periodsStart}
           dateFin={periodsEndForArrivalDate}
@@ -277,6 +306,11 @@ const PeriodsBooking = () => {
         )}
 
         <aside className={`${ready ? styles.activeBtn : ""}`}>
+          <label htmlFor="qtyTraveller">
+            Combien de personnes logeront sur place ?{" "}
+            <div ref={contentTraveller}></div>
+          </label>
+
           <label htmlFor="privacy" onClick={(e) => handleDisplayPrivacy(e)}>
             En cochant cette case, vous confirmez avoir pris connaissance et
             accepté les termes et conditions de ce règlement intérieur

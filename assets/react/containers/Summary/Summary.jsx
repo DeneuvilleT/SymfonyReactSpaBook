@@ -21,6 +21,7 @@ const Summary = () => {
 
   const [end, setEnd] = useState(null);
   const [start, setStart] = useState(null);
+  const [nbNight, setNbNight] = useState(0);
 
   useEffect(() => {
     if (locations.length !== 0) {
@@ -37,33 +38,78 @@ const Summary = () => {
     const dateStart = new Date(dates[0]);
     const dateEnd = new Date(dates[1]);
 
+    const millisecondsPerDay = 1000 * 60 * 60 * 24;
+    const differenceInMilliseconds = dateEnd - dateStart;
+
+    setNbNight(Math.floor(differenceInMilliseconds / millisecondsPerDay));
+
     setStart(format(dateStart, "dd MMMM yyyy", { locale: fr }));
     setEnd(format(dateEnd, "dd MMMM yyyy", { locale: fr }));
   };
 
   return (
     <main className={styles.summary}>
+      <div role="switch"></div>
       {locations.length !== 0 ? (
         <section>
-          <h1>Récapitulatif de votre réservation</h1>
+          <h2>Récapitulatif de votre réservation :</h2>
+
           <p>
             {isLog &&
             infos.firstname.length !== 0 &&
-            infos.lastname.length !== 0
-              ? `${infos.firstname} ${infos.lastname}, vous êtes sur le point de réserver :`
-              : "Vous êtes sur le point de réserver :"}
+            infos.lastname.length !== 0 ? (
+              <>
+                <b>
+                  <span>{`${infos.lastname}`}</span> {`${infos.firstname}`}
+                </b>
+                , vous êtes sur le point de réserver :
+              </>
+            ) : (
+              "Vous êtes sur le point de réserver :"
+            )}
           </p>
-          <h2>{locations[0].cottage.name}</h2>
-          <img
-            alt={locations[0].cottage.name}
-            src={`${window.location.origin}/uploads/images/${
-              locations[0].cottage.covers.find((x) => x.priority === 1)?.path ||
-              ""
-            }`}
-          />
-          <p>
-            Du {start} au {end}
-          </p>
+
+          <article>
+            <img
+              alt={locations[0].cottage.name}
+              src={`${window.location.origin}/uploads/images/${
+                locations[0].cottage.covers.find((x) => x.priority === 1)
+                  ?.path || ""
+              }`}
+            />
+
+            <div>
+              <h3>{locations[0].cottage.name}</h3>
+              <p>
+                Du <b>{start}</b> au <b>{end}</b>
+              </p>
+
+              <p>
+                Pour un total de <b>{nbNight}</b> nuit(s)
+              </p>
+
+              <p>
+                A{" "}
+                <b>
+                  {(locations[0].cottage.price_one_night / 100)
+                    .toString()
+                    .replace(".", ",")}{" "}
+                  €
+                </b>{" "}
+                la nuit
+              </p>
+
+              <p>
+                Pour un montant total de{" "}
+                <b>
+                  {((locations[0].cottage.price_one_night * nbNight) / 100)
+                    .toString()
+                    .replace(".", ",")}{" "}
+                  €
+                </b>
+              </p>
+            </div>
+          </article>
           <p>Voulez-vous modifier votre choix ? </p>
           <Link to={"/"}>modifier</Link>
           <aside>
