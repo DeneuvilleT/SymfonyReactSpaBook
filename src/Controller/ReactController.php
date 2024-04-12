@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpKernel\Log\Logger;
 
 class ReactController extends AbstractController
 {
@@ -89,11 +90,12 @@ class ReactController extends AbstractController
                     'privacy' => $location->getCategoriesCottage()->getPrivacy(),
                     'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
 
-                    /**
-                     * Filtrer les périodes déjà réservées
-                     */
                     // 'periods' => $this->getPeriodsData($location->getCategoriesCottage()->getPeriods())
-                    'periods' => $this->checkBookings($location->getCategoriesCottage()->getPeriods(), $location->getBookings())
+                    'periods' => $this->checkBookings(
+                        $location->getCategoriesCottage()->getPeriods(),
+                        $location->getBookings(),
+                        $location->getCategoriesCottage()->getPeriodMinimum(),
+                    )
                 ],
             ];
 
@@ -105,13 +107,66 @@ class ReactController extends AbstractController
         return new Response($jsonContent);
     }
 
-    private function checkBookings(Collection $periods, Collection $bookings)
+    private function checkBookings(Collection $periods, Collection $bookings, int $period_minimum)
     {
         $periodsDatas = $this->getPeriodsData($periods);
         $bookingsDatas = $this->getBookingsData($bookings);
+    
+        $availablePeriods = [];
+    
+        // Créer un tableau des dates réservées
+        $reservedDates = [];
+        
+        foreach ($bookingsDatas as $booking) {
+            $startDate = $booking['start']->format('Y-m-d');
+            $endDate = $booking['end']->format('Y-m-d');
+            $reservedDates = array_merge($reservedDates, $this->getDatesRange($startDate, $endDate));
+        }
+    
+        // Parcourir toutes les périodes et vérifier les disponibilités
+        foreach ($periodsDatas as $period) {
 
-        dd($bookingsDatas, $periodsDatas);
+            $periodId = $period['id'];
+            $startDate = $period['start']->format('Y-m-d');
+            $endDate = $period['end']->format('Y-m-d');
+            $periodDates = $this->getDatesRange($startDate, $endDate);
+    
+            // Vérifier si les dates de la période sont disponibles
+            $availableDates = array_diff($periodDates, $reservedDates);
+    
+            if (!empty($availableDates)) {
+
+                // Calculer la durée de la période en jours
+                $periodDuration = count($availableDates);
+    
+                // Vérifier si la durée de la période est supérieure ou égale à la période minimale
+                if ($periodDuration >= $period_minimum) {
+                    $availablePeriods[] = [
+                        'id' => $periodId,
+                        'start' => new DateTime(min($availableDates)),
+                        'end' => new DateTime(max($availableDates))
+                    ];
+                }
+            }
+        }
+
+        return $availablePeriods;
     }
+
+    // Fonction pour obtenir un tableau de dates entre deux dates données
+    private function getDatesRange($startDate, $endDate)
+    {
+        $dates = [];
+        $currentDate = new DateTime($startDate);
+        $endDateObj = new DateTime($endDate);
+
+        while ($currentDate <= $endDateObj) {
+            $dates[] = $currentDate->format('Y-m-d');
+            $currentDate->modify('+1 day');
+        }
+        return $dates;
+    }
+
 
 
     private function getBookingsData(Collection $bookings)

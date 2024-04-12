@@ -40,6 +40,7 @@ const PeriodsBooking = () => {
   useEffect(() => {
     if (choiceLocation) {
       period.current.classList.add(styles.activeBooking);
+      console.log(locations[0].cottage.periods)
       convertTimestamp(locations[0].cottage.periods);
     } else {
       period.current.classList.remove(styles.activeBooking);
@@ -155,6 +156,7 @@ const PeriodsBooking = () => {
     periods.forEach((period) => {
       const periodStart = new Date(period.start.timestamp * 1000);
       const periodEnd = new Date(period.end.timestamp * 1000);
+      console.log(periodStart, periodEnd)
 
       const diffTime = Math.abs(periodEnd - periodStart);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
