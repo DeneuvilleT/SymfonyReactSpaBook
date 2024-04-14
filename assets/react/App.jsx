@@ -1,38 +1,38 @@
 import React, { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import Header from "./containers/Header/Header";
-import Home from "./containers/Home/Home";
-import Footer from "./containers/Footer/Footer";
-// import Product from "./components/Product/Product";
-import Logup from "./containers/Logup/Logup";
-import Logout from "./containers/Logout/Logout";
-import Login from "./containers/Login/Login";
-// import Cart from "./containers/Cart/Cart";
-import Notfound from "./components/PageNotFound/Notfound";
-import Authentication from "./utilities/Authentication";
-import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
-import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
-// import UserComments from "./containers/ProfileBridge/UserComments/UserComments";
-import UserOrders from "./containers/ProfileBridge/UserOrders/UserOrders";
-// import Notif from "./components/Notif/Notif";
 import Slider from "./components/Slider/Slider";
 import Privacy from "./components/Privacy/Privacy";
+import Header from "./containers/Header/Header";
+import Authentication from "./utilities/Authentication";
+import Home from "./containers/Home/Home";
+import AboutUs from "./containers/AboutUs/AboutUs";
+import Summary from "./containers/Summary/Summary";
+import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
+import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
+import UserOrders from "./containers/ProfileBridge/UserOrders/UserOrders";
+import Login from "./containers/Login/Login";
+import Logout from "./containers/Logout/Logout";
+import Footer from "./containers/Footer/Footer";
+import Notfound from "./components/PageNotFound/Notfound";
 
-import { useDispatch } from "react-redux";
 import { clearCart } from "./Store/slices/cartSlices";
 
 import styles from "./containers/Header/header.styles.scss";
-import AboutUs from "./containers/AboutUs/AboutUs";
-import Summary from "./containers/Summary/Summary";
 
 const App = ({ container }) => {
   const dispatch = useDispatch();
+
   const locationHook = useLocation();
+
   const headerDom = useRef(null);
 
   useEffect(() => {
-    if (location.hash === "#/login#register" || location.hash === "#/login") {
+    if (
+      locationHook.search === "?param=register" ||
+      locationHook.pathname === "/login"
+    ) {
       headerDom.current.classList.add(styles.hide);
     } else {
       headerDom.current.classList.remove(styles.hide);
@@ -54,7 +54,7 @@ const App = ({ container }) => {
     <>
       <Slider />
       <Privacy />
-      {/* <Notif /> */}
+
       <Header headerDom={headerDom} />
       <Routes>
         <Route
@@ -65,15 +65,6 @@ const App = ({ container }) => {
           path="/about_us"
           element={<Authentication child={AboutUs} auth={false} />}
         />
-        {/* <Route
-          path="product/:id"
-          element={<Authentication child={Product} auth={false} />}
-        /> */}
-
-        {/* <Route
-          path="/cart"
-          element={<Authentication child={Cart} auth={false} />}
-        /> */}
 
         <Route
           path="/summary"
@@ -92,15 +83,7 @@ const App = ({ container }) => {
           path="/user/orders"
           element={<Authentication child={UserOrders} auth={true} />}
         />
-        {/* <Route
-          path="/user/comments"
-          element={<Authentication child={UserComments} auth={true} />}
-        /> */}
 
-        {/* <Route
-          path="/register"
-          element={<Authentication child={Logup} auth={false} />}
-        /> */}
         <Route
           path="/login"
           element={<Authentication child={Login} auth={false} />}

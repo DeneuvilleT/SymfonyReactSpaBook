@@ -127,10 +127,50 @@
 
   aside label {
     display: flex;
+    align-items: flex-end;
     margin: 20px;
     gap: 20px;
     cursor: pointer;
     text-decoration: underline;
+  }
+
+  aside label[for="qtyTraveller"] {
+    text-decoration: none;
+  }
+
+  aside label div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  aside label div span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsla(0, 0%, 83%, 0.86);
+    border-radius: 5px;
+    width: 37.5px;
+    height: 37.5px;
+    line-height: normal;
+    font-weight: 400;
+    text-decoration: underline;
+    text-decoration-color: #333;
+    transition: background-color 0.25s ease-in-out, border-radius 0.25s ease-in,
+      color 0.25s ease-out, text-decoration-color 0.25s ease-in, font-weight 0.25s ease-in-out;
+  }
+
+  aside label div span:hover {
+    text-decoration-color: transparent;
+  }
+
+  aside label div span.choice {
+    color: #fff;
+    background-color: #00a314;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration-color: transparent;
   }
 
   aside label input[type="checkbox"] {
@@ -139,7 +179,7 @@
     -moz-appearance: none;
     cursor: pointer;
 
-  background-color: hsl(0deg 0% 82.85% / 86%);
+    background-color: hsl(0deg 0% 82.85% / 86%);
     border-radius: 5px;
     width: 17.5px;
     height: 17.5px;
@@ -151,7 +191,7 @@
     content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M12 7a5 5 0 1 1-4.995 5.217L7 12l.005-.217A5 5 0 0 1 12 7'/%3E%3C/svg%3E");
     width: 17.5px;
     height: 17.5px;
-background-color: hsl(0deg 0% 82.85% / 86%);
+    background-color: hsl(0deg 0% 82.85% / 86%);
   }
 }
 

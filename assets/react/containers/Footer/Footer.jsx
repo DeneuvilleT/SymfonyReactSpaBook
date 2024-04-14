@@ -83,7 +83,7 @@ const Footer = () => {
                 <Link to={"/login"}>Connexion</Link>
               </li>
               <li>
-                <Link to={"/login#register"}>Inscription</Link>
+                <Link to={{ pathname: "/login", search: "?param=register" }}>Inscription</Link>
               </li>
               <li>
                 <Link to={"/profile"}>Mon compte</Link>

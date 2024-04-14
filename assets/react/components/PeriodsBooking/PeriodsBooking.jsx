@@ -105,8 +105,28 @@ const PeriodsBooking = () => {
 
   const buildSelectTraveller = () => {
     if (locations[0].cottage.period_minimum !== 0) {
-      const choiceQtyTraveller = (e) => {
-        setQtyTraveller(Number(e.textContent));
+
+      contentTraveller.current.innerHTML = '';
+
+      const choiceQtyTraveller = (spanChoice) => {
+        setQtyTraveller(Number(spanChoice.textContent));
+
+        const prevChoice = Array.from(contentTraveller.current.childNodes).find(
+          (x) => x.classList.contains(styles.choice)
+        );
+        prevChoice !== undefined
+          ? prevChoice.classList.remove(styles.choice)
+          : null;
+
+          spanChoice.classList.add(styles.choice);
+
+        if (document.getElementById('privacy').checked) { 
+          btnPrivacy.current.onclick = function () {
+            handleNavigateToSummary(Number(spanChoice.textContent));
+          };
+          btnPrivacy.current.disabled = false;
+          setPrivacyChecked(true);
+        }  
       };
 
       for (
@@ -201,7 +221,7 @@ const PeriodsBooking = () => {
     const tempBookingMini = locations[0].cottage.period_minimum;
     const trueEndDate = new Date(
       periodsEndForDepartureDate[position].getTime() +
-        tempBookingMini * 24 * 60 * 60 * 1000
+      tempBookingMini * 24 * 60 * 60 * 1000
     );
 
     const diffTime = Math.abs(date - trueEndDate);
@@ -238,7 +258,7 @@ const PeriodsBooking = () => {
   const handlePrivacyChecked = (e) => {
     e.stopPropagation();
     if (
-      e.currentTarget.checked &&
+      e.target.checked &&
       dateEndSelectionnee !== null &&
       dateStartSelectionnee !== null &&
       qtyTraveller !== 0
@@ -255,8 +275,11 @@ const PeriodsBooking = () => {
     }
   };
 
-  const handleNavigateToSummary = () => {
-    localStorage.setItem("location", JSON.stringify([locations[0]]));
+  const handleNavigateToSummary = (qty) => {
+    localStorage.setItem(
+      "location",
+      JSON.stringify([locations[0], { qtyTraveller: qtyTraveller === 0 ? qty : qtyTraveller }])
+    );
     localStorage.setItem(
       "dates",
       JSON.stringify([dateStartSelectionnee, dateEndSelectionnee])
@@ -267,7 +290,7 @@ const PeriodsBooking = () => {
         JSON.stringify([dateStartSelectionnee, dateEndSelectionnee])
       )
     );
-    navigate("/summary");
+    return navigate("/summary");
   };
 
   return (
@@ -307,7 +330,7 @@ const PeriodsBooking = () => {
 
         <aside className={`${ready ? styles.activeBtn : ""}`}>
           <label htmlFor="qtyTraveller">
-            Combien de personnes logeront sur place ?{" "}
+            Quel sera le nombre de personnes hébergées sur les lieux ?
             <div ref={contentTraveller}></div>
           </label>
 

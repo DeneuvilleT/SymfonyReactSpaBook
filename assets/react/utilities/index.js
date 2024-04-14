@@ -1,5 +1,4 @@
 import stylesHeader from "../containers/Header/header.styles.scss";
-import stylesHome from "../containers/Home/home.styles.scss";
 import styles from "../styles.scss";
 
 export const valueOk =
@@ -49,9 +48,11 @@ export const hideHeader = (toHide = true) => {
 export const displayLoader = () => {
   const loader = document.querySelector('div[role="switch"]');
 
-  loader.classList.add(styles.loading);
+  if (loader !== null) {
+    loader.classList.add(styles.loading);
 
-  setTimeout(() => {
-    loader.classList.remove(styles.loading);
-  }, 4000);
+    setTimeout(() => {
+      loader.classList.remove(styles.loading);
+    }, 4000);
+  }
 };

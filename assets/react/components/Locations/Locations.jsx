@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import { setSlider } from "../../Store/slices/sliderSlices";
 
@@ -17,13 +18,19 @@ const Locations = ({ locationsDatas }) => {
 
   const locationContainer = useRef(null);
 
+  const locationHook = useLocation();
+
   useEffect(() => {
-    if (locations.length !== 0) {
-      setTimeout(() => {
-        locationContainer.current.classList.add(styles.hide);
-      }, 2000);
+    if (locationHook.search === "?param=modify") {
+      locationContainer.current.classList.add(styles.speed, styles.appear);
+    } else {
+      if (locations.length !== 0) {
+        setTimeout(() => {
+          locationContainer.current.classList.add(styles.appear);
+        }, 2000);
+      }
     }
-  }, [locations]);
+  }, [locations, locationHook]);
 
   return (
     <>

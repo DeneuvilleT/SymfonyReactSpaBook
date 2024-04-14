@@ -32,7 +32,10 @@ const Nav = () => {
       <ul>
         {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
 
-        <Link to={"/login#register"} onClick={() => hideHeader()}>
+        <Link
+          to={{ pathname: "/login", search: "?param=register" }}
+          onClick={() => hideHeader()}
+        >
           Inscription
         </Link>
 
@@ -69,7 +72,7 @@ const Nav = () => {
               name: "cottage",
               type: "select",
               option: [
-                { value: 'null', text: "Cabane et gite" },
+                { value: "null", text: "Cabane et gite" },
                 { value: "0", text: "Cabane" },
                 { value: "1", text: "Gite" },
               ],

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import styles from "./home.styles.scss";
@@ -12,7 +12,21 @@ const Home = () => {
   const itemWelcomeOne = useRef(null);
   const itemWelcomeTwo = useRef(null);
 
+  const locationHook = useLocation();
+
   useEffect(() => {
+    /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+    /* Réinitialisation des class */
+    [itemWelcomeOne, itemWelcomeTwo].map((x) =>
+      x.current.classList.remove(styles.hideModify)
+    );
+
+    if (locationHook.search === "?param=modify") {
+      [itemWelcomeOne, itemWelcomeTwo].map((x) =>
+        x.current.classList.add(styles.hideModify)
+      );
+    }
+
     if (locations.length !== 0) {
       [itemWelcomeOne, itemWelcomeTwo].map((x) =>
         x.current.classList.add(styles.hide)
@@ -22,7 +36,7 @@ const Home = () => {
         x.current.classList.remove(styles.hide)
       );
     }
-  }, [locations]);
+  }, [locations, locationHook]);
 
   return (
     <main className={styles.home}>

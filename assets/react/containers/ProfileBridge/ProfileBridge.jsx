@@ -32,7 +32,7 @@ const ProfileBridge = () => {
         />
         <p>Mes réservations</p>
       </div>
-      <div onClick={handleUserCommennt}>
+      {/* <div onClick={handleUserCommennt}>
         <Icon
           icon="line-md:coffee-half-empty-twotone-loop"
           style={{ color: "#69340e" }}
@@ -40,7 +40,7 @@ const ProfileBridge = () => {
           height="80"
         />
         <p>Mes commentaires</p>
-      </div>
+      </div> */}
     </main>
   );
 };

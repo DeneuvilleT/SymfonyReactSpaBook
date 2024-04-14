@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { login } from "../../Store/slices/authSlices";
@@ -14,6 +14,8 @@ const Login = ({ isLog }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const locationHook = useLocation();
+
   const formLog = useRef(null);
 
   const [msgErr, setMsgErr] = useState("");
@@ -25,7 +27,7 @@ const Login = ({ isLog }) => {
   });
 
   useEffect(() => {
-    if (location.hash === "#/login#register") {
+    if (locationHook.search === "?param=register") {
       formLog.current.classList.add(styles.formSlide);
     } else {
       formLog.current.classList.remove(styles.formSlide);
@@ -34,7 +36,7 @@ const Login = ({ isLog }) => {
       top: 0,
       behavior: "smooth",
     });
-  }, [location.hash]);
+  }, [locationHook]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
