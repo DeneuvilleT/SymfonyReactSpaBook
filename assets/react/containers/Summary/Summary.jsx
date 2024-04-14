@@ -7,6 +7,7 @@ import { setOneLocation } from "../../Store/slices/locationsSlices";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Icon } from "@iconify/react";
+import axios from "axios";
 
 import styles from "./summary.styles.scss";
 
@@ -15,6 +16,7 @@ const Summary = () => {
     ...state.location,
     ...state.auth,
   }));
+  const token = localStorage.getItem(`${location.origin}_bear_token`);
 
   const dispatch = useDispatch();
   const locationHook = useLocation();
@@ -23,11 +25,10 @@ const Summary = () => {
   const [start, setStart] = useState(null);
   const [nbNight, setNbNight] = useState(0);
   const [nbTraveller, setNbTraveller] = useState(0);
+  const [icone, setIcone] = useState("bi:stripe");
 
   useEffect(() => {
-    
     if (localStorage.getItem("location") && localStorage.getItem("dates")) {
-
       const localLocation = JSON.parse(localStorage.getItem("location"));
       setNbTraveller(localLocation[1].qtyTraveller);
       dispatch(setOneLocation(localLocation[0]));
@@ -50,6 +51,38 @@ const Summary = () => {
     setEnd(format(dateEnd, "dd MMMM yyyy", { locale: fr }));
   };
 
+  const checkout = async (e) => {
+    e.preventDefault();
+
+    setIcone("svg-spinners:90-ring-with-bg");
+
+    const datasBooking = {
+      location: JSON.parse(localStorage.getItem("location")),
+      dates: datesChoices,
+      price: locations[0].cottage.price_one_night * nbNight,
+    };
+
+    try {
+      const response = await axios.post(
+        `/api/v1/stripe/checkout/${infos.uid}`,
+        JSON.stringify(datasBooking),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        location.href = response.data;
+      } else {
+        console.error("Erreur lors de la création de la session de paiement");
+      }
+    } catch (error) {
+      console.log(error.response.data.message, error);
+    }
+  };
+
   return (
     <main className={styles.summary}>
       {locations.length !== 0 ? (
@@ -58,10 +91,13 @@ const Summary = () => {
 
           <p>
             {isLog &&
-              infos.firstname.length !== 0 &&
-              infos.lastname.length !== 0 ? (
+            infos.firstname.length !== 0 &&
+            infos.lastname.length !== 0 ? (
               <>
-                <b><span>{`${infos.lastname}`}</span> {`${infos.firstname}`}</b>, vous êtes sur le point de réserver :
+                <b>
+                  <span>{`${infos.lastname}`}</span> {`${infos.firstname}`}
+                </b>
+                , vous êtes sur le point de réserver :
               </>
             ) : (
               "Vous êtes sur le point de réserver :"
@@ -69,46 +105,127 @@ const Summary = () => {
           </p>
 
           <article>
-
-            <img
-              alt={locations[0].cottage.name}
-              src={`${window.location.origin}/uploads/images/${locations[0].cottage.covers.find((x) => x.priority === 1)
-                ?.path || ""
-                }`}
-            />
-
             <div>
               <h3>{locations[0].cottage.name}</h3>
-
-              <p>Du <b>{start}</b> au <b>{end}</b></p>
-              <p>Pour un total de <b>{nbNight}</b> nuit(s)</p>
-              <p>Pour <b>{nbTraveller}</b> personne(s)</p>
-              <p>A <b>{(locations[0].cottage.price_one_night / 100).toString().replace(".", ",")} €</b> la nuit</p>
-              <p>Pour un montant total de <b>{((locations[0].cottage.price_one_night * nbNight) / 100).toString().replace(".", ",")}€</b></p>
+              <img
+                alt={locations[0].cottage.name}
+                src={`${window.location.origin}/uploads/images/${
+                  locations[0].cottage.covers.find((x) => x.priority === 1)
+                    ?.path || ""
+                }`}
+              />
             </div>
 
+            <div>
+              <p>
+                Votre arrivée est prévue le : <b>{start}</b>
+              </p>
+              <p>
+                Votre départ est prévue le : <b>{end}</b>
+              </p>
+              <p>
+                <span>
+                  <Icon
+                    icon="solar:user-hand-up-linear"
+                    width="3.25em"
+                    height="3.25em"
+                    style={{ color: "#444" }}
+                  />
+                  <b>{nbTraveller} personne(s)</b>
+                </span>
+
+                <span>
+                  <Icon
+                    icon="game-icons:night-sleep"
+                    width="3em"
+                    height="3em"
+                    style={{ color: "#444" }}
+                  />
+                  <b>{nbNight} nuit(s) </b>
+                </span>
+
+                <span>
+                  <Icon
+                    icon="material-symbols:euro"
+                    width="3.25em"
+                    height="3.25em"
+                    style={{ color: "#444" }}
+                  />
+                  <b>
+                    {(locations[0].cottage.price_one_night / 100)
+                      .toString()
+                      .replace(".", ",")}{" "}
+                    € la nuit
+                  </b>
+                </span>
+              </p>
+
+              <p>
+                Ce séjour vous sera facturé :{" "}
+                <b>
+                  {((locations[0].cottage.price_one_night * nbNight) / 100)
+                    .toString()
+                    .replace(".", ",")}
+                  &nbsp;€
+                </b>
+              </p>
+            </div>
           </article>
 
-          <p>Voulez-vous modifier votre choix ? </p>
+          <article>
+            <p>
+              Voulez-vous modifier votre réservation avant validation ?{" "}
+              <Link to={{ pathname: "/", search: "?param=modify" }}>
+                modifier
+              </Link>
+            </p>
 
-          <Link to={{ pathname: "/", search: "?param=modify" }}>modifier</Link>
+            <p>
+              {isLog ? (
+                <>
+                  <span>
+                    Si toutes ces informations s'avèrent exactes, vous pouvez
+                    effectuer le paiement de la réservation en cliquant sur le
+                    lien ci-dessous.
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    Vous n'êtes pas connecté, vous devez posséder un compte et
+                    vous connecter pour finaliser la procédure de paiement.
+                  </span>
+                </>
+              )}
+            </p>
 
-          <aside>
             {isLog ? (
-              <p>Si toutes ces informations sont exactes, vous pouvez procéder au paiement de la réservation en cliquant ci-dessous.</p>
+              <Link to={"/summary"} onClick={checkout}>
+                Procéder au paiement via Stripe
+                <Icon
+                  icon={icone}
+                  width="1.4em"
+                  height="1.4em"
+                  style={{ color: "white" }}
+                />
+              </Link>
             ) : (
-              /**
-               *  Procédure de paiement Stripe
-               */
-              <>
-                <p>Vous n'êtes pas connecté. Vous devez posséder un compte et vous connecter pour finaliser la procédure de paiement.</p>
-                <Link to={"/login"}>se connecter</Link>
-                &nbsp;ou&nbsp;
-                <Link to={"/login#register"}>s'inscrire</Link>
-              </>
-            )}
-          </aside>
+              <div>
+                <aside>
+                  Vous pouvez vous connecter en cliquant sur le bouton ci
+                  dessous
+                  <Link to={"/login"}>se connecter</Link>
+                </aside>
 
+                <aside>
+                  Vous pouvez vous inscrire en cliquant sur le bouton ci dessous
+                  <Link to={{ pathname: "/login", search: "?param=register" }} >
+                    s'inscrire
+                  </Link>
+                </aside>
+              </div>
+            )}
+          </article>
         </section>
       ) : (
         <p>Vous n'avez sélectionné aucun hébergement</p>

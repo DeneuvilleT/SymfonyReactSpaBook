@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+
 class StripeController extends AbstractController
 {
     #[Route('/api/v1/stripe/checkout/{uid}', name: 'app_checkout', methods: ['POST', 'GET'])]
@@ -27,24 +28,43 @@ class StripeController extends AbstractController
 
         if ($user !== null && $user === $customer) {
             $data = json_decode($request->getContent(), true);
-
             $productData = [];
 
-            foreach ($data as $product) {
-                $realPrice = (int)$product['priceUnit'] * 1;
+            $location = $data['location'][0];
+            $price = (int)$data['price'];
+            $dates = json_decode($data['dates']);
+            $images = $location['cottage']['covers'];
 
-                $lineItems[] = [
-                    'price_data' => [
-                        'currency' => 'eur',
-                        'product_data' => [
-                            'name' => $product['title'],
-                        ],
-                        'unit_amount' => $realPrice,
-                    ],
-                    'quantity' => $product['item_quantity'],
-                ];
-                $productData[$product['id']] = $product['item_quantity'];
+            $dateStart = date_create($dates[0]);
+            $dateEnd = date_create($dates[1]);
+
+            $selectedPath = '';
+            foreach ($images as $image) {
+                if (isset($image['priority']) && $image['priority'] == 1) {
+                    $selectedPath = $image['path'];
+                    break;
+                }
             }
+
+            $cover = 'http://127.0.0.1:8000/uploads/images/' . $selectedPath;
+
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'unit_amount' => $price,
+                    'product_data' => [
+                        'name' => 'Location : ' . $location['cottage']['name'],
+                        'description' => 'Du ' . date_format($dateStart, 'd/m/Y') . ' au ' .  date_format($dateEnd, 'd/m/Y'),
+                        'images' => [$cover],
+                    ],                    
+                ],
+                'quantity' => 1,
+            ];
+
+
+            $productData['location'] = $location['cottage']['name'];
+            $productData['price'] = $price;
+
 
             $productDataJson = json_encode($productData);
 
