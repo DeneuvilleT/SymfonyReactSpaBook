@@ -11,7 +11,7 @@ import AboutUs from "./containers/AboutUs/AboutUs";
 import Summary from "./containers/Summary/Summary";
 import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
 import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
-import UserOrders from "./containers/ProfileBridge/UserOrders/UserOrders";
+import UserBookings from "./containers/ProfileBridge/UserBookings/UserBookings";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Logout/Logout";
 import Footer from "./containers/Footer/Footer";
@@ -80,8 +80,8 @@ const App = ({ container }) => {
           element={<Authentication child={UserDatas} auth={true} />}
         />
         <Route
-          path="/user/orders"
-          element={<Authentication child={UserOrders} auth={true} />}
+          path="/user/reservations"
+          element={<Authentication child={UserBookings} auth={true} />}
         />
 
         <Route

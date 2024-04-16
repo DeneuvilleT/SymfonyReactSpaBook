@@ -9,7 +9,7 @@ const ProfileBridge = () => {
   const navigate = useNavigate();
 
   const handleUserData = () => navigate("/user/datas");
-  const handleUserOrder = () => navigate("/user/orders");
+  const handleUserBooking = () => navigate("/user/reservations");
   const handleUserCommennt = () => navigate("/user/comments");
 
   return (
@@ -23,7 +23,7 @@ const ProfileBridge = () => {
         />
         <p>Paramétres du compte</p>
       </div>
-      <div onClick={handleUserOrder}>
+      <div onClick={handleUserBooking}>
         <Icon
           icon="line-md:sunny-outline-twotone-loop"
           style={{ color: " #ffc408" }}

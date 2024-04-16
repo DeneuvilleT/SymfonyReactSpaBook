@@ -47,7 +47,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 37px;
+    width: 35px;
     height: 35px;
     text-align: start;
   }
@@ -59,6 +59,7 @@
     border-radius: 5px;
     transition: background-color 0.15s ease-in-out,
     border-radius 0.25s ease-in-out;
+    margin: 1px;
   }
   
   .dates span:not(.available) {
@@ -69,6 +70,7 @@
     user-select: initial;
     cursor: pointer;
     color: #0da72c;
+    background-color: #36d23624;
   }
 
   .dates span.available.dateActive,
@@ -89,6 +91,7 @@
     user-select: initial;
     cursor: pointer;
     color: #0d3ea7;
+    background-color: #17589333;
   }
 
   .dates span.available.dateActive,

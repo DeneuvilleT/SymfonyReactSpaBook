@@ -38,7 +38,7 @@ Encore.setOutputPath("public/build/")
     // "./assets/react/containers/ProductList/productList.styles.scss",
     "./assets/react/containers/ProfileBridge/profileBridge.styles.scss",
     "./assets/react/containers/ProfileBridge/UserDatas/userDatas.styles.scss",
-    "./assets/react/containers/ProfileBridge/UserOrders/userOrders.styles.scss",
+    "./assets/react/containers/ProfileBridge/UserBookings/userBookings.styles.scss",
     "./assets/react/containers/ProfileBridge/UserComments/userComments.styles.scss",
     "./assets/react/containers/ProfileBridge/UserDatas/Addresses/address.styles.scss",
     "./assets/react/containers/Summary/summary.styles.scss",

@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\HttpKernel\Log\Logger;
 
 class ReactController extends AbstractController
 {
@@ -83,14 +82,13 @@ class ReactController extends AbstractController
                 'tree_height' => $location->getTreeHeight(),
                 'is_available' => $location->isIsAvailable(),
                 'cottage' => [
+                    'id' => $location->getCategoriesCottage()->getId(),
                     'name' => $location->getCategoriesCottage()->getName(),
                     'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),
                     'description' => $location->getCategoriesCottage()->getDescription(),
                     'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
                     'privacy' => $location->getCategoriesCottage()->getPrivacy(),
                     'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
-
-                    // 'periods' => $this->getPeriodsData($location->getCategoriesCottage()->getPeriods())
                     'periods' => $this->checkBookings(
                         $location->getCategoriesCottage()->getPeriods(),
                         $location->getBookings(),
@@ -111,18 +109,17 @@ class ReactController extends AbstractController
     {
         $periodsDatas = $this->getPeriodsData($periods);
         $bookingsDatas = $this->getBookingsData($bookings);
-    
+
         $availablePeriods = [];
-    
+
         // Créer un tableau des dates réservées
         $reservedDates = [];
-        
         foreach ($bookingsDatas as $booking) {
             $startDate = $booking['start']->format('Y-m-d');
             $endDate = $booking['end']->format('Y-m-d');
             $reservedDates = array_merge($reservedDates, $this->getDatesRange($startDate, $endDate));
         }
-    
+
         // Parcourir toutes les périodes et vérifier les disponibilités
         foreach ($periodsDatas as $period) {
 
@@ -130,22 +127,45 @@ class ReactController extends AbstractController
             $startDate = $period['start']->format('Y-m-d');
             $endDate = $period['end']->format('Y-m-d');
             $periodDates = $this->getDatesRange($startDate, $endDate);
-    
+
             // Vérifier si les dates de la période sont disponibles
             $availableDates = array_diff($periodDates, $reservedDates);
-    
-            if (!empty($availableDates)) {
 
-                // Calculer la durée de la période en jours
-                $periodDuration = count($availableDates);
-    
-                // Vérifier si la durée de la période est supérieure ou égale à la période minimale
-                if ($periodDuration >= $period_minimum) {
-                    $availablePeriods[] = [
-                        'id' => $periodId,
-                        'start' => new DateTime(min($availableDates)),
-                        'end' => new DateTime(max($availableDates))
-                    ];
+            if (!empty($availableDates)) {
+                // Diviser les dates disponibles en sous-tableaux contigus
+                $contiguousDates = [];
+                $tempArray = [];
+                $lastDate = null;
+
+                foreach ($availableDates as $date) {
+                    $currentDate = new DateTime($date);
+                    if ($lastDate !== null && $currentDate->diff($lastDate)->days !== 1) {
+                        $contiguousDates[] = $tempArray;
+                        $tempArray = [];
+                    }
+                    $tempArray[] = $date;
+                    $lastDate = $currentDate;
+                }
+
+                // Ajouter le dernier sous-tableau temporaire
+                if (!empty($tempArray)) {
+                    $contiguousDates[] = $tempArray;
+                }
+
+                // Parcourir les sous-tableaux contigus
+                foreach ($contiguousDates as $contiguousDateGroup) {
+                    
+                    // Calculer la durée de chaque sous-tableau
+                    $periodDuration = count($contiguousDateGroup);
+
+                    // Vérifier si la durée de la période est supérieure ou égale à la période minimale
+                    if ($periodDuration >= $period_minimum) {
+                        $availablePeriods[] = [
+                            'id' => $periodId,
+                            'start' => new DateTime(min($contiguousDateGroup)),
+                            'end' => new DateTime(max($contiguousDateGroup))
+                        ];
+                    }
                 }
             }
         }
@@ -164,10 +184,9 @@ class ReactController extends AbstractController
             $dates[] = $currentDate->format('Y-m-d');
             $currentDate->modify('+1 day');
         }
+
         return $dates;
     }
-
-
 
     private function getBookingsData(Collection $bookings)
     {
@@ -184,7 +203,6 @@ class ReactController extends AbstractController
 
         return $bookingsDatas;
     }
-
 
     private function getPeriodsData(Collection $periods)
     {

@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Bookings;
 use Stripe\Stripe;
 use App\Entity\Orders;
 use App\Entity\LineOrders;
+use App\Repository\BookingsRepository;
+use App\Repository\CategoriesCottageRepository;
 use Stripe\Checkout\Session;
 use App\Repository\ProductsRepository;
 use App\Repository\CustomerRepository;
+use App\Repository\LocationTypesRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +34,6 @@ class StripeController extends AbstractController
 
         if ($user !== null && $user === $customer) {
             $data = json_decode($request->getContent(), true);
-            $productData = [];
 
             $location = $data['location'][0];
             $price = (int)$data['price'];
@@ -56,17 +61,21 @@ class StripeController extends AbstractController
                         'name' => 'Location : ' . $location['cottage']['name'],
                         'description' => 'Du ' . date_format($dateStart, 'd/m/Y') . ' au ' .  date_format($dateEnd, 'd/m/Y'),
                         'images' => [$cover],
-                    ],                    
+                    ],
                 ],
                 'quantity' => 1,
             ];
 
+            $bookingData['location'] =
+                [
+                    'id_location' => $location['id'],
+                    'qty_traveller' => $data['location'][1]['qtyTraveller'],
+                    'price' => $price,
+                    'start_at' => new DateTime($dates[0]),
+                    'end_at' => new DateTime($dates[1]),
+                ];
 
-            $productData['location'] = $location['cottage']['name'];
-            $productData['price'] = $price;
-
-
-            $productDataJson = json_encode($productData);
+            $bookingDataJson = json_encode($bookingData);
 
             $tokenProvider = $this->container->get('security.csrf.token_manager');
             $token = $tokenProvider->getToken('stripe_token')->getValue();
@@ -76,7 +85,7 @@ class StripeController extends AbstractController
             $stripeSession = Session::create([
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost:8000/checkout_success/' . $token . '/' . $uid . '?productData=' . urlencode($productDataJson),
+                'success_url' => 'http://localhost:8000/checkout_success/' . $token . '/' . $uid . '?bookingData=' . urlencode($bookingDataJson),
                 'cancel_url' => 'http://localhost:8000/checkout_error',
             ]);
 
@@ -87,58 +96,33 @@ class StripeController extends AbstractController
     }
 
     #[Route('checkout_success/{token}/{uid}', name: 'app_checkout_success', methods: ['GET'])]
-    public function checkoutSuccess(string $token, string $uid,  Request $request, ProductsRepository $productRepo,  CustomerRepository $customerRepository, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
-        $productDataJson = $request->query->get('productData');
-        $productData = json_decode(urldecode($productDataJson), true);
+    public function checkoutSuccess(
+        string $token,
+        string $uid,
+        Request $request,
+        BookingsRepository $bookRepo,
+        LocationTypesRepository $locationRepo,
+        CustomerRepository $customerRepository,
+        SessionInterface $session
+    ): Response {
+        $bookingDataJson = $request->query->get('bookingData');
+        $bookingData = json_decode(urldecode($bookingDataJson), true)['location'];
         $customer = $customerRepository->findOneByUid($uid);
-
-        $products = $productRepo->findBy(['id' => array_keys($productData)]);
-
-        $order = new Orders();
-        $order->setName('Facture');
-        $order->setCustomer($customer);
-        $order->setCreatedAt(new \DateTime());
-        $order->setStatus(["En attente"]);
-
-        $totalAmount = 0;
-
-        foreach ($products as $product) {
-            $productId = $product->getId();
-
-            $quantityToSubtract = $productData[$productId];
-            $currentStock = $product->getStock();
-
-            if ($currentStock >= $quantityToSubtract) {
-
-                $product->setStock($currentStock - $quantityToSubtract);
-                $productRepo->save($product, true);
-
-                $lineOrder = new LineOrders();
-                $lineOrder->setOrderId($order);
-                $lineOrder->setProduct($product);
-                $lineOrder->setAmount($product->getPriceUnit());
-                $lineOrder->setQuantity($quantityToSubtract);
-
-                $lineAmount = (float)$product->getPriceUnit();
-                $totalAmount += $lineAmount * $quantityToSubtract;
-
-                $order->addLineOrder($lineOrder);
-            } else {
-                return $this->redirectToRoute('app_home');
-            }
-        }
-
-        $order->setAmount($totalAmount);
-
-        $entityManager->persist($order);
-        $entityManager->flush();
-
-        $order->setName('Facture' . ' ' . $order->getId());
-
-        $entityManager->persist($order);
-        $entityManager->flush();
-
+        
+        $location = $locationRepo->findOneBy(['id' => $bookingData['id_location']]);
+        
+        $booking = new Bookings();
+        $booking
+        ->setLocationType($location)
+        ->setCustomer($customer)
+        ->setCreatedAt(new DateTimeImmutable())
+        ->setQuantityTraveller($bookingData['qty_traveller'])
+        ->setTotalPrice($bookingData['price'])
+        ->setStartAt(new DateTime($bookingData['start_at']['date']))
+        ->setEndAt(new DateTime($bookingData['end_at']['date']));
+        
+        $bookRepo->save($booking, true);
+        
         if ($this->isCsrfTokenValid('stripe_token', $token)) {
             $session->set('clean', true);
             return $this->redirectToRoute('app_home');

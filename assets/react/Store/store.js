@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import addressesReducer from "./slices/addressesSlices";
 import commentsReducer from "./slices/commentsSlices";
-import ordersReducer from "./slices/ordersSlices";
+import bookingsReducer from "./slices/bookingsSlices";
 import productsReducer from "./slices/productsSlices";
 import sliderReducer from "./slices/sliderSlices";
 import notifReducer from "./slices/notifSlices";
@@ -20,6 +20,6 @@ export const store = configureStore({
     addresses: addressesReducer,
     products: productsReducer,
     comments: commentsReducer,
-    orders: ordersReducer,
+    bookings: bookingsReducer,
   },
 });
