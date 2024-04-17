@@ -43,7 +43,7 @@ const UserBookings = ({ infos }) => {
   switch (bookingsStatus) {
     case "loading":
       return (
-        <main className={styles.userOrders}>
+        <main className={styles.userBookings}>
           <Icon
             style={{ marginTop: "150px" }}
             icon="svg-spinners:blocks-shuffle-3"
@@ -98,7 +98,10 @@ const UserBookings = ({ infos }) => {
 
                       <p>
                         <strong>
-                          {(Number(booking.price) / 100).toFixed(2)} €
+                          {(Number(booking.price) / 100)
+                            .toString()
+                            .replace(".", ",")}{" "}
+                          €
                         </strong>
                       </p>
 
