@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { hideHeader } from "../../utilities";
 
 import FormBook from "../../components/FormBook/FormBook";
 
+import { Icon } from "@iconify/react";
+
 import styles from "./nav.styles.scss";
 import axios from "axios";
+import { logout } from "../../Store/slices/authSlices";
 
 const Nav = () => {
   const { isLog, status } = useSelector((state) => ({ ...state.auth }));
   const token = localStorage.getItem(`${location.origin}_bear_token`);
+
+  const dispatch = useDispatch();
+
+  const [icon, setIcon] = useState("quill:off");
 
   const handleAdmin = async () => {
     try {
@@ -20,9 +27,26 @@ const Nav = () => {
         },
       });
       if (response.status === 200) {
-        return (location.href = response.data.url);
+        window.open(response.data.url, "_blank");
       }
     } catch (error) {
+      return console.error(error);
+    }
+  };
+
+  const handleLogout = async () => {
+    setIcon("svg-spinners:90-ring");
+    try {
+      const submitLogout = await axios.get("/api/v1/logout");
+
+      if (submitLogout.status === 200) {
+        setTimeout(() => {
+          dispatch(logout());
+          setIcon("quill:off");
+        }, 2000);
+      }
+    } catch (error) {
+      location.href = "/";
       return console.error(error);
     }
   };
@@ -30,7 +54,7 @@ const Nav = () => {
   return (
     <nav className={styles.nav}>
       <ul>
-        {isLog ? <Link to={"/profile"}>Profil</Link> : <></>}
+        {isLog ? <Link to={"/profile"}>Mon compte</Link> : <></>}
 
         <Link
           to={{ pathname: "/login", search: "?param=register" }}
@@ -52,9 +76,15 @@ const Nav = () => {
         )}
 
         {isLog ? (
-          <Link to={"/logout"}>Déconnexion</Link>
+          <Icon
+            onClick={handleLogout}
+            icon={icon}
+            style={{ color: " #ffc408" }}
+            width="50"
+            height="40"
+          />
         ) : (
-          <Link to={"/login"} onClick={() => hideHeader()}>
+          <Link to={"/login"} onClick={hideHeader}>
             Connexion
           </Link>
         )}

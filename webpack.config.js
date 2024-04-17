@@ -33,7 +33,6 @@ Encore.setOutputPath("public/build/")
     "./assets/react/containers/Home/home.styles.scss",
     "./assets/react/containers/Login/login.styles.scss",
     "./assets/react/containers/Logup/logup.styles.scss",
-    "./assets/react/containers/Logout/logout.styles.scss",
     "./assets/react/containers/Nav/nav.styles.scss",
     // "./assets/react/containers/ProductList/productList.styles.scss",
     "./assets/react/containers/ProfileBridge/profileBridge.styles.scss",

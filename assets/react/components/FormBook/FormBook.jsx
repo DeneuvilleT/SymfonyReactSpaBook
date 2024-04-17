@@ -54,11 +54,13 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
               dispatch(setLocations(response.data));
             }, 2000);
           } else {
-            dispatch(deleteLocations());
             setIcone("lets-icons:search-light");
-            return setMsgsErr([
-              "Aucun hébergement n'a été trouvé, vous pouvez réessayer avec d'autres paramètres",
+            setMsgsErr([
+              "Aucun hébergement n'a été trouvé. Vous pouvez essayer à nouveau avec différents paramètres",
             ]);
+            setTimeout(() => {
+              setMsgsErr([]);
+            }, 7000);
           }
         }
       } catch (err) {
@@ -183,9 +185,12 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
         )}
       </aside>
 
-      <ul>
+      <ul
+        className={`${styles.error_messages}
+        ${msgsErr.length !== 0 ? styles.appear : ""}`}
+      >
         {msgsErr.length > 0 && (
-          <div className="error-messages">
+          <div>
             {msgsErr.map((err, index) => (
               <span key={index}>
                 <Icon icon="uiw:warning" color="white" width="25" height="25" />

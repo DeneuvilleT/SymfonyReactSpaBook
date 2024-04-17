@@ -11,7 +11,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      localStorage.setItem(`${location.origin}_bear_token`, action.payload.token);
+      localStorage.setItem(
+        `${location.origin}_bear_token`,
+        action.payload.token
+      );
       state.isLog = true;
       state.infos = action.payload.user;
       if (action.payload !== null) state.status = action.payload.user.roles[0];

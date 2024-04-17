@@ -4,6 +4,8 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 
   width: 63vw;
   height: 100%;
@@ -32,7 +34,7 @@
   aside {
     justify-content: center;
     padding: 13px 0;
-    gap: 30px;
+    gap: 1vw;
   }
 
   aside:first-child label {
@@ -94,7 +96,8 @@
     appearance: none;
     cursor: pointer;
     min-width: 200px;
-    transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, border-radius 0.5s ease-in-out;
+    transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out,
+      border-radius 0.5s ease-in-out;
   }
 
   select:focus + label,
@@ -152,7 +155,7 @@
     user-select: none;
     border: 1px solid transparent;
     border-radius: 0.75ex;
-    background-color: #212529;
+    background-color: #464646;
     min-width: 126px;
     min-height: 45px;
     cursor: pointer;
@@ -186,6 +189,18 @@
     border-left: none;
   }
 
+  ul.error_messages {
+    height: 0;
+    margin-bottom: 0;
+    transition: height 0.75s ease-in-out, margin-bottom 0.75s ease-in-out;
+  }
+
+  ul.error_messages.appear {
+    height: 55px;
+    margin-bottom: 20px;
+    transition: height 0.5s ease-in, margin-bottom 0.5s ease-in-out;
+  }
+
   span {
     display: flex;
     align-items: center;
@@ -202,8 +217,8 @@
   }
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1605px) {
   .formBook {
-    width: 95vw;
+    width: 100%;
   }
 }

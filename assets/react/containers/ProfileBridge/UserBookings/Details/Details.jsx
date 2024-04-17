@@ -18,6 +18,7 @@ const Details = ({ cottage, display }) => {
             __html: cottage.description,
           }}
         />
+             
         <p>{(Number(cottage.price) / 100).toFixed(2)} €</p>
       </div>
     </aside>

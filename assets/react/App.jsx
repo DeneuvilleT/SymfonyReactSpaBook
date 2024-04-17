@@ -13,7 +13,6 @@ import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
 import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
 import UserBookings from "./containers/ProfileBridge/UserBookings/UserBookings";
 import Login from "./containers/Login/Login";
-import Logout from "./containers/Logout/Logout";
 import Footer from "./containers/Footer/Footer";
 import Notfound from "./components/PageNotFound/Notfound";
 
@@ -87,10 +86,6 @@ const App = ({ container }) => {
         <Route
           path="/login"
           element={<Authentication child={Login} auth={false} />}
-        />
-        <Route
-          path="/logout"
-          element={<Authentication child={Logout} auth={true} />}
         />
 
         <Route path="/notFound" element={<Notfound />} />

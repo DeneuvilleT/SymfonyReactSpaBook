@@ -1,7 +1,7 @@
 .userBookings {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 50px;
   padding: 20px 15vw;
@@ -10,7 +10,13 @@
   background-color: #f1f1f1f1;
 
   h2 {
-    font-size: 26px;
+    color: #333;
+    font-family: Poppins, sans-serif;
+    font-size: 3em;
+    font-weight: 600;
+    line-height: 1.15em;
+    margin-bottom: 20px;
+    width: 100%;
   }
 
   h3 {
@@ -22,10 +28,12 @@
 
   section {
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    flex-wrap: wrap;
     gap: 20px;
+    max-width: 1360px;
+    margin: 0 auto;
   }
 
   div {
@@ -33,29 +41,25 @@
   }
 
   img {
-    width: 300px;
+    width: 240px;
     height: auto;
+    max-height: 160px;
     border-radius: 5px;
-  }
-
-  section {
-    flex-wrap: wrap;
-    align-items: flex-start;
   }
 
   article {
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 5px;
-    flex: 1;
+    justify-content: center;
+
     position: relative;
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
     cursor: pointer;
-    width: 100%;
-    padding: 25px;
+    width: 45%;
+    padding: 15px 25px;
     transition: box-shadow 0.5s ease-in-out;
   }
 
@@ -65,12 +69,12 @@
 
   article aside {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
+    gap: 20px;
   }
 
   article aside:first-child {
-
   }
 
   article aside:nth-child(2) {
@@ -90,15 +94,16 @@
   span {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background-color: #ff6874;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.5em;
-    text-align: center;
+    justify-content: space-between;
+  }
+
+  span em:first-child::before {
+      content: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27%23000%27 d=%27M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4%27/%3E%3C/svg%3E");
+      display: inline-block;
+      width: 1.25em;
+      height: 1.25em;
+      vertical-align: -.125em;
+      margin-right: 5px;
   }
 
   h4 {
@@ -109,6 +114,14 @@
     font-size: 1.25em;
     line-height: 1.3em;
     letter-spacing: 0.05em;
+    text-align: right;
+  }
+
+  p strong  {
+      color: #017143;
+      font-family: Poppins,sans-serif;
+      font-size: 1.5em;
+      font-weight: 500;
   }
 
   button {

@@ -30,7 +30,7 @@ const Privacy = () => {
     <div
       className={styles.sliderContainer}
       style={{ display: privacyContent ? "flex" : "none" }}
-      onClick={() => handleClose()}
+      onClick={handleClose}
     >
       <Icon icon="fontisto:close-a" />
       <div className={`${styles.slider} ${styles.privacy}`} ref={sliderDom}>

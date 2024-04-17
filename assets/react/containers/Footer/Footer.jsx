@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { Icon } from "@iconify/react";
 
 import styles from "./footer.styles.scss";
 
 const Footer = () => {
+
+  const { isLog } = useSelector((state) => ({ ...state.auth }));
+
   return (
     <>
       <div className={styles.reinsurance}>
@@ -86,7 +90,7 @@ const Footer = () => {
                 <Link to={{ pathname: "/login", search: "?param=register" }}>Inscription</Link>
               </li>
               <li>
-                <Link to={"/profile"}>Mon compte</Link>
+                {isLog ? <Link to={"/profile"}>Mon compte</Link> : <></>}
               </li>
               <li>
                 <Link to={"/"}>Accueil</Link>

@@ -57,10 +57,9 @@ const UserBookings = ({ infos }) => {
     case "succeeded":
       return (
         <main className={styles.userBookings}>
-          <h2>Vos réservations</h2>
-
           {console.log(bookings)}
           <section>
+            <h2>Vos réservations :</h2>
             {bookings.length ? (
               bookings?.map((booking) => (
                 <article
@@ -82,27 +81,36 @@ const UserBookings = ({ infos }) => {
                     />
 
                     <div>
-                      <h4>{booking.cottage.name}</h4>
                       <p>
-                        {format(new Date(booking.start), "dd MMMM yyyy", {
-                          locale: fr,
-                        })}
+                        Location du&nbsp;
+                        <b>
+                          {format(new Date(booking.start), "dd MMMM yyyy", {
+                            locale: fr,
+                          })}
+                        </b>
+                        <br /> au&nbsp;
+                        <b>
+                          {format(new Date(booking.end), "dd MMMM yyyy", {
+                            locale: fr,
+                          })}
+                        </b>
                       </p>
-                      <p>
-                        {format(new Date(booking.end), "dd MMMM yyyy", {
-                          locale: fr,
-                        })}
-                      </p>
-                    </div>
 
-                    <div>
                       <p>
-                        {format(new Date(booking.createdAt), "dd MMMM yyyy", {
-                          locale: fr,
-                        })}
+                        <strong>
+                          {(Number(booking.price) / 100).toFixed(2)} €
+                        </strong>
                       </p>
-                      <p>{(Number(booking.price) / 100).toFixed(2)} €</p>
-                      <p>Pour {booking.traveller}</p>
+
+                      <span>
+                        <em>{booking.traveller} personne(s)</em>
+                        <em>
+                          créé le
+                          {format(new Date(booking.createdAt), "dd MMMM yyyy", {
+                            locale: fr,
+                          })}
+                        </em>
+                      </span>
                     </div>
                   </aside>
 

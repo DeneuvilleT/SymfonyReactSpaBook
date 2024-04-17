@@ -22,9 +22,7 @@ const Logo = ({ page }) => {
       to={"/"}
       ref={titleContainer}
       className={`${styles.logo} ${page === "login" ? styles.loginLogo : ""}`}
-      onClick={() => {
-        handleBackToHome();
-      }}
+      onClick={handleBackToHome}
     >
       <h1>
         <span>Cabane</span>
