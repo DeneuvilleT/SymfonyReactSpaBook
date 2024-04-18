@@ -57,7 +57,7 @@ const UserBookings = ({ infos }) => {
     case "succeeded":
       return (
         <main className={styles.userBookings}>
-          {console.log(bookings)}
+
           <section>
             <h2>Vos réservations :</h2>
             {bookings.length ? (

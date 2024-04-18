@@ -21,21 +21,26 @@ class ReactController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(SessionInterface $session): Response
     {
-        $tokenAtferBuy = $session->get('token');
+        $tokenAfterBuy = $session->get('token');
 
-        if ($tokenAtferBuy) {
+        if ($tokenAfterBuy) {
+
             $session->remove('token');
-            return $this->render('base.html.twig', [
-                'back' => $tokenAtferBuy
+
+            $response = $this->render('base.html.twig', [
+                'back' => $tokenAfterBuy
             ]);
-        } else if ($tokenAtferBuy === false) {
+
+            $response->headers->set('Set-Cookie', 'tokenAfterBuy=' . $tokenAfterBuy . '; path=/; expires=' . (new \DateTime('+10 minutes'))->format('r') . '; SameSite=None; Secure');
+
+            return $response;
+        } else if ($tokenAfterBuy === false) {
             return $this->render('base.html.twig', [
                 'back' => 'error_buy'
             ]);
-        } else if ($tokenAtferBuy === null) {
+        } else if ($tokenAfterBuy === null) {
             return $this->render('base.html.twig', [
-                'back' => 'test'
-                // 'back' => false
+                'back' => false
             ]);
         }
     }

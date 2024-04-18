@@ -47,7 +47,7 @@ const App = ({ container }) => {
   return (
     <>
       <Slider />
-      <Privacy success={backBuy} />
+      <Privacy success={backBuy} container={container} />
 
       <Header headerDom={headerDom} />
       <Routes>
