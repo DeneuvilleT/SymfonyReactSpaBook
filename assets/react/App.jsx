@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import Slider from "./components/Slider/Slider";
 import Privacy from "./components/Privacy/Privacy";
@@ -16,16 +15,13 @@ import Login from "./containers/Login/Login";
 import Footer from "./containers/Footer/Footer";
 import Notfound from "./components/PageNotFound/Notfound";
 
-import { clearCart } from "./Store/slices/cartSlices";
-
 import styles from "./containers/Header/header.styles.scss";
 
 const App = ({ container }) => {
-  const dispatch = useDispatch();
-
   const locationHook = useLocation();
-
   const headerDom = useRef(null);
+
+  const [backBuy, setBackBuy] = useState(null);
 
   useEffect(() => {
     if (
@@ -43,16 +39,15 @@ const App = ({ container }) => {
   }, [locationHook]);
 
   useEffect(() => {
-    if (container.dataset.clean) {
-      dispatch(clearCart());
-      container.removeAttribute("data-clean");
+    if (container.dataset.back || container.dataset.back !== false) {
+      setBackBuy(container.dataset.back);
     }
-  }, [container.dataset.clean, dispatch]);
+  }, [container]);
 
   return (
     <>
       <Slider />
-      <Privacy />
+      <Privacy success={backBuy} />
 
       <Header headerDom={headerDom} />
       <Routes>

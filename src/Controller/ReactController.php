@@ -21,16 +21,21 @@ class ReactController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(SessionInterface $session): Response
     {
-        $clean = $session->get('clean');
+        $tokenAtferBuy = $session->get('token');
 
-        if ($clean) {
-            $session->remove('clean');
+        if ($tokenAtferBuy) {
+            $session->remove('token');
             return $this->render('base.html.twig', [
-                'clean' => true
+                'back' => $tokenAtferBuy
             ]);
-        } else {
+        } else if ($tokenAtferBuy === false) {
             return $this->render('base.html.twig', [
-                'clean' => false
+                'back' => 'error_buy'
+            ]);
+        } else if ($tokenAtferBuy === null) {
+            return $this->render('base.html.twig', [
+                'back' => 'test'
+                // 'back' => false
             ]);
         }
     }
@@ -154,7 +159,7 @@ class ReactController extends AbstractController
 
                 // Parcourir les sous-tableaux contigus
                 foreach ($contiguousDates as $contiguousDateGroup) {
-                    
+
                     // Calculer la durée de chaque sous-tableau
                     $periodDuration = count($contiguousDateGroup);
 

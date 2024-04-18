@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Icon } from "@iconify/react";
 
 import styles from "../../UserBookings/userBookings.styles.scss";
 
 const Details = ({ cottage, display }) => {
-  const navigate = useNavigate();
 
   const [heightLine, setHeightLine] = useState(60);
 

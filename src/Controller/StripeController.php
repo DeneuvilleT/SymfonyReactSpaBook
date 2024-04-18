@@ -2,19 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Bookings;
-use Stripe\Stripe;
-use App\Entity\Orders;
-use App\Entity\LineOrders;
-use App\Repository\BookingsRepository;
-use App\Repository\CategoriesCottageRepository;
-use Stripe\Checkout\Session;
-use App\Repository\ProductsRepository;
-use App\Repository\CustomerRepository;
-use App\Repository\LocationTypesRepository;
 use DateTime;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
+use Stripe\Stripe;
+use App\Entity\Bookings;
+use Stripe\Checkout\Session;
+use App\Repository\CustomerRepository;
+use App\Repository\BookingsRepository;
+use App\Repository\LocationTypesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -124,11 +119,11 @@ class StripeController extends AbstractController
         $bookRepo->save($booking, true);
         
         if ($this->isCsrfTokenValid('stripe_token', $token)) {
-            $session->set('clean', true);
+            $session->set('token', $token);
             return $this->redirectToRoute('app_home');
         }
 
-        $session->set('clean', true);
+        $session->set('token', $token);
         return $this->redirectToRoute('app_home');
     }
 
@@ -136,7 +131,7 @@ class StripeController extends AbstractController
     #[Route('checkout_error', name: 'app_checkout_error', methods: ['GET'])]
     public function checkoutError(SessionInterface $session): Response
     {
-        $session->set('clean', true);
+        $session->set('token', false);
 
         return $this->redirectToRoute('app_home');
     }
