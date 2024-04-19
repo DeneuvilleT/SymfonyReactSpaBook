@@ -16,6 +16,8 @@ import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
 import UserBookings from "./containers/ProfileBridge/UserBookings/UserBookings";
 
 import styles from "./containers/Header/header.styles.scss";
+import Mentions from "./containers/Mentions/Mentions";
+import Conditions from "./containers/Conditions/Conditions";
 
 const App = ({ container }) => {
   const locationHook = useLocation();
@@ -58,6 +60,14 @@ const App = ({ container }) => {
         <Route
           path="/about_us"
           element={<Authentication child={AboutUs} auth={false} />}
+        />
+        <Route
+          path="/mentions-legales"
+          element={<Authentication child={Mentions} auth={false} />}
+        />
+        <Route
+          path="/conditions-generales-de-ventes"
+          element={<Authentication child={Conditions} auth={false} />}
         />
 
         <Route

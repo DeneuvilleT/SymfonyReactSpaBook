@@ -70,10 +70,10 @@ const Footer = () => {
                 <Link to={"/about_us"}>Qui sommes-nous</Link>
               </li>
               <li>
-                <Link to={"/"}>Mentions légales</Link>
+                <Link to={"/mentions-legales"}>Mentions légales</Link>
               </li>
               <li>
-                <Link to={"/"}>CGV</Link>
+                <Link to={"/conditions-generales-de-ventes"}>CGV</Link>
               </li>
               <li>
                 <Link to={"/"}>Moyens de paiement</Link>

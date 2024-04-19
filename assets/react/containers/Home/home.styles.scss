@@ -61,6 +61,12 @@
   }
 }
 
+.home.other {
+  div[role="figure"] {
+    clip-path: circle(500px at right 1000px);
+  }
+}
+
 // Accueil
 .welcome {
   position: relative;
@@ -151,6 +157,21 @@
 
   .imageBox img:hover {
     transform: scale3d(1.05, 1.05, 1.05);
+  }
+}
+
+.welcome.other {
+  height: auto;
+  margin: 40px auto 80px;
+  justify-content: center;
+
+  .textBox {
+    max-width: 1140px;
+    margin-left: 0;
+  }
+
+  .textBox h2 {
+    margin-bottom: 60px;
   }
 }
 

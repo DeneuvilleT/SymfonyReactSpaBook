@@ -100,6 +100,16 @@ const styles = StyleSheet.create({
     color: "#222",
     textAlign: "start",
   },
+  bottomPage: {
+    flexDirection : "column",
+    alignItems : "center",
+  },
+  textBottomUp: {
+    fontSize: 10,
+    color: "#333",
+    textAlign: "center",
+    marginBottom : 10,
+  },
   textBottom: {
     fontSize: 10,
     color: "#333",
@@ -225,6 +235,9 @@ const Invoice = ({ booking, infos }) => (
         </View>
 
         <View style={styles.bottomPage}>
+          <Text style={styles.textBottomUp}>
+            SIRET : 95340636000016 &nbsp;|&nbsp; TVA : FR74953406360 &nbsp;|&nbsp; Adresse : 2 RUE DE CHEZ CHABOT 17460 RIOUX
+          </Text>
           <Text style={styles.textBottom}>
             Copyright | 2024 Pause et nature | Tous droits réservés
           </Text>

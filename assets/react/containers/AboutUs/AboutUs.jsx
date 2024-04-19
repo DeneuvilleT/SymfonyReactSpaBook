@@ -5,15 +5,11 @@ import faces from "../../../../public/images/FACES/face_2.jpg";
 
 const AboutUs = () => {
   return (
-    <main className={styles.home}>
+    <main className={`${styles.home} ${styles.other}`}>
       <div role="figure"></div>
-      <article className={styles.welcome}>
+      <article className={`${styles.welcome} ${styles.other}`}>
         <div className={styles.textBox}>
-          <h2>
-            Profitez de la <span>nature</span>
-            <br />
-            et détendez-vous
-          </h2>
+        <h2>Qui sommes-nous ?</h2>
           <p>
             <span>
               Bienvenue sur notre plateforme de location de gîtes et cabanes, où
@@ -53,9 +49,6 @@ const AboutUs = () => {
               naturels exceptionnels. Bienvenue dans votre havre de paix.
             </span>
           </p>
-        </div>
-        <div className={styles.imageBox}>
-          <img src={faces} title="Photo des propriétaires" />
         </div>
       </article>
     </main>
