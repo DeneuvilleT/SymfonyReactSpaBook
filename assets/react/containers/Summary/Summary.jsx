@@ -219,7 +219,7 @@ const Summary = () => {
 
                 <aside>
                   Vous pouvez vous inscrire en cliquant sur le bouton ci dessous
-                  <Link to={{ pathname: "/login", search: "?param=register" }} >
+                  <Link to={{ pathname: "/login", search: "?param=register" }}>
                     s'inscrire
                   </Link>
                 </aside>

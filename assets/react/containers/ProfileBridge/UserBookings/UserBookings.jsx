@@ -57,7 +57,6 @@ const UserBookings = ({ infos }) => {
     case "succeeded":
       return (
         <main className={styles.userBookings}>
-
           <section>
             <h2>Vos réservations :</h2>
             {bookings.length ? (
@@ -120,6 +119,7 @@ const UserBookings = ({ infos }) => {
                   <Details
                     cottage={booking.cottage}
                     display={show[booking.id]}
+                    booking={booking}
                   />
                 </article>
               ))

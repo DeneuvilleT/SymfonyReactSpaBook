@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import Slider from "./components/Slider/Slider";
-import Privacy from "./components/Privacy/Privacy";
-import Header from "./containers/Header/Header";
-import Authentication from "./utilities/Authentication";
 import Home from "./containers/Home/Home";
+import Login from "./containers/Login/Login";
+import Slider from "./components/Slider/Slider";
+import Header from "./containers/Header/Header";
+import Footer from "./containers/Footer/Footer";
+import Privacy from "./components/Privacy/Privacy";
 import AboutUs from "./containers/AboutUs/AboutUs";
 import Summary from "./containers/Summary/Summary";
+import Authentication from "./utilities/Authentication";
+import Notfound from "./components/PageNotFound/Notfound";
 import ProfileBridge from "./containers/ProfileBridge/ProfileBridge";
 import UserDatas from "./containers/ProfileBridge/UserDatas/UserDatas";
 import UserBookings from "./containers/ProfileBridge/UserBookings/UserBookings";
-import Login from "./containers/Login/Login";
-import Footer from "./containers/Footer/Footer";
-import Notfound from "./components/PageNotFound/Notfound";
 
 import styles from "./containers/Header/header.styles.scss";
 

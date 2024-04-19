@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import { Icon } from "@iconify/react";
 
 import styles from "../../UserBookings/userBookings.styles.scss";
+import Invoice from "../../../../components/Invoice/Invoice";
 
-const Details = ({ cottage, display }) => {
+const Details = ({ booking, cottage, display }) => {
+  const { infos } = useSelector((state) => ({ ...state.auth }));
 
   const [heightLine, setHeightLine] = useState(60);
 
@@ -37,7 +42,17 @@ const Details = ({ cottage, display }) => {
               height="3em"
               style={{ color: "#444" }}
             />
-            <b>Télécharger la facture</b>
+
+            <PDFDownloadLink
+              document={<Invoice booking={booking} infos={infos} />}
+              fileName={`Réservation_${booking.id}.pdf`}
+            >
+              {({ blob, url, loading, error }) =>
+                loading
+                  ? "Chargement de la facture ..."
+                  : "Télécharger la facture"
+              }
+            </PDFDownloadLink>
           </span>
 
           <span>
