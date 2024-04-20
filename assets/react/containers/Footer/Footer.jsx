@@ -67,7 +67,7 @@ const Footer = () => {
             <h2>Support</h2>
             <ul>
               <li>
-                <Link to={"/about_us"}>Qui sommes-nous</Link>
+                <Link to={"qui-sommes-nous"}>Qui sommes-nous</Link>
               </li>
               <li>
                 <Link to={"/mentions-legales"}>Mentions légales</Link>
@@ -76,7 +76,7 @@ const Footer = () => {
                 <Link to={"/conditions-generales-de-ventes"}>CGV</Link>
               </li>
               <li>
-                <Link to={"/"}>Moyens de paiement</Link>
+                <Link to={"/moyens-de-paiements"}>Moyens de paiement</Link>
               </li>
             </ul>
           </div>

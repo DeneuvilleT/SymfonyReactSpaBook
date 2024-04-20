@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
@@ -7,15 +7,24 @@ import { Icon } from "@iconify/react";
 
 import styles from "../../UserBookings/userBookings.styles.scss";
 import Invoice from "../../../../components/Invoice/Invoice";
+import { setOnPrivacy } from "../../../../Store/slices/locationsSlices";
 
 const Details = ({ booking, cottage, display }) => {
   const { infos } = useSelector((state) => ({ ...state.auth }));
 
+  const dispatch = useDispatch();
+
   const [heightLine, setHeightLine] = useState(60);
 
   useEffect(() => {
-    setHeightLine(heightLine * 4);
+    setHeightLine(heightLine * 2.4);
   }, []);
+
+  const handleDisplayPrivacy = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(setOnPrivacy(cottage.privacy));
+  };
 
   return (
     <aside
@@ -25,22 +34,13 @@ const Details = ({ booking, cottage, display }) => {
       }}
     >
       <div>
-        <p
-          dangerouslySetInnerHTML={{
-            __html:
-              cottage.description.length > 200
-                ? `${cottage.description.substr(0, 200)} ...`
-                : cottage.description.substr(0, 200),
-          }}
-        />
-
         <p>
           <span>
             <Icon
               icon="iwwa:file-pdf"
               width="3em"
               height="3em"
-              style={{ color: "#444" }}
+              style={{ color: "#fff" }}
             />
 
             <PDFDownloadLink
@@ -57,26 +57,26 @@ const Details = ({ booking, cottage, display }) => {
 
           <span>
             <Icon
+              icon="material-symbols:euro"
+              width="2.25em"
+              height="3em"
+              style={{ color: "#fff" }}
+            />
+            <b>
+              {(Number(cottage.price) / 100).toString().replace(".", ",")}&nbsp;€ la nuit
+            </b>
+          </span>
+
+          <span onClick={(e) => handleDisplayPrivacy(e)}>
+            <Icon
               icon="iconoir:privacy-policy"
               width="2em"
               height="3em"
-              style={{ color: "#444" }}
+              style={{ color: "#fff" }}
             />
             <b>Régles de l'hébergement</b>
           </span>
 
-          <span>
-            <Icon
-              icon="material-symbols:euro"
-              width="2.25em"
-              height="3em"
-              style={{ color: "#444" }}
-            />
-            <b>
-              {(Number(cottage.price) / 100).toString().replace(".", ",")}
-              &nbsp;€ la nuit
-            </b>
-          </span>
         </p>
       </div>
     </aside>

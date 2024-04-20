@@ -11,7 +11,7 @@ import {
 
 import Calendar from "../Calendar/Calendar";
 import styles from "./periodsBooking.styles.scss";
-import { creaDomElem, displayLoader } from "../../utilities";
+import { creaDomElem } from "../../utilities";
 
 const PeriodsBooking = () => {
   const { choiceLocation, locations } = useSelector((state) => ({
