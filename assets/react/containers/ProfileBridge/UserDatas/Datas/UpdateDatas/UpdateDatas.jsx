@@ -31,6 +31,11 @@ const UpdateDatas = ({ infos }) => {
             name: "lastname",
             type: "text",
           },
+          phone: {
+            label: "Téléphone",
+            name: "phone",
+            type: "tel",
+          },
         }}
       />
     </fieldset>

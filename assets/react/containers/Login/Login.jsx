@@ -19,7 +19,7 @@ const Login = ({ isLog }) => {
   const formLog = useRef(null);
 
   const [msgErr, setMsgErr] = useState("");
-  const [icone, setIcone] = useState("line-md:arrow-right-circle");
+  const [icone, setIcone] = useState("bxs:right-arrow");
   const [canSave, setCanSave] = useState(false);
   const [formData, setFormData] = useState({
     _email: "",
@@ -66,7 +66,7 @@ const Login = ({ isLog }) => {
           return setMsgErr(response.data.message);
         }
       } catch (err) {
-        setIcone("line-md:arrow-right-circle");
+        setIcone("bxs:right-arrow");
         return setMsgErr(err.response.data.message);
       }
     }
@@ -126,7 +126,7 @@ const Login = ({ isLog }) => {
 
                 <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
                   Se connecter{" "}
-                  <Icon icon={icone} color="white" width="30" height="30" />
+                  <Icon icon={icone} color="white" width="22.5" height="22.5" />
                 </button>
               </form>
             </div>

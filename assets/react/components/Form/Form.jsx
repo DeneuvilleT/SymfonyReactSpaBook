@@ -4,21 +4,21 @@ import axios from "axios";
 import { Icon } from "@iconify/react";
 
 import styles from "./form.styles.scss";
-import { notification } from "../../utilities";
 
 const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
-
   const initialFormData = Object.fromEntries(
-    Object.entries(inputs).map(([key, input]) => [key, key === "type" ? input.value || 0 : input.value || ""])
+    Object.entries(inputs).map(([key, input]) => [
+      key,
+      key === "type" ? input.value || 0 : input.value || "",
+    ])
   );
 
   const token = localStorage.getItem(`${location.origin}_bear_token`);
 
-  const [icone, setIcone] = useState("line-md:arrow-right-circle");
+  const [icone, setIcone] = useState("bxs:right-arrow");
   const [formData, setFormData] = useState(initialFormData);
   const [canSave, setCanSave] = useState(false);
   const [msgsErr, setMsgsErr] = useState([]);
-  const [msgSuccess, setMsgSuccess] = useState(success);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
       setCanSave(false);
       try {
         setIcone("svg-spinners:90-ring-with-bg");
-
+        console.log(formData);
         const response = await axios.post(url, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,13 +36,19 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         setMsgsErr([]);
 
         if (response.status === 200) {
-          notification(setMsgSuccess, msgSuccess);
           setIcone("line-md:circle-to-confirm-circle-transition");
           return after ? location.reload() : (location.href = "/");
         }
       } catch (err) {
-        setIcone("line-md:arrow-right-circle");
-        return setMsgsErr([...JSON.parse(err.response.data).errors]);
+        console.log(err)
+        const errors = JSON.parse(err.response.data);
+console.log(errors)
+        if (Array.isArray(errors)) {
+          setMsgsErr([...errors.message]);
+        } else {
+          setMsgsErr([errors.message]);
+        }
+        return setIcone("bxs:right-arrow");
       }
     }
   };
@@ -52,15 +58,20 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
     const { name, value } = e.target;
     const updatedFormData = { ...formData, [name]: value };
     setFormData(updatedFormData);
-    setCanSave(Object.values(updatedFormData).every((val) => val !== "") ? true : false);
+    setCanSave(
+      Object.values(updatedFormData).every((val) => val !== "") ? true : false
+    );
   };
 
   return (
     <form className={styles.form}>
       {Object.entries(inputs).map(([key, input]) => (
         <fieldset key={key}>
-
-          {hasLabel && input.type !== "hidden" ? <label htmlFor={`post_${input.name}`}>{input.label}</label> : <></>}
+          {hasLabel && input.type !== "hidden" ? (
+            <label htmlFor={`post_${input.name}`}>{input.label}</label>
+          ) : (
+            <></>
+          )}
 
           {input.type !== "textarea" && input.type !== "select" ? (
             <input
@@ -71,14 +82,21 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
               placeholder={!hasLabel ? input.label.toLowerCase() : ""}
               onChange={handleInputChange}
             />
-
           ) : input.type === "textarea" ? (
-            <textarea name={input.name} value={formData[key]} onChange={handleInputChange}>
+            <textarea
+              name={input.name}
+              value={formData[key]}
+              onChange={handleInputChange}
+            >
               {!hasLabel ? input.label.toLowerCase() : ""}
             </textarea>
-
           ) : (
-            <select name={input.name} value={formData[key]} onChange={handleInputChange} id={`post_${input.name}`}>
+            <select
+              name={input.name}
+              value={formData[key]}
+              onChange={handleInputChange}
+              id={`post_${input.name}`}
+            >
               {input.option?.map((x, i) => (
                 <option key={i} value={x.value}>
                   {x.text}
@@ -86,7 +104,6 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
               ))}
             </select>
           )}
-
         </fieldset>
       ))}
 
@@ -95,7 +112,7 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
           <div className="error-messages">
             {msgsErr.map((err, index) => (
               <span key={index}>
-                <Icon icon="line-md:alert-twotone" color="white" width="23" height="23" />
+                <Icon icon="line-md:alert-twotone" color="white" />
                 {err}
               </span>
             ))}
@@ -105,7 +122,7 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
 
       <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
         {btnSubmit}
-        <Icon icon={icone} color="white" width="30" height="30" />
+        <Icon icon={icone} color="white" width="22.5" height="22.5" />
       </button>
     </form>
   );

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -40,12 +41,7 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\Column(length: 255)]
-    #[Assert\Regex(
-        pattern: '/^(?=(?:[^0-9]*[0-9]){2})(?=.*[!@#$%^&*€()])(?=.*[A-Z]).{8,}$/',
-        match: true,
-        message: 'Le mot de passe doit contenir au moins deux chiffres, un caractère spécial, une majuscule, et avoir au moins 8 caractères.',
-    )]
+    #[ORM\Column(type: "string")]
     private ?string $password = null;
 
     #[Groups("api")]
@@ -79,6 +75,17 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: 'Votre nom ne peut pas contenir plus de {{ limit }} cractéres.',
     )]
     private ?string $lastName = null;
+
+    #[Assert\Length(
+        min: 8,
+        max: 20,
+        minMessage: 'Le numéro de téléphone doit comporter au moins {{ limit }} caractères.',
+        maxMessage: 'Le numéro de téléphone ne peut excéder {{ limit }} caractères.'
+    )]
+
+    #[Assert\Type('numeric')]
+    #[Assert\Regex('/^\+?[\d\- ]*$/', message: 'Le numéro de téléphone n\'est pas valide.')]
+    private ?int $phone = null;
 
     #[Groups("api")]
     #[ORM\Column(type: 'integer')]
@@ -155,6 +162,18 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): static
+    {
+        $this->phone = $phone;
 
         return $this;
     }

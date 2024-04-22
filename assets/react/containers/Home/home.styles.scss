@@ -1,3 +1,28 @@
+@keyframes appear {
+  0% {
+    opacity: 0.5;
+    transform: translateY(90vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(1px);
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+    height: 100%;
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 0;
+    height: 0%;
+    transform: translateY(100vh);
+    z-index: -1;
+  }
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -76,9 +101,7 @@
   width: 100%;
   margin: 60px auto;
   max-width: 1360px;
-  height: 615px;
-  transform: translateY(1);
-  transition: transform 3.5s ease-in-out;
+  animation: appear 2.5s linear forwards;
 
   .textBox {
     position: relative;
@@ -162,8 +185,11 @@
 
 .welcome.other {
   height: auto;
-  margin: 40px auto 80px;
+  margin: 60px auto 100px;
   justify-content: center;
+  transform: translateY(90vh);
+  opacity: 0.5;
+  animation: appear 2.5s linear forwards;
 
   .textBox {
     max-width: 1140px;
@@ -176,11 +202,14 @@
 }
 
 .welcome.hideModify {
+  animation: none;
   visibility: hidden;
+  opacity: 0;
 }
 
 .welcome.hide {
-  transform: translateY(-850px);
+  overflow: hidden;
+  animation: disappear 2.5s linear forwards;
 }
 
 // Locations
@@ -193,8 +222,7 @@
   max-width: 1450px;
   margin: -750px auto auto;
   width: 100%;
-  transform: translateY(160vh);
-  transition: transform 2s ease-out;
+  transform: translateY(90vh);
 
   li {
     display: flex;
@@ -211,7 +239,8 @@
 }
 
 .locations.appear {
-  transform: translateY(1px);
+  // transform: translateY(1px);
+  animation: appear 2s linear forwards;
 }
 
 // Locations trouvées
@@ -237,20 +266,20 @@
     flex-direction: column;
     position: relative;
     width: 100%;
-    margin-bottom: 15px;
+    margin: 15px 0;
     padding: 20px 0 0 20px;
     border-radius: 25px;
-    background-color: #f1f1f1;
+    background-color: #fff;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.16);
   }
 
   .content > span {
     display: flex;
     position: absolute;
-    top: -70px;
+    top: -80px;
     left: 0;
     width: auto;
-    height: 70px;
+    height: 65px;
     min-width: 50%;
     border-top: 10px solid #f1f1f1;
     border-right: 10px solid #f1f1f1;

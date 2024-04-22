@@ -160,7 +160,12 @@
   padding: 20px 40px;
   overflow-y: auto;
   overflow-x: hidden;
+  inset: 80px auto;
 
+  transform: none;
+  left: auto;
+  top: auto;
+  max-width: 1360px;
   border-radius: 0;
   width: 85vw;
 

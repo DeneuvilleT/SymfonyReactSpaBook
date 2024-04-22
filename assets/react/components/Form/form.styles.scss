@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 20px;
+  gap: 10px;
 
   textarea,
   select,
@@ -23,6 +23,7 @@
   }
 
   input::placeholder {
+    font-weight: 400;
     font-size: 1.15em;
     color: #99999963;
   }
@@ -48,30 +49,11 @@
     gap: 25px;
     min-height: 45px;
     max-width: 200px;
-    background-color: green !important;
+    background-color: green;
     font-size: 18px;
     color: #fff;
-    border-radius: 30px !important;
-    padding: 7px 25px !important;
-    font-size: 16px !important;
-  }
-
-  button:disabled {
-    padding: 7px 25px !important;
-    border-radius: 30px !important;
-    background-color: #999 !important;
-    color: #f9f9f9;
-    font-size: 16px !important;
-    cursor: default;
-    max-width: 200px;
-  }
-
-  button:disabled:hover {
-    filter: brightness(1);
-  }
-
-  button:disabled:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+    border-radius: 30px;
+    padding: 7px 25px;
   }
 
   ul div {
@@ -81,14 +63,20 @@
   span {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: flex-start;
+    gap: 15px;
 
     background-color: #c10000;
-    border-radius: 2ex;
-    padding: 15px;
+    border-radius: 5px;
+    padding: 8px 12.5px;
 
     color: #fff;
-    font-size: 1.25em;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+  }
+
+  span svg {
+    min-width: 30px;
+    min-height: 30px;
   }
 }

@@ -8,6 +8,9 @@ import PeriodsBooking from "../PeriodsBooking/PeriodsBooking";
 import Filters from "../Filters/Filters";
 
 import styles from "../../containers/Home/home.styles.scss";
+import {
+  setOneLocation,
+} from "../../Store/slices/locationsSlices";
 
 const Locations = ({ locationsDatas }) => {
   const { choiceLocation, locations } = useSelector((state) => ({
@@ -31,6 +34,14 @@ const Locations = ({ locationsDatas }) => {
       }
     }
   }, [locations, locationHook]);
+
+  useEffect(() => {
+    if (locationHook.search === "?param=modify") {
+      locationContainer.current.classList.add(styles.speed, styles.appear);
+
+      dispatch(setOneLocation(locations[0]));
+    }
+  }, [locationHook]);
 
   return (
     <>

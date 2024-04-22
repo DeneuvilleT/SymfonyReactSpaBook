@@ -50,28 +50,34 @@
 
   h2 {
     color: #fff;
+    letter-spacing: 1px;
     font-size: 1.2em;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     text-shadow: 0 0px 4px rgb(119 119 119);
   }
 
   button {
     cursor: pointer;
     padding: 10px 20px;
-    background-color: #fff;
-    color: #333;
+    color: #fff;
     font-size: 1.1em;
     font-weight: 500;
+    letter-spacing: 1px;
     border: none;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
     transition: box-shadow 0.25s ease-in-out;
+    background: linear-gradient(155deg, #0f9310, #0ea32c 70%, #43a70f);
   }
 
   button:active {
     box-shadow: inset rgba(0, 0, 0, 0.3) 0px 0px 2px;
   }
+}
+
+.formContainerBox:nth-child(2) > button {
+  background: linear-gradient(155deg, #e30000, #d40000 70%, #d60202);
 }
 
 .formBox {
@@ -118,7 +124,7 @@
   .formSignUp form {
     display: flex;
     flex-direction: column;
-    padding: 0 50px;
+    padding: 0 60px;
     width: 100%;
   }
 
@@ -140,12 +146,20 @@
     padding: 10px;
     outline: none;
     flex: none;
-    font-size: 0.8em;
-    text-transform: uppercase;
-    border: 1px solid #3333338a;
+    font-size: 0.9em;
     letter-spacing: 0.1em;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    background-color: #e9e9e9;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .formSignIn form input::placeholder,
+  .formSignUp form input::placeholder {
+    color: #222;
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 0.9em;
   }
 
   .formSignIn form button,
@@ -154,21 +168,51 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    background-color: green;
+    background: linear-gradient(155deg, #0f9310, #0ea32c 70%, #43a70f);
     border: none;
     color: #fff;
 
-    padding: 10px;
-    max-width: 170px;
+    padding: 10px 10px 10px 15px;
+    max-width: 180px;
     cursor: pointer;
+    letter-spacing: 1px;
     font-size: 1.1em;
     font-weight: 500;
     margin-top: 20px;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    border-radius: 5px;
+    box-shadow: none;
   }
 
-  .formSignUp form button {
-    background-color: #f43648 !important;
+  .formSignUp button:disabled,
+  .formSignIn form button:disabled {
+    background: #999;
+    color: #f9f9f9;
+    cursor: default;
+  }
+
+  .formSignUp button:hover,
+  .formSignIn form button:hover {
+    filter: brightness(1);
+  }
+
+  .formSignUp form button:not(:disabled):active,
+  .formSignIn form button:not(:disabled):active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+  }
+}
+
+@media (max-width: 1920px) {
+  .formContainer {
+    width: 100%;
+  }
+
+  .formBox {
+    width: 32vw;
+  }
+
+  .formLog.formSlide {
+    .formBox {
+      left: 52%;
+    }
   }
 }

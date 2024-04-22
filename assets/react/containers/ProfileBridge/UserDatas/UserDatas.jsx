@@ -16,7 +16,6 @@ const UserDatas = ({ infos }) => {
           <h2>Bienvenue {infos.firstname}</h2>
           {!modif ? <Datas infos={infos} setModif={setModif} /> : <UpdateDatas infos={infos} />}
         </div>
-        <Addresses infos={infos} />
       </section>
     </main>
   );

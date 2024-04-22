@@ -21,15 +21,20 @@ const Logup = () => {
             name: "lastname",
             type: "text",
           },
+          email: {
+            label: "Email",
+            name: "email",
+            type: "email",
+          },
           password: {
             label: "Mot de passe",
             name: "password",
             type: "password",
           },
-          email: {
-            label: "Email",
-            name: "email",
-            type: "email",
+          phone: {
+            label: "Téléphone",
+            name: "phone",
+            type: "tel",
           },
         }}
       />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 import { setOneLocation } from "../../Store/slices/locationsSlices";
@@ -9,6 +9,10 @@ import { hideHeader } from "../../utilities";
 import styles from "../../containers/Home/home.styles.scss";
 
 const Filters = ({ location }) => {
+  const { choiceLocation } = useSelector((state) => ({
+    ...state.location,
+  }));
+
   const dispatch = useDispatch();
 
   const btnBook = useRef(null);
@@ -23,26 +27,25 @@ const Filters = ({ location }) => {
     }
   }, [locationHook]);
 
-  const selectLocation = (node) => {
+  const selectLocation = () => {
     dispatch(setOneLocation(location));
     hideHeader();
 
     setContent(`${location.cottage.price_one_night / 100} €`);
-    node.parentElement.classList.toggle(styles.locationActive);
-    node.classList.toggle(styles.locationActive);
   };
 
   return (
     <ul>
       <div
         role="figure"
-        className={`${!location.is_available ? styles.locationOff : ""}`}
+        className={`${!location.is_available ? styles.locationOff : ""} ${
+          choiceLocation ? styles.locationActive : ""
+        }`}
       >
         <span
           ref={btnBook}
-          onClick={(e) =>
-            location.is_available ? selectLocation(e.currentTarget) : null
-          }
+          className={`${choiceLocation ? styles.locationActive : ""}`}
+          onClick={location.is_available ? selectLocation : null}
         >
           {content !== "Réserver" ? (
             <>

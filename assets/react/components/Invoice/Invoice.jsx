@@ -128,6 +128,7 @@ const Invoice = ({ booking, infos }) => (
               {infos.lastname} {infos.firstname}
             </Text>
             <Text style={styles.textTop}>{infos.email}</Text>
+            <Text style={styles.textTop}>{infos.phone}</Text>
           </View>
           <Image style={styles.logoImg} src={logo} />
         </View>

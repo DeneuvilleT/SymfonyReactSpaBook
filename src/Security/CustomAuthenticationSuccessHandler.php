@@ -31,6 +31,7 @@ class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler
                 'password' => $user->getPassword(),
                 'firstname' => $user->getFirstname(),
                 'lastname' => $user->getLastName(),
+                'phone' => $user->getPhone(),
                 'roles' => $user->getRoles(),
                 'uid' => $user->getUid(),
             ],
