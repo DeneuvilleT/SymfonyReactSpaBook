@@ -52,43 +52,38 @@ class RegistrationController extends AbstractController
 
         $password = $datas['password'];
 
-        // Vérifier si le mot de passe contient au moins deux chiffres
         if (preg_match_all("/[0-9]/", $password) < 2) {
             $errorMessage = "Le mot de passe doit contenir au moins deux chiffres.";
-            // Retourner une réponse d'erreur
+
             $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
             return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
         }
 
-        // Vérifier si le mot de passe contient un caractère spécial
         if (!preg_match("/[!@#$%^&*€()-]/", $password)) {
-            $errorMessage = "Le mot de passe doit contenir au moins un caractère spécial.";
-            // Retourner une réponse d'erreur
+            $errorMessage = "Le mot de passe doit contenir au moins un caractère spécial parmi ! @ # $ % ^ & * € ( ) - ."; 
+
             $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
             return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
         }
 
-        // Vérifier si le mot de passe contient au moins une majuscule
         if (!preg_match("/[A-Z]/", $password)) {
             $errorMessage = "Le mot de passe doit contenir au moins une majuscule.";
-            // Retourner une réponse d'erreur
+
             $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
             return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
         }
 
-        // Vérifier si le mot de passe a au moins 8 caractères
         if (strlen($password) < 8) {
             $errorMessage = "Le mot de passe doit avoir au moins 8 caractères.";
-            // Retourner une réponse d'erreur
+
             $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
             return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
         }
 
-        // Si le mot de passe est valide, procédez à l'inscription
         $customer->setFirstname($datas['firstname']);
         $customer->setLastName($datas['lastname']);
         $customer->setEmail($datas['email']);
-        $customer->setPhone($datas['phone']);
+        $customer->setPhone((int)$datas['phone']);
         $customer->setRoles(['ROLE_CUSTOMER']);
         $customer->setIsVerified(0);
         $customer->setUid(uniqid());
@@ -111,7 +106,7 @@ class RegistrationController extends AbstractController
 
             return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
         } else {
-            // Hachez le mot de passe et stockez-le
+
             $hashedPassword = $userPasswordHasher->hashPassword($customer, $datas['password']);
             $customer->setPassword($hashedPassword);
 

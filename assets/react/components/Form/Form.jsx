@@ -27,7 +27,6 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
       setCanSave(false);
       try {
         setIcone("svg-spinners:90-ring-with-bg");
-        console.log(formData);
         const response = await axios.post(url, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -42,9 +41,8 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
       } catch (err) {
         console.log(err)
         const errors = JSON.parse(err.response.data);
-console.log(errors)
-        if (Array.isArray(errors)) {
-          setMsgsErr([...errors.message]);
+        if (Array.isArray(errors.errors)) {
+          setMsgsErr([...errors.errors]);
         } else {
           setMsgsErr([errors.message]);
         }

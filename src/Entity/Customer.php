@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -76,15 +75,11 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $lastName = null;
 
-    #[Assert\Length(
-        min: 8,
-        max: 20,
-        minMessage: 'Le numéro de téléphone doit comporter au moins {{ limit }} caractères.',
-        maxMessage: 'Le numéro de téléphone ne peut excéder {{ limit }} caractères.'
+    #[Assert\Regex(
+        pattern: '/^(?:\+)?(\d{3})[-.\s]?\d{2}[-. ]?\d{4}$/',
+        match: true,
+        message: 'Le numéro de téléphone doit être sous la forme +XXX-XX-XXXX ou XXX-XX-XXXX ou XXX XX XXXX'
     )]
-
-    #[Assert\Type('numeric')]
-    #[Assert\Regex('/^\+?[\d\- ]*$/', message: 'Le numéro de téléphone n\'est pas valide.')]
     private ?int $phone = null;
 
     #[Groups("api")]
