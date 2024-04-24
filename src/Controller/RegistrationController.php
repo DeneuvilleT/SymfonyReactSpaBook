@@ -22,6 +22,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -36,7 +37,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/v1/register', name: 'app_register', methods: ['POST', 'GET'])]
-    public function register(Request $request,  UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
+    public function register(Request $request,  UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ValidatorInterface $validator,  MailerInterface $mailer,): JsonResponse
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
@@ -60,7 +61,7 @@ class RegistrationController extends AbstractController
         }
 
         if (!preg_match("/[!@#$%^&*€()-]/", $password)) {
-            $errorMessage = "Le mot de passe doit contenir au moins un caractère spécial parmi ! @ # $ % ^ & * € ( ) - ."; 
+            $errorMessage = "Le mot de passe doit contenir au moins un caractère spécial parmi ! @ # $ % ^ & * € ( ) - .";
 
             $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
             return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
@@ -113,15 +114,16 @@ class RegistrationController extends AbstractController
             $entityManager->persist($customer);
             $entityManager->flush();
 
-            // $this->emailVerifier->sendEmailConfirmation(
-            //     'app_verify_email',
-            //     $customer,
-            //     (new TemplatedEmail())
-            //         ->from(new Address('deneuville.thomas@gmail.com', 'Admin'))
-            //         ->to($customer->getEmail())
-            //         ->subject('Please Confirm your Email')
-            //         ->htmlTemplate('registration/confirmation_email.html.twig')
-            // );
+            $email = (new TemplatedEmail())
+                ->from('Cabane et gite au naturel <contact@cabaneetgiteaunaturel.com>')
+                ->to($customer->getEmail())
+                ->subject("Création de votre compte utilisateur")
+                ->htmlTemplate('/mail/confirmation_register.html.twig')
+                ->context([
+                    'customer' => $customer,
+                ]);
+
+            $mailer->send($email);
 
             $jsonContent = $serializer->serialize(["Success"], 'json');
 

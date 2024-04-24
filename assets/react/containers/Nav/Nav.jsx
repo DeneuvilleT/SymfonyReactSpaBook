@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { hideHeader } from "../../utilities";
 
@@ -16,6 +16,7 @@ const Nav = () => {
   const token = localStorage.getItem(`${location.origin}_bear_token`);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [icon, setIcon] = useState("quill:off");
 
@@ -43,6 +44,7 @@ const Nav = () => {
         setTimeout(() => {
           dispatch(logout());
           setIcon("quill:off");
+          navigate('/');
         }, 2000);
       }
     } catch (error) {

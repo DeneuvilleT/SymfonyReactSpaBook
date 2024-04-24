@@ -33,12 +33,45 @@ class CustomersController extends AbstractController
 
             $datas = json_decode($request->getContent(), true);
 
+            $password = $datas['password'];
+
+            if (preg_match_all("/[0-9]/", $password) < 2) {
+                $errorMessage = "Le mot de passe doit contenir au moins deux chiffres.";
+
+                $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+            }
+
+            if (!preg_match("/[!@#$%^&*€()-]/", $password)) {
+                $errorMessage = "Le mot de passe doit contenir au moins un caractère spécial parmi ! @ # $ % ^ & * € ( ) - .";
+
+                $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+            }
+
+            if (!preg_match("/[A-Z]/", $password)) {
+                $errorMessage = "Le mot de passe doit contenir au moins une majuscule.";
+
+                $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+            }
+
+            if (strlen($password) < 8) {
+                $errorMessage = "Le mot de passe doit avoir au moins 8 caractères.";
+
+                $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+            }
+
             $customer->setFirstname($datas['firstname']);
             $customer->setLastName($datas['lastname']);
             $customer->setPassword($datas['password']);
             $customer->setEmail($datas['email']);
+            $customer->setPhone((int)$datas['phone']);
 
             $errors = $validator->validate($customer);
+
+            dd($errors);
 
             if (count($errors) > 0) {
                 $errorMessages = [];
@@ -57,12 +90,8 @@ class CustomersController extends AbstractController
                 return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
             } else {
 
-                $customer->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $customer,
-                        $datas['password']
-                    )
-                );
+                $hashedPassword = $userPasswordHasher->hashPassword($customer, $datas['password']);
+                $customer->setPassword($hashedPassword);
 
                 $customerRepo->save($customer, true);
 

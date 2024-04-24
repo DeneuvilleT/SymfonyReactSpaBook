@@ -75,13 +75,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $lastName = null;
 
-    #[Assert\Regex(
-        pattern: '/^(?:\+)?(\d{3})[-.\s]?\d{2}[-. ]?\d{4}$/',
-        match: true,
-        message: 'Le numéro de téléphone doit être sous la forme +XXX-XX-XXXX ou XXX-XX-XXXX ou XXX XX XXXX'
-    )]
-    private ?int $phone = null;
-
     #[Groups("api")]
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
@@ -99,6 +92,14 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Bookings::class)]
     private Collection $bookings;
 
+    #[Groups("api")]
+    #[ORM\Column]
+    #[Assert\Regex(
+        pattern: '/^(?:\+)?(\d{3})[-.\s]?\d{2}[-. ]?\d{4}$/',
+        match: true,
+        message: 'Le numéro de téléphone doit être sous la forme +XXX-XX-XXXX ou XXX-XX-XXXX ou XXX XX XXXX'
+    )]
+    private ?int $phone = null;
 
     public function __construct()
     {
@@ -161,17 +162,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhone(): ?int
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(int $phone): static
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
 
     /**
      * A visual identifier that represents this user.
@@ -350,6 +340,18 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
                 $booking->setCustomer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): static
+    {
+        $this->phone = $phone;
 
         return $this;
     }

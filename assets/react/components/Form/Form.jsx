@@ -34,9 +34,10 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         });
         setMsgsErr([]);
 
+        console.log(response)
         if (response.status === 200) {
           setIcone("line-md:circle-to-confirm-circle-transition");
-          return after ? location.reload() : (location.href = "/");
+          return after ? '' : (location.href = "/");
         }
       } catch (err) {
         console.log(err)
