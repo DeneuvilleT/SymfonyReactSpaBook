@@ -78,8 +78,8 @@
   input:not(input[type="checkbox"]) {
     display: block;
     width: 100%;
-    min-width: 175px;
     min-height: 38px;
+    min-width: 200px;
     padding: 0.375rem 0.75rem;
     font-size: 0.9em;
     font-weight: 400;
@@ -95,7 +95,6 @@
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
-    min-width: 200px;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out,
       border-radius 0.5s ease-in-out;
   }
@@ -217,8 +216,34 @@
   }
 }
 
-@media (max-width: 1605px) {
+@media (max-width: 1800px) {
   .formBook {
     width: 100%;
+
+    select,
+    input:not(input[type="checkbox"]) {
+      min-width: 195px;
+    }
+  }
+}
+
+@media (max-width: 515px) {
+  .formBook {
+    aside:first-child div {
+      width: 49%;
+    }
+
+    aside:nth-child(2) div {
+      flex-grow: 1;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+
+    aside:first-child label {
+      min-width: 0;
+      width: 95%;
+    }
   }
 }

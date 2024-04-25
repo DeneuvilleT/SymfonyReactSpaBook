@@ -12,12 +12,16 @@ const Footer = () => {
 
   return (
     <>
-      <div className={styles.reinsurance}>
+      <div className={styles.reassurance}>
         <div>
           <h3>
+            <span>
             Trouvez
+            </span>
             <br />
+            <span>
             nous
+            </span>
           </h3>
 
           <address>
