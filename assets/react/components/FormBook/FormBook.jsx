@@ -1,20 +1,18 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Icon } from "@iconify/react";
 import axios from "axios";
 
-import {
-  setLocations,
-  deleteLocations,
-} from "../../Store/slices/locationsSlices";
+import { setLocations } from "../../Store/slices/locationsSlices";
 import { displayLoader } from "../../utilities";
 
 import styles from "./formBook.styles.scss";
 
 const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
   const { locations } = useSelector((state) => ({ ...state.location }));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,6 +22,8 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
       key === "type" ? input.value || 0 : input.value || "",
     ])
   );
+
+  const filters = useRef(null);
 
   const [icone, setIcone] = useState("lets-icons:search-light");
   const [formData, setFormData] = useState(initialFormData);
@@ -163,7 +163,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
         </button>
       </aside>
 
-      <aside>
+      <aside ref={filters}>
         {Object.entries(inputs).map(([key, input]) =>
           input.type === "checkbox" ? (
             <div key={key}>
@@ -186,6 +186,10 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
           )
         )}
       </aside>
+
+      <menu
+        onClick={() => filters.current.classList.toggle(styles.active)}
+      ></menu>
 
       <ul
         className={`${styles.error_messages}

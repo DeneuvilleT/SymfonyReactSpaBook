@@ -87,10 +87,6 @@
   > aside {
     background-color: hsla(0, 0%, 57%, 0.45);
   }
-
-  form aside:nth-child(2) {
-    padding-bottom: 20px;
-  }
 }
 
 @media (max-width: 1800px) {
@@ -125,6 +121,7 @@
     > ul {
       flex-direction: column;
       align-items: flex-end;
+      padding-right: 10px;
     }
     ul a {
       padding: 7.5px 10px;

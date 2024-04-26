@@ -19,9 +19,12 @@
   aside {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 1vw;
+    padding: 13px 0;
+    height: auto;
+    transition: transform 0.75s ease-in-out, height 0.5s ease-in;
   }
 
   div {
@@ -29,12 +32,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
-  }
-
-  aside {
-    justify-content: center;
-    padding: 13px 0;
-    gap: 1vw;
   }
 
   aside:first-child label {
@@ -222,6 +219,7 @@
     padding: 15px;
 
     color: #fff;
+    font-weight: 500;
     font-size: 1em;
     letter-spacing: 1px;
   }
@@ -233,15 +231,91 @@
   }
 }
 
+@media (max-width: 780px) {
+  aside:nth-child(2) {
+    justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 621px) {
+  .formBook {
+    menu {
+      display: none;
+    }
+
+    aside:nth-child(2) {
+      height: auto;
+      transform: translateY(1px);
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  .formBook {
+    aside:first-child {
+      padding-bottom: 0;
+    }
+
+    aside:first-child div:first-child {
+      order: 1;
+    }
+
+    aside:first-child div:nth-child(2) {
+      order: 3;
+    }
+
+    aside:first-child div:nth-child(3) {
+      order: 4;
+    }
+
+    aside:first-child div:nth-child(4) {
+      order: 2;
+    }
+
+    aside:nth-child(2) {
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      transform: translateY(200px);
+    }
+
+    aside:nth-child(2).active {
+      height: 70px;
+      padding: 0 13px;
+      margin-top: 10px;
+      transform: translateY(1px);
+    }
+
+    menu {
+      height: 30px;
+      width: 100%;
+      color: #fff;
+      list-style: none;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 14.702L6.692 9.394l.708-.707l4.6 4.6l4.6-4.6l.708.707z'/%3E%3C/svg%3E");
+    }
+
+    aside:nth-child(2).active + menu {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='m7.4 14.702l-.708-.708L12 8.687l5.308 5.307l-.708.708l-4.6-4.6z'/%3E%3C/svg%3E");
+    }
+
+    button {
+      order: 5;
+      width: 80%;
+    }
+
+    ul.error_messages.appear {
+      margin-bottom: 45px;
+    }
+  }
+}
+
 @media (max-width: 515px) {
   .formBook {
     select,
     input:not(input[type="checkbox"]) {
       min-width: 0;
-    }
-
-    aside:first-child {
-      padding-bottom: 0;
     }
 
     aside:first-child div {
@@ -264,6 +338,7 @@
     button {
       margin-top: 10px;
       font-size: 0.9em;
+      width: 100%;
     }
 
     aside:nth-child(2) {
@@ -283,6 +358,10 @@
     aside:first-child label,
     aside:nth-child(2) label {
       font-size: 0.7em;
+    }
+
+    ul.error_messages.appear {
+      margin-bottom: 55px;
     }
   }
 }
