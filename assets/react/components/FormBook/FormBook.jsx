@@ -140,7 +140,9 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
                 <></>
               )}
               {!hasLabel || (hasLabel && !inputValues[input.name]) ? (
-                <label htmlFor={`post_${input.name}`}>{input.label}</label>
+                <label htmlFor={`post_${input.name}`}>
+                  &nbsp;&nbsp;{input.label}
+                </label>
               ) : (
                 <></>
               )}

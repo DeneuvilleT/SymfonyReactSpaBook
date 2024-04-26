@@ -44,7 +44,7 @@ const Nav = () => {
         setTimeout(() => {
           dispatch(logout());
           setIcon("quill:off");
-          navigate('/');
+          navigate("/");
         }, 2000);
       }
     } catch (error) {
@@ -56,13 +56,19 @@ const Nav = () => {
   return (
     <nav className={styles.nav}>
       <ul>
-        {isLog ? <Link to={"/profile"}>Mon compte</Link> : <></>}
+        {isLog ? (
+          <Link to={"/profile"}>
+            <span>Mon compte</span>
+          </Link>
+        ) : (
+          <></>
+        )}
 
         <Link
           to={{ pathname: "/login", search: "?param=register" }}
           onClick={() => hideHeader()}
         >
-          Inscription
+          <span>Inscription</span>
         </Link>
 
         {status === "ROLE_SUPER_ADMIN" ? (
@@ -87,7 +93,7 @@ const Nav = () => {
           />
         ) : (
           <Link to={"/login"} onClick={hideHeader}>
-            Connexion
+            <span>Connexion</span>
           </Link>
         )}
       </ul>

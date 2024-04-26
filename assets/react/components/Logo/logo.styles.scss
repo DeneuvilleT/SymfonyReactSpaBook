@@ -128,9 +128,8 @@
   }
 }
 
-@media (max-height: 632px) {
+@media (max-width: 620px) {
   .logo {
-    position: absolute;
-    top: 51%;
+    zoom: 0.6;
   }
 }

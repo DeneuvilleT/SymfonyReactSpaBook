@@ -551,3 +551,31 @@
     }
   }
 }
+
+@media (max-width: 620px) {
+  .welcome {
+    margin: 25px auto;
+
+    .imageBox img {
+      max-width: 325px;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .welcome {
+    margin: 25px auto;
+
+    .textBox h2 {
+      font-size: 1.9em;
+    }
+
+    .textBox p span {
+      margin-left: 0;
+    }
+
+    .imageBox img {
+      max-width: 285px;
+    }
+  }
+}

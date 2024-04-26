@@ -71,7 +71,9 @@ const Home = () => {
                 amoureux, une escapade en famille ou une aventure entre amis,
                 nous avons le lieu idéal pour répondre à vos besoins.
               </span>
-              <Link to={"/qui-sommes-nous"}><span>En apprendre plus</span></Link>
+              <Link to={"/qui-sommes-nous"}>
+                <span>En apprendre plus</span>
+              </Link>
             </p>
           </div>
           <div className={styles.imageBox}>

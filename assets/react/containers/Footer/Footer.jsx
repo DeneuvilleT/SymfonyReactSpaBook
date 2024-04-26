@@ -7,7 +7,6 @@ import { Icon } from "@iconify/react";
 import styles from "./footer.styles.scss";
 
 const Footer = () => {
-
   const { isLog } = useSelector((state) => ({ ...state.auth }));
 
   return (
@@ -15,13 +14,9 @@ const Footer = () => {
       <div className={styles.reassurance}>
         <div>
           <h3>
-            <span>
-            Trouvez
-            </span>
+            <span>Trouvez</span>
             <br />
-            <span>
-            nous
-            </span>
+            <span>nous</span>
           </h3>
 
           <address>
@@ -91,11 +86,11 @@ const Footer = () => {
                 <Link to={"/login"}>Connexion</Link>
               </li>
               <li>
-                <Link to={{ pathname: "/login", search: "?param=register" }}>Inscription</Link>
+                <Link to={{ pathname: "/login", search: "?param=register" }}>
+                  Inscription
+                </Link>
               </li>
-              <li>
-                {isLog ? <Link to={"/profile"}>Mon compte</Link> : <></>}
-              </li>
+              <li>{isLog ? <Link to={"/profile"}>Mon compte</Link> : <></>}</li>
               <li>
                 <Link to={"/"}>Accueil</Link>
               </li>
