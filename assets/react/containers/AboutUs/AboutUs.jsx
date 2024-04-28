@@ -1,7 +1,6 @@
 import React from "react";
 
 import styles from "../Home/home.styles.scss";
-import faces from "../../../../public/images/FACES/face_2.jpg";
 
 const AboutUs = () => {
   return (
@@ -9,7 +8,7 @@ const AboutUs = () => {
       <div role="figure"></div>
       <article className={`${styles.welcome} ${styles.other}`}>
         <div className={styles.textBox}>
-        <h2>Qui sommes-nous ?</h2>
+        <h2 role="term">Qui sommes-nous ?</h2>
           <p>
             <span>
               Bienvenue sur notre plateforme de location de gîtes et cabanes, où

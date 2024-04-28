@@ -28,9 +28,9 @@
 .formContainer {
   position: relative;
   width: 60vw;
-  height: 55vh;
+  height: 65vh;
   max-height: 700px;
-  max-width: 1360px;
+  max-width: 1140px;
   backdrop-filter: blur(20px) brightness(0.75);
   display: flex;
   justify-content: center;
@@ -84,30 +84,40 @@
   position: absolute;
   left: 10%;
   width: 25vw;
-  height: 65vh;
-  max-width: 580px;
+  height: 75vh;
+
+  max-width: 515px;
+  min-width: 515px;
+
   max-height: 800px;
   min-height: 500px;
   background-color: #fff;
+
   z-index: 1000;
+  overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 25px;
   transition: 0.5s;
   transition-delay: 0.5s;
-  overflow: hidden;
 
   .formSignIn,
   .formSignUp {
     position: absolute;
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
+
+    max-width: 515px;
+    max-height: 800px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    transition: 0.5s;
     background: #fff;
+
+    transition: 0.5s;
   }
 
   .formSignUp {
@@ -120,12 +130,33 @@
     transition-delay: 1s;
   }
 
+  .formSignIn span.error {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+
+    background-color: #c10000;
+    border-radius: 5px;
+    padding: 8px 12.5px;
+
+    color: #fff;
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+
+  .formSignIn span.error svg {
+    min-width: 30px;
+    min-height: 30px;
+  }
+
   .formSignIn form,
   .formSignUp form {
     display: flex;
     flex-direction: column;
     padding: 0 60px;
     width: 100%;
+    overflow-y: auto;
   }
 
   .formSignIn h3,
@@ -207,12 +238,167 @@
   }
 
   .formBox {
-    width: 32vw;
+    width: 27vw;
   }
 
   .formLog.formSlide {
     .formBox {
       left: 52%;
     }
+  }
+}
+
+@media (max-width: 1280px) {
+  .formContainer {
+    max-height: 575px;
+    max-width: 940px;
+
+    h2 {
+      font-size: 1.05em;
+    }
+
+    button {
+      font-size: 1em;
+    }
+  }
+
+  .formBox {
+    left: 5%;
+
+    min-width: 430px;
+    max-height: 700px;
+
+    .formSignIn form,
+    .formSignUp form {
+      padding: 0 30px;
+    }
+
+    .formSignIn form h3,
+    .formSignUp form h3 {
+      padding: 0 20px;
+    }
+
+    .formSignIn form button,
+    .formSignUp form button {
+      font-size: 1em;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .formLog {
+    background-color: transparent;
+    border-bottom: 20px solid white;
+  }
+
+  .formContainer {
+    max-height: none;
+    max-width: none;
+    height: 100%;
+  }
+
+  .formLog.formSlide {
+    .formBox {
+      left: 47.5vw;
+    }
+  }
+}
+
+@media (max-width: 870px) {
+  .formContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    h2 {
+      display: none;
+    }
+  }
+
+  .formContainerBox {
+    justify-content: flex-end;
+    margin: auto;
+    padding: 40px 0;
+    width: auto;
+  }
+
+  .formBox {
+    left: auto;
+  }
+
+  .formLog.formSlide {
+    .formBox {
+      left: auto;
+    }
+  }
+}
+
+@media (max-width: 515px) {
+  .formLog {
+    gap: 5px;
+  }
+
+  .formBox {
+    max-width: 100vw;
+    min-width: 100vw;
+
+    max-height: none;
+    height: 100vh;
+    z-index: 0;
+
+    .formSignIn,
+    .formSignUp {
+      max-height: none;
+    }
+
+    .formSignIn form,
+    .formSignUp form {
+      padding: 0 15px;
+    }
+
+    .formSignIn h3,
+    .formSignUp h3 {
+      margin: 0 0 20px;
+      padding: 80px 25px 20px;
+    }
+  }
+
+  .formContainer {
+    align-items: flex-end;
+
+    button {
+      margin-bottom: 15vh;
+    }
+  }
+
+  .formContainerBox {
+    height: auto;
+    margin: 0 auto;
+    padding: 0;
+  }
+}
+
+@media (max-width: 375px) {
+  .formContainer {
+    align-items: flex-start;
+
+    button {
+      margin-bottom: 5vh;
+    }
+  }
+
+  .formBox {
+    .formSignIn h3,
+    .formSignUp h3 {
+      padding: 80px 25px 5px;
+    }
+
+    .formSignIn form button,
+    .formSignUp form button {
+      margin-top: 0;
+    }
+  }
+
+  .formContainerBox {
+    height: 100vh;
   }
 }

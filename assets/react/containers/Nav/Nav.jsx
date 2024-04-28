@@ -5,11 +5,11 @@ import { hideHeader } from "../../utilities";
 
 import FormBook from "../../components/FormBook/FormBook";
 
+import { logout } from "../../Store/slices/authSlices";
 import { Icon } from "@iconify/react";
 
 import styles from "./nav.styles.scss";
 import axios from "axios";
-import { logout } from "../../Store/slices/authSlices";
 
 const Nav = () => {
   const { isLog, status } = useSelector((state) => ({ ...state.auth }));
@@ -77,7 +77,7 @@ const Nav = () => {
             style={{ cursor: "pointer" }}
             onClick={handleAdmin}
           >
-            Administration
+            <span>Administration</span>
           </a>
         ) : (
           <></>
@@ -88,7 +88,7 @@ const Nav = () => {
             onClick={handleLogout}
             icon={icon}
             style={{ color: " #ffc408" }}
-            width="50"
+            width="40"
             height="40"
           />
         ) : (

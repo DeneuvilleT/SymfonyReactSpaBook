@@ -53,21 +53,6 @@
     transition: color 0.25s ease-in-out, background-color 0.25s ease-in;
   }
 
-  // aside:first-child label {
-  //   color: #2d2d2d;
-  //   font-size: 0.8em;
-  //   letter-spacing: 0.07em;
-  //   position: absolute;
-  //   top: 6px;
-  //   left: 8px;
-  //   background-color: white;
-  //   padding: 5px;
-  //   cursor: pointer;
-  //   pointer-events: none;
-  //   transition: color 0.25s ease-in-out, background-color 0.25s ease-in;
-  //   min-width: 185px;
-  // }
-
   aside:nth-child(2) label {
     font-size: 0.9em;
     text-shadow: 0 0px 10px rgb(0 0 0 / 42%);
@@ -115,8 +100,8 @@
       border-radius 0.5s ease-in-out;
   }
 
-  select:focus + label,
-  input:focus + label {
+  aside:first-child select:focus + label,
+  aside:first-child input:focus + label {
     color: transparent;
     background-color: transparent;
   }

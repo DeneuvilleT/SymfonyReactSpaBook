@@ -34,13 +34,13 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         });
         setMsgsErr([]);
 
-        console.log(response)
+        console.log(response);
         if (response.status === 200) {
           setIcone("line-md:circle-to-confirm-circle-transition");
-          return after ? '' : (location.href = "/");
+          return after ? "" : (location.href = "/");
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
         const errors = JSON.parse(err.response.data);
         if (Array.isArray(errors.errors)) {
           setMsgsErr([...errors.errors]);
@@ -63,7 +63,7 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
   };
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onClick={() => setMsgsErr([])}>
       {Object.entries(inputs).map(([key, input]) => (
         <fieldset key={key}>
           {hasLabel && input.type !== "hidden" ? (
@@ -106,7 +106,10 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         </fieldset>
       ))}
 
-      <ul>
+      <ul
+        className={msgsErr.length !== 0 ? styles.error : ""}
+        onClick={() => setMsgsErr([])}
+      >
         {msgsErr.length > 0 && (
           <div className="error-messages">
             {msgsErr.map((err, index) => (

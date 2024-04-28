@@ -105,7 +105,7 @@ const Login = ({ isLog }) => {
           <div className={styles.formBox}>
             <div className={styles.formSignIn}>
               <h3>Connectez-vous</h3>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} onClick={() => setMsgErr("")}>
                 <input
                   type="email"
                   placeholder="Email"
@@ -122,7 +122,10 @@ const Login = ({ isLog }) => {
                   onChange={handleInputChange}
                 />
 
-                <span>{msgErr}</span>
+                <span className={msgErr !== "" ? styles.error : ""}>
+                  <Icon icon="line-md:alert-twotone" color="white" />
+                  {msgErr}
+                </span>
 
                 <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
                   Se connecter{" "}

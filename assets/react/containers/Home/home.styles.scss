@@ -204,6 +204,7 @@
 .welcome.other {
   height: auto;
   margin: 60px auto 100px;
+  padding: 0 20px;
   justify-content: center;
   transform: translateY(90vh);
   opacity: 0.5;
@@ -542,6 +543,12 @@
       margin: 50px auto 0;
     }
   }
+
+  .welcome.other {
+    .textBox p {
+      align-items: flex-start;
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -550,9 +557,36 @@
       font-size: 2.25em;
     }
   }
+
+  .welcome.other {
+    .textBox h2[role="term"] {
+      white-space: nowrap;
+    }
+
+    .textBox p span {
+      margin-left: 0;
+    }
+  }
 }
 
 @media (max-width: 620px) {
+  .home,
+  .home.other {
+    div[role="figure"] {
+      clip-path: circle(650px at right 1000px);
+    }
+  }
+
+  .home.other {
+    div[role="figure"] {
+      top: 200px;
+    }
+  }
+
+  .welcome.other {
+    margin: 45px auto;
+  }
+
   .welcome {
     margin: 25px auto;
 
@@ -563,11 +597,13 @@
 }
 
 @media (max-width: 375px) {
-  .welcome {
+  .welcome,
+  .welcom.other {
     margin: 25px auto;
 
     .textBox h2 {
       font-size: 1.9em;
+      margin-bottom: 40px !important;
     }
 
     .textBox p span {
