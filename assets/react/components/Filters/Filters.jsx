@@ -61,7 +61,7 @@ const Filters = ({ location }) => {
       {location.has_garden ? (
         <li>
           <Icon icon="guidance:garden" style={{ color: "#333" }} />
-          Vue sur jardin
+          <span>Vue sur jardin</span>
         </li>
       ) : (
         <></>
@@ -69,7 +69,7 @@ const Filters = ({ location }) => {
       {location.has_pool ? (
         <li>
           <Icon icon="material-symbols-light:pool" style={{ color: "#333" }} />
-          Picine protégée
+          <span>Picine protégée</span>
         </li>
       ) : (
         <></>
@@ -77,7 +77,7 @@ const Filters = ({ location }) => {
       {location.has_sanitary ? (
         <li>
           <Icon icon="bi:badge-wc" style={{ color: "#333" }} />
-          Sanitaire indépendant
+          <span>Sanitaire indépendant</span>
         </li>
       ) : (
         <></>
@@ -85,7 +85,7 @@ const Filters = ({ location }) => {
       {location.animal_accpeted ? (
         <li>
           <Icon icon="ic:round-pets" style={{ color: "#333" }} />
-          Animaux acceptés
+          <span>Animaux acceptés</span>
         </li>
       ) : (
         <></>
