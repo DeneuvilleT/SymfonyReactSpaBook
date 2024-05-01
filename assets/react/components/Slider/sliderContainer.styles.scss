@@ -308,8 +308,20 @@
 /* |-|-|-|-|-|-|-|-|-|-|-| RESPONSIVE |-|-|-|-|-|-|-|-|-|-|-| */
 /* :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 
+@media (min-height: 1080px) {
+  .slider.privacy {
+    top: 7.5%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .privacy {
+    padding: 15px 20px;
+  }
+}
+
 @media (max-width: 900px) {
-  .slider {
+  .slider:not(.privacy) {
     position: absolute;
     inset: 40px 40px 200px 40px;
   }
@@ -339,5 +351,17 @@
   }
   .sliderSlides:nth-child(6) {
     left: 360px;
+  }
+}
+
+@media (min-height: 515px) {
+  .slider.privacy {
+    width: 100vw;
+    top: 9.5%;
+
+    ul li {
+      line-height: 22px;
+      font-weight: 400;
+    }
   }
 }

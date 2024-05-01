@@ -49,7 +49,7 @@ const Locations = ({ locationsDatas }) => {
       behavior: "smooth",
     });
   };
-  
+
   const handleNext = (e) => {
     const container = e.target.previousElementSibling;
     const currentPosition = container.scrollTop;
@@ -58,10 +58,15 @@ const Locations = ({ locationsDatas }) => {
       behavior: "smooth",
     });
   };
-  
+
   return (
     <>
-      <ul ref={locationContainer} className={styles.locations}>
+      <ul
+        ref={locationContainer}
+        className={`${styles.locations} ${
+          choiceLocation ? styles.choiceActive : ""
+        }`}
+      >
         {locationsDatas.map((location) => (
           <li key={location.id}>
             <div className={styles.cardsLoc}>
@@ -101,7 +106,11 @@ const Locations = ({ locationsDatas }) => {
                 ) : (
                   <></>
                 )}
-                <ul className={styles.thumbails}>
+                <ul
+                  className={`${styles.thumbails} ${
+                    location.cottage.covers.length > 3 ? styles.moreCover : ""
+                  }`}
+                >
                   {location.cottage.covers.map((cover) => (
                     <li
                       onClick={() => {

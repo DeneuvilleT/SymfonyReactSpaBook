@@ -63,7 +63,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 50px;
+    flex-wrap: wrap;
+    gap: 25px;
 
     padding: 0 20px 20px;
     margin-bottom: 20px;
@@ -118,6 +119,7 @@
     align-items: center;
     gap: 20px;
     font-size: 1.15em;
+    min-width: 500px;
   }
 
   aside p svg {
@@ -140,6 +142,7 @@
 
   aside label div {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
@@ -158,7 +161,8 @@
     text-decoration: underline;
     text-decoration-color: #333;
     transition: background-color 0.25s ease-in-out, border-radius 0.25s ease-in,
-      color 0.25s ease-out, text-decoration-color 0.25s ease-in, font-weight 0.25s ease-in-out;
+      color 0.25s ease-out, text-decoration-color 0.25s ease-in,
+      font-weight 0.25s ease-in-out;
   }
 
   aside label div span:hover {
@@ -181,16 +185,16 @@
 
     background-color: hsl(0deg 0% 82.85% / 86%);
     border-radius: 5px;
-    width: 17.5px;
-    height: 17.5px;
+    min-width: 19.5px;
+    height: 19.5px;
     transition: background-color 0.25s ease-in-out;
   }
 
   aside label input[type="checkbox"]:checked {
     z-index: 1;
     content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M12 7a5 5 0 1 1-4.995 5.217L7 12l.005-.217A5 5 0 0 1 12 7'/%3E%3C/svg%3E");
-    width: 17.5px;
-    height: 17.5px;
+    min-width: 19.5px;
+    height: 19.5px;
     background-color: hsl(0deg 0% 82.85% / 86%);
   }
 }
@@ -207,6 +211,101 @@
   .periodsBooking {
     > div {
       margin-left: 20px;
+    }
+  }
+}
+
+@media (max-width: 1500px) {
+  .periodsBooking {
+    > div {
+      margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .periodsBooking {
+    aside {
+      align-items: flex-start;
+    }
+
+    aside button {
+      margin: 10px auto;
+    }
+  }
+}
+
+@media (max-width: 870px) {
+  .periodsBooking {
+    > div {
+      padding: 30px 15px 15px;
+    }
+
+    aside p {
+      align-items: center;
+      font-size: 1.05em;
+    }
+
+    h4 {
+      font-size: 2em;
+    }
+
+    aside label {
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 27px;
+    }
+
+    aside label [for="qtyTraveller"] {
+      margin-top: 0;
+    }
+
+    aside label input[type="checkbox"]:checked,
+    aside label input[type="checkbox"] {
+      height: 23px;
+      width: 23px;
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  .periodsBooking {
+    aside p {
+      flex-wrap: wrap;
+      min-width: 0;
+      font-size: 1em;
+    }
+
+    aside p b {
+      display: block;
+      width: 100%;
+    }
+
+    aside p svg {
+      width: 1.5em;
+      height: 1.5em;
+    }
+
+    aside label {
+      margin: 20px 10px;
+    }
+
+    aside button {
+      font-size: 1.05em;
+    }
+
+    h4 {
+      padding-left: 20px;
+    }
+
+    > div > aside:first-child {
+      padding: 0 10px 20px;
+      margin-bottom: 0;
+    }
+
+    > div div[id="bookStart"] + h4 {
+      margin-top: 0;
+      padding-top: 20px;
     }
   }
 }

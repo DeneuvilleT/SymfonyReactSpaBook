@@ -53,15 +53,15 @@
   }
 
   .dates span {
-    color: #cacaca;
+    color: #b3b3b3;
     user-select: none;
     background-color: transparent;
     border-radius: 5px;
     transition: background-color 0.15s ease-in-out,
-    border-radius 0.25s ease-in-out;
+      border-radius 0.25s ease-in-out;
     margin: 1px;
   }
-  
+
   .dates span:not(.available) {
     text-decoration: line-through;
   }
@@ -104,5 +104,32 @@
   .dates span.available:hover b {
     text-shadow: 0 0 20px rgb(0 0 0);
     color: #fff;
+  }
+}
+
+@media (max-width: 1000px) {
+  .rowCalendar {
+    .dates span:not(.available) {
+      font-weight: 500;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar {
+    justify-content: space-between;
+    gap: 0;
+
+    article {
+      height: 300px;
+      width: 250px;
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  .calendar {
+    flex-direction: column;
+    align-items: center;
   }
 }

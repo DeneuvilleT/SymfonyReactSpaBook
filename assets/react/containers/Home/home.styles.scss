@@ -549,7 +549,15 @@
   .cardsLoc {
     margin-left: 0;
 
+    .content > ul div[role="figure"] span {
+      padding-top: 17px;
+    }
+
     .content > ul div[role="figure"].locationOff span {
+      font-size: 1.5em;
+    }
+
+    .content > ul div[role="figure"].locationActive span strong {
       font-size: 1.5em;
     }
 
@@ -559,6 +567,36 @@
 
     .content h3 {
       font-size: 1.5em;
+    }
+
+    .content > ul li {
+      height: 46px;
+      overflow: hidden;
+      transition: height 0.5s ease-out;
+    }
+
+    .content > ul li svg {
+      height: 30px;
+      width: 30px;
+      margin-bottom: -10px;
+    }
+
+    .content > ul li span {
+      font-size: 0;
+      font-weight: 500;
+      transition: font-size 0.5s ease-out;
+    }
+
+    .content > ul li:hover {
+      height: 75px;
+    }
+
+    .content > ul li:hover svg {
+      margin-bottom: auto;
+    }
+
+    .content > ul li:hover span {
+      font-size: 1em;
     }
   }
 }
@@ -593,14 +631,6 @@
 
     .content > ul {
       margin-top: 20px;
-    }
-
-    .content > ul li span {
-      display: none;
-    }
-
-    .content > ul li:hover {
-      display: flex;
     }
 
     .content > ul div[role="figure"] span {
@@ -670,8 +700,50 @@
 
   .locations span[role="previous"],
   .locations span[role="next"],
-  .locations .thumbails {
+  .locations:not(.choiceActive) .thumbails {
     display: none;
+  }
+
+  .locations.choiceActive {
+    > li {
+      flex-direction: column;
+      max-height: none;
+      gap: 50px;
+    }
+
+    .cardsLoc {
+      max-width: none;
+    }
+
+    .thumbails {
+      width: auto;
+      padding-bottom: 30px;
+      max-height: 500px;
+      overflow-y: auto;
+      gap: 10px;
+    }
+
+    .thumbails li {
+      width: 215px;
+    }
+
+    .thumbails.moreCover + span[role="next"] {
+      display: inline-block;
+      overflow: hidden;
+      border-radius: 100px;
+      box-shadow: none;
+      backdrop-filter: none;
+      background-image: none;
+      background: rgb(255, 255, 255);
+      background: linear-gradient(
+        180deg,
+        hsla(0, 0%, 100%, 0),
+        hsla(0, 0%, 95%, 0.824) 25%,
+        #f0f0f0
+      );
+      width: 100%;
+      top: 97%;
+    }
   }
 }
 
@@ -727,6 +799,65 @@
   .locations {
     > li {
       max-height: none;
+    }
+  }
+
+  .locations.choiceActive {
+    .cardsLoc {
+      .content {
+        border-radius: 12.5px;
+        padding: 20px 0 0;
+        margin: 0;
+      }
+
+      .content > ul {
+        padding: 10px 0;
+      }
+
+      .content > ul,
+      .content p div {
+        padding-left: 20px;
+      }
+
+      .content p div {
+        font-size: 0.9em;
+        max-height: 160px;
+        overflow-y: auto;
+      }
+
+      .content > ul div[role="figure"] {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        overflow: hidden;
+        clip-path: none;
+      }
+
+      .content > ul div[role="figure"].locationActive:hover,
+      .content > ul div[role="figure"]:hover {
+        clip-path: none;
+      }
+
+      .content > ul div[role="figure"] span {
+        display: flex;
+        gap: 15px;
+        font-size: 1.5em;
+        padding-left: 0;
+        padding-top: 0;
+      }
+
+      .content > ul div[role="figure"] span strong {
+        font-size: 1.25em;
+      }
+
+      .content > ul div[role="figure"] span br {
+        display: none;
+      }
+
+      .content > span {
+        border-top-right-radius: 20px;
+        height: 55px;
+        top: -55px;
+      }
     }
   }
 }
@@ -803,6 +934,11 @@
       clip-path: none;
     }
 
+    .content > ul div[role="figure"].locationActive:hover,
+    .content > ul div[role="figure"]:hover {
+      clip-path: none;
+    }
+
     .content > ul div[role="figure"] span {
       font-size: 1.5em;
       padding-left: 0;
@@ -815,12 +951,45 @@
       top: -55px;
     }
   }
+
+  .locations.choiceActive {
+    .thumbails {
+      gap: 7.5px;
+    }
+
+    .thumbails li {
+      width: 44vw;
+      height: 200px;
+    }
+  }
 }
 
 @media (max-width: 515px) {
   .home {
     > section {
       padding: 0 10px 70px;
+    }
+  }
+
+  .locations.choiceActive {
+    .thumbails li {
+      height: 140px;
+    }
+  }
+
+  .locations.choiceActive {
+    .cardsLoc {
+      .content > ul {
+        gap: 10px;
+      }
+
+      .content > ul div[role="figure"] {
+        padding-right: 10px;
+      }
+
+      .content > ul div[role="figure"] span {
+        font-size: 1.25em;
+      }
     }
   }
 }
