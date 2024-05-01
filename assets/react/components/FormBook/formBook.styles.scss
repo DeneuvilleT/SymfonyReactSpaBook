@@ -288,6 +288,8 @@
     button {
       order: 5;
       width: 80%;
+      max-width: 325px;
+      background-color: #333;
     }
 
     ul.error_messages.appear {
