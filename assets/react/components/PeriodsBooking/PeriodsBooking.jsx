@@ -105,8 +105,7 @@ const PeriodsBooking = () => {
 
   const buildSelectTraveller = () => {
     if (locations[0].cottage.period_minimum !== 0) {
-
-      contentTraveller.current.innerHTML = '';
+      contentTraveller.current.innerHTML = "";
 
       const choiceQtyTraveller = (spanChoice) => {
         setQtyTraveller(Number(spanChoice.textContent));
@@ -118,15 +117,15 @@ const PeriodsBooking = () => {
           ? prevChoice.classList.remove(styles.choice)
           : null;
 
-          spanChoice.classList.add(styles.choice);
+        spanChoice.classList.add(styles.choice);
 
-        if (document.getElementById('privacy').checked) { 
+        if (document.getElementById("privacy").checked) {
           btnPrivacy.current.onclick = function () {
             handleNavigateToSummary(Number(spanChoice.textContent));
           };
           btnPrivacy.current.disabled = false;
           setPrivacyChecked(true);
-        }  
+        }
       };
 
       for (
@@ -221,7 +220,7 @@ const PeriodsBooking = () => {
     const tempBookingMini = locations[0].cottage.period_minimum;
     const trueEndDate = new Date(
       periodsEndForDepartureDate[position].getTime() +
-      tempBookingMini * 24 * 60 * 60 * 1000
+        tempBookingMini * 24 * 60 * 60 * 1000
     );
 
     const diffTime = Math.abs(date - trueEndDate);
@@ -278,7 +277,10 @@ const PeriodsBooking = () => {
   const handleNavigateToSummary = (qty) => {
     localStorage.setItem(
       "location",
-      JSON.stringify([locations[0], { qtyTraveller: qtyTraveller === 0 ? qty : qtyTraveller }])
+      JSON.stringify([
+        locations[0],
+        { qtyTraveller: qtyTraveller === 0 ? qty : qtyTraveller },
+      ])
     );
     localStorage.setItem(
       "dates",
