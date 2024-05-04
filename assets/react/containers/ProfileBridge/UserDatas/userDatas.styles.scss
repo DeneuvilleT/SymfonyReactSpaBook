@@ -36,25 +36,11 @@
     display: flex;
     align-self: stretch;
     flex-direction: column;
+    width: 100%;
   }
 
   section div:nth-child(2) {
     padding: 20px;
-  }
-
-  legend {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    font-size: 1.15em;
-    padding: 20px 0;
-    width: 100%;
-  }
-
-  legend:nth-child(2) {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
   }
 
   form,
@@ -63,10 +49,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     border: none;
     gap: 20px;
     border-radius: 5px;
+    width: 50%;
+  }
+
+  form {
     width: 100%;
   }
 
@@ -94,8 +84,14 @@
 
   input,
   p {
-    max-width: 400px;
-    font-size: 1.15em;
+    max-width: 300px;
+    font-size: 1em !important;
+    padding: 13.5px 20px 0px;
+    min-height: 43px;
+  }
+
+  input {
+    padding: 4.5px 20px 0px;
   }
 
   input:hover,
@@ -113,8 +109,9 @@
     max-width: 250px;
   }
 
+  .datas button:disabled,
   button:disabled {
-    background-color: #999;
+    background: #999;
     cursor: default;
   }
 
@@ -124,6 +121,35 @@
 
   button:disabled:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+  }
+
+  .datas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .datas ul {
+    width: 100%;
+  }
+
+  .datas div:not(div[class="error-messages"]):first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+  }
+
+  .datas button {
+    font-size: 1em;
+    color: #fff;
+    height: 43px;
+    background: linear-gradient(-180deg, #00a314, #0da72c 30%, #2fab18);
+  }
+
+  .datas button[role="none"] {
+    background: linear-gradient(155deg, #e30000, #d40000 70%, #d60202);
   }
 }
 
@@ -137,6 +163,30 @@
     address,
     fieldset {
       align-items: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .userDatas {
+    .datas {
+      flex-direction: column;
+    }
+
+    .datas div,
+    .datas div:not(div[class="error-messages"]):first-child {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .datas button {
+      margin-top: 25px;
+    }
+
+    .datas button[role="none"] {
+      margin-bottom: 50px;
     }
   }
 }

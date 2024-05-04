@@ -5,6 +5,7 @@
   align-items: center;
   gap: 50px;
   width: 100%;
+  margin-top: 25px;
 
   h3 {
     display: flex;
@@ -228,8 +229,6 @@
 
 @media (max-width: 768px) {
   .userBookings {
-    margin-top: 25px;
-
     article {
       width: 100%;
       min-width: 0;

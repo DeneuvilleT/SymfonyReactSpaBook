@@ -18,7 +18,7 @@ const Datas = ({ infos, setModif }) => {
       </p>
       <p>{!infos.firstname ? "" : infos.firstname}</p>
       <p>{!infos.lastname ? "" : infos.lastname}</p>
-      <p>{!infos.phone ? "" : infos.phone}</p>
+      <p>{!infos.phone ? "" : `0${infos.phone}`}</p>
     </fieldset>
   );
 };

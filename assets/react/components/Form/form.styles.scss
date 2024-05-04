@@ -72,6 +72,7 @@
 
     color: #fff;
     font-size: 0.9em;
+    font-weight: 500;
     margin-bottom: 20px;
   }
 
@@ -101,6 +102,10 @@
 
     ul.error div {
       width: 90vw;
+    }
+
+    span {
+      max-width: 90%;
     }
   }
 }

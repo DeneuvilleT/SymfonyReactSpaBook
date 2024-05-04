@@ -4,7 +4,6 @@ import Form from "../../../../../components/Form/Form";
 const UpdateDatas = ({ infos }) => {
   return (
     <fieldset>
-      <legend>Mise à jour de vos informations</legend>
       <Form
         url={`/api/v1/customers/edit_customer/${infos.uid}`}
         btnSubmit={"Enregistrer"}

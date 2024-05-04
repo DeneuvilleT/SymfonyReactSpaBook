@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 
 import styles from "./form.styles.scss";
 
-const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
+const Form = ({ url, btnSubmit, hasLabel, after, inputs }) => {
   const initialFormData = Object.fromEntries(
     Object.entries(inputs).map(([key, input]) => [
       key,
@@ -34,13 +34,11 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, success }) => {
         });
         setMsgsErr([]);
 
-        console.log(response);
         if (response.status === 200) {
           setIcone("line-md:circle-to-confirm-circle-transition");
-          return after ? "" : (location.href = "/");
+          return after ? location.reload() : (location.href = "/");
         }
       } catch (err) {
-        console.log(err);
         const errors = JSON.parse(err.response.data);
         if (Array.isArray(errors.errors)) {
           setMsgsErr([...errors.errors]);

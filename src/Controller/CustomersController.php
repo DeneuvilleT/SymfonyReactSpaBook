@@ -71,8 +71,6 @@ class CustomersController extends AbstractController
 
             $errors = $validator->validate($customer);
 
-            dd($errors);
-
             if (count($errors) > 0) {
                 $errorMessages = [];
                 foreach ($errors as $error) {

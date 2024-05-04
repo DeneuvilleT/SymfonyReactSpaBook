@@ -70,7 +70,7 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: 'Votre nom doit contenir au moiuns {{ limit }} cractéres.',
+        minMessage: 'Votre nom doit contenir au moins {{ limit }} cractéres.',
         maxMessage: 'Votre nom ne peut pas contenir plus de {{ limit }} cractéres.',
     )]
     private ?string $lastName = null;
