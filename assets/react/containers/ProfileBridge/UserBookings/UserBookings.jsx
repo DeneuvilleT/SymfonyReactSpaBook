@@ -43,7 +43,7 @@ const UserBookings = ({ infos }) => {
   switch (bookingsStatus) {
     case "loading":
       return (
-        <main className={styles.userBookings}>
+        <div className={styles.userBookings}>
           <Icon
             style={{ marginTop: "150px" }}
             icon="svg-spinners:blocks-shuffle-3"
@@ -51,14 +51,13 @@ const UserBookings = ({ infos }) => {
             height="150"
           />
           ;
-        </main>
+        </div>
       );
 
     case "succeeded":
       return (
-        <main className={styles.userBookings}>
+        <div className={styles.userBookings}>
           <section>
-            <h2>Vos réservations :</h2>
             {bookings.length ? (
               bookings?.map((booking) => (
                 <article
@@ -135,7 +134,7 @@ const UserBookings = ({ infos }) => {
               </h3>
             )}
           </section>
-        </main>
+        </div>
       );
 
     case "failed":

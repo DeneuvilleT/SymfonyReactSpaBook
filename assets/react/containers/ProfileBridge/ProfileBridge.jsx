@@ -1,4 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
+import UserDatas from "./UserDatas/UserDatas";
+import UserBookings from "./UserBookings/UserBookings";
 
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
@@ -6,41 +10,38 @@ import { useNavigate } from "react-router-dom";
 import styles from "./profileBridge.styles.scss";
 
 const ProfileBridge = () => {
-  const navigate = useNavigate();
+  const { infos } = useSelector((state) => ({ ...state.auth }));
 
-  const handleUserData = () => navigate("/user/datas");
-  const handleUserBooking = () => navigate("/user/reservations");
-  const handleUserCommennt = () => navigate("/user/comments");
+  const navigate = useNavigate();
 
   return (
     <main className={styles.profilBridge}>
-      <div onClick={handleUserData}>
-        <Icon
-          icon="line-md:cog-loop"
-          style={{ color: "#017143" }}
-          width="80"
-          height="80"
-        />
-        <p>Paramétres du compte</p>
-      </div>
-      <div onClick={handleUserBooking}>
-        <Icon
-          icon="line-md:sunny-outline-twotone-loop"
-          style={{ color: " #ffc408" }}
-          width="80"
-          height="80"
-        />
-        <p>Mes réservations</p>
-      </div>
-      {/* <div onClick={handleUserCommennt}>
-        <Icon
-          icon="line-md:coffee-half-empty-twotone-loop"
-          style={{ color: "#69340e" }}
-          width="80"
-          height="80"
-        />
-        <p>Mes commentaires</p>
-      </div> */}
+      <section>
+        <h2>
+          <Icon
+            icon="line-md:cog-loop"
+            style={{ color: "#017143" }}
+            width="80"
+            height="80"
+          />
+          <span>Paramétres du compte</span>
+        </h2>
+
+        <UserDatas infos={infos} />
+      </section>
+      <section>
+        <h2>
+          <Icon
+            icon="line-md:sunny-outline-twotone-loop"
+            style={{ color: " #ffc408" }}
+            width="80"
+            height="80"
+          />
+          <span>Mes réservations</span>
+        </h2>
+
+        <UserBookings infos={infos} />
+      </section>
     </main>
   );
 };

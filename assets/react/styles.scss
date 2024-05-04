@@ -53,9 +53,13 @@ html {
   }
 
   main {
-    //min-height: 100vh;
     overflow: hidden;
     z-index: 2;
+  }
+
+  h2, h3 {
+    font-family: "Poppins", sans-serif;
+    color: #1a1a1a;
   }
 
 }

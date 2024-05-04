@@ -4,7 +4,6 @@ import { Icon } from "@iconify/react";
 const Datas = ({ infos, setModif }) => {
   return (
     <fieldset onClick={() => setModif(true)}>
-      <legend>Informations personnelles</legend>
       <p>{infos.email}</p>
       <p>
         <Icon icon="tabler:point-filled" />

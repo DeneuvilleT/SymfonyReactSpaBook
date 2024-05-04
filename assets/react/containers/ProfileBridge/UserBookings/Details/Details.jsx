@@ -17,7 +17,7 @@ const Details = ({ booking, cottage, display }) => {
   const [heightLine, setHeightLine] = useState(60);
 
   useEffect(() => {
-    setHeightLine(heightLine * 2.4);
+    setHeightLine(innerWidth > 515 ? heightLine * 1.4 : 235);
   }, []);
 
   const handleDisplayPrivacy = (e) => {
@@ -63,7 +63,8 @@ const Details = ({ booking, cottage, display }) => {
               style={{ color: "#fff" }}
             />
             <b>
-              {(Number(cottage.price) / 100).toString().replace(".", ",")}&nbsp;€ la nuit
+              {(Number(cottage.price) / 100).toString().replace(".", ",")}
+              &nbsp;€ la nuit
             </b>
           </span>
 
@@ -76,7 +77,6 @@ const Details = ({ booking, cottage, display }) => {
             />
             <b>Régles de l'hébergement</b>
           </span>
-
         </p>
       </div>
     </aside>
