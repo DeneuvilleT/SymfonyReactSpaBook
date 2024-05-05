@@ -9,7 +9,7 @@ import { hideHeader } from "../../utilities";
 import styles from "../../containers/Home/home.styles.scss";
 
 const Filters = ({ location }) => {
-  const { choiceLocation } = useSelector((state) => ({
+  const { choiceLocation, locations } = useSelector((state) => ({
     ...state.location,
   }));
 
@@ -25,6 +25,11 @@ const Filters = ({ location }) => {
     if (locationHook.search === "?param=modify") {
       selectLocation(btnBook.current);
     }
+    setContent(
+      !choiceLocation
+        ? "Réserver"
+        : `${locations[0].cottage.price_one_night / 100} €`
+    );
   }, [locationHook]);
 
   const selectLocation = () => {

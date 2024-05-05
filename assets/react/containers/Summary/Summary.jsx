@@ -30,6 +30,7 @@ const Summary = () => {
   useEffect(() => {
     if (localStorage.getItem("location") && localStorage.getItem("dates")) {
       const localLocation = JSON.parse(localStorage.getItem("location"));
+
       setNbTraveller(localLocation[1].qtyTraveller);
       dispatch(setOneLocation(localLocation[0]));
       transformDates(datesChoices);
@@ -37,10 +38,8 @@ const Summary = () => {
   }, [locationHook]);
 
   const transformDates = (datesChoices) => {
-    const dates = JSON.parse(datesChoices);
-
-    const dateStart = new Date(dates[0]);
-    const dateEnd = new Date(dates[1]);
+    const dateStart = new Date(datesChoices[0]);
+    const dateEnd = new Date(datesChoices[1]);
 
     const millisecondsPerDay = 1000 * 60 * 60 * 24;
     const differenceInMilliseconds = dateEnd - dateStart;

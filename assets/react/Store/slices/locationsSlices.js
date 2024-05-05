@@ -1,10 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const parseDates = (dates) => {
+  if (!dates) return [];
+
+  const datesArr = [];
+
+  JSON.parse(dates).map((dateString) => {
+    const parts = dateString.split(/[\/ :]/);
+    const date = new Date(
+      `${parts[2]}-${parts[1]}-${parts[0]} ${parts[3]}:${parts[4]}:${parts[5]}`
+    );
+    datesArr.push(date);
+  });
+  
+  return datesArr;
+};
+
 const initialState = {
   locations: [],
   choiceLocation: false,
   privacy: null,
-  datesChoices: localStorage.getItem("dates") ? localStorage.getItem("dates") : [],
+  datesChoices: parseDates(localStorage.getItem("dates")),
 };
 
 const locationsSlice = createSlice({
@@ -19,7 +35,7 @@ const locationsSlice = createSlice({
       state.privacy = action.payload;
     },
     setDatesLocation(state, action) {
-      state.datesChoices = action.payload;
+      state.datesChoices = parseDates(action.payload);
     },
     resetPrivacy(state, action) {
       state.privacy = null;

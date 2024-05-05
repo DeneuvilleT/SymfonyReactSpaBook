@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
 
 use Stripe\Stripe;
 use App\Entity\Bookings;
@@ -24,7 +25,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-
+use Symfony\Component\Validator\Constraints\Date;
 
 class StripeController extends AbstractController
 {
@@ -42,11 +43,14 @@ class StripeController extends AbstractController
 
                 $location = $data['location'][0];
                 $price = (int)$data['price'];
-                $dates = json_decode($data['dates']);
                 $images = $location['cottage']['covers'];
 
-                $dateStart = date_create($dates[0]);
-                $dateEnd = date_create($dates[1]);
+                $fuseau_horaire_fr = new DateTimeZone('Europe/Paris');
+                $dateStartFormat = new DateTime($data['dates'][0]);
+                $dateEndFormat = new DateTime($data['dates'][1]);
+
+                $dateStartFormat->setTimezone($fuseau_horaire_fr);
+                $dateEndFormat->setTimezone($fuseau_horaire_fr);
 
                 $selectedPath = '';
                 foreach ($images as $image) {
@@ -69,7 +73,7 @@ class StripeController extends AbstractController
                         'unit_amount' => $price,
                         'product_data' => [
                             'name' => 'Location : ' . $location['cottage']['name'],
-                            'description' => 'Du ' . date_format($dateStart, 'd/m/Y') . ' au ' .  date_format($dateEnd, 'd/m/Y'),
+                            'description' => 'Du ' . date_format($dateStartFormat, 'd/m/Y') . ' au ' .  date_format($dateEndFormat, 'd/m/Y'),
                             'images' => [$cover],
                         ],
                     ],
@@ -81,8 +85,8 @@ class StripeController extends AbstractController
                         'id_location' => $location['id'],
                         'qty_traveller' => $data['location'][1]['qtyTraveller'],
                         'price' => $price,
-                        'start_at' => new DateTime($dates[0]),
-                        'end_at' => new DateTime($dates[1]),
+                        'start_at' => $dateStartFormat,
+                        'end_at' => $dateEndFormat,
                     ];
 
                 $bookingDataJson = json_encode($bookingData);

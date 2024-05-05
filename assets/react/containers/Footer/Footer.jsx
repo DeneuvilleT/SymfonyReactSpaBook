@@ -100,7 +100,7 @@ const Footer = () => {
             <h2>Nous contacter</h2>
             <ul>
               <li>
-                <a href="tel:0323565150">
+                <a href="tel:0546931782">
                   <Icon
                     icon="bi:phone"
                     width="1.2em"

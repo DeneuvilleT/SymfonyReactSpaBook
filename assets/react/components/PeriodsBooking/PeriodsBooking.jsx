@@ -282,14 +282,21 @@ const PeriodsBooking = () => {
         { qtyTraveller: qtyTraveller === 0 ? qty : qtyTraveller },
       ])
     );
+
     localStorage.setItem(
       "dates",
-      JSON.stringify([dateStartSelectionnee, dateEndSelectionnee])
+      JSON.stringify([
+        dateStartSelectionnee.toLocaleString(),
+        dateEndSelectionnee.toLocaleString(),
+      ])
     );
 
     dispatch(
       setDatesLocation(
-        JSON.stringify([dateStartSelectionnee, dateEndSelectionnee])
+        JSON.stringify([
+          dateStartSelectionnee.toLocaleString(),
+          dateEndSelectionnee.toLocaleString(),
+        ])
       )
     );
     return navigate("/summary");

@@ -40,6 +40,9 @@ class ReactController extends AbstractController
 
                 return $response;
             } else if ($tokenAfterBuy === false) {
+
+                $session->remove('token');
+                
                 return $this->render('base.html.twig', [
                     'back' => 'error_buy'
                 ]);

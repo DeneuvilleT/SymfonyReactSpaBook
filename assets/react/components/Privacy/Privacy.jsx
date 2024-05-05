@@ -23,11 +23,9 @@ const Privacy = ({ success, container }) => {
       setPrivacyContent(privacy);
       document.body.style.overflowY = "hidden";
     } else if (success !== null && success !== undefined) {
-
       if (success === "error_buy") {
         setErrorContent(true);
       } else {
-
         const stripeToken = Cookies.get("tokenAfterBuy");
         if (stripeToken === container.dataset.back) {
           setSuccessContent(true);
@@ -45,7 +43,6 @@ const Privacy = ({ success, container }) => {
       dispatch(resetPrivacy());
       setPrivacyContent(null);
     } else {
-
       if (container.dataset.back) {
         container.removeAttribute("data-back");
       }
@@ -95,9 +92,12 @@ const Privacy = ({ success, container }) => {
                   contact@cabaneetgiteaunaturel.com
                   <Icon icon="lets-icons:e-mail" />
                 </a>
-                <a href="tel:0323565150">
-                  03 23 56 51 50
-                  <Icon icon="fluent:phone-32-regular" />
+                <a href="tel:0546931782">
+                  05 46 93 17 82
+                  <Icon
+                    style={{ marginTop: "-3px" }}
+                    icon="fluent:phone-32-regular"
+                  />
                 </a>
               </span>
             </p>
@@ -136,9 +136,12 @@ const Privacy = ({ success, container }) => {
                   contact@cabaneetgiteaunaturel.com
                   <Icon icon="lets-icons:e-mail" />
                 </a>
-                <a href="tel:0323565150" style={{ alignItems: "flex-end" }}>
-                  03 23 56 51 50
-                  <Icon icon="fluent:phone-32-regular" />
+                <a href="tel:0546931782">
+                  05 46 93 17 82
+                  <Icon
+                    style={{ marginTop: "-3px" }}
+                    icon="fluent:phone-32-regular"
+                  />
                 </a>
               </span>
             </p>
@@ -150,11 +153,7 @@ const Privacy = ({ success, container }) => {
               Nous vous remercions de votre compréhension et espérons avoir
               l'occasion de vous accueillir prochainement.
             </p>
-            <Link
-              to={"/"}
-              onClick={handleClose}
-              style={{ alignItems: "flex-end" }}
-            >
+            <Link to={"/"} onClick={handleClose}>
               Retour à la page d'accueil <Icon icon="teenyicons:home-solid" />
             </Link>
           </section>

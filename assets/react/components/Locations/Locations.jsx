@@ -22,6 +22,9 @@ const Locations = ({ locationsDatas }) => {
   const locationHook = useLocation();
 
   useEffect(() => {
+    /**
+     * SI RETOUR EN ARRIERE NAVIGATEUR AUSSI
+     */
     if (locationHook.search === "?param=modify") {
       locationContainer.current.classList.add(styles.speed, styles.appear);
     } else {

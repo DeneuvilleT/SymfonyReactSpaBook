@@ -7,24 +7,6 @@
   width: 100%;
   margin-top: 25px;
 
-  h3 {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 2em;
-    font-weight: 600;
-    line-height: 1.15em;
-    margin-bottom: 20px;
-    width: 100%;
-  }
-
-  h3 {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    font-size: 26px;
-  }
-
   > section {
     display: flex;
     flex-direction: row;
@@ -127,7 +109,6 @@
   p {
     font-size: 1.1em;
     line-height: 1.3em;
-    letter-spacing: 0.05em;
     text-align: right;
   }
 

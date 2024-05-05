@@ -106,7 +106,7 @@ const UserBookings = ({ infos }) => {
                       <span>
                         <em>{booking.traveller} personne(s)</em>
                         <em>
-                          créé le
+                          créé le&nbsp;
                           {format(new Date(booking.createdAt), "dd MMMM yyyy", {
                             locale: fr,
                           })}
@@ -123,15 +123,9 @@ const UserBookings = ({ infos }) => {
                 </article>
               ))
             ) : (
-              <h3>
-                <Icon
-                  icon="line-md:emoji-frown-open"
-                  color="#333"
-                  width="60"
-                  height="60"
-                />{" "}
-                Vous n'avez pas encore de réservations.
-              </h3>
+              <p>
+                Vous n'avez pas encore de réservations
+              </p>
             )}
           </section>
         </div>
