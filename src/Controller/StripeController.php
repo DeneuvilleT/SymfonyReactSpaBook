@@ -147,14 +147,6 @@ class StripeController extends AbstractController
 
             $bookRepo->save($booking, true);
 
-            setlocale(LC_TIME, 'fr_FR.utf8');
-
-            // Votre logique de contrôleur ici
-
-            // Formater la date avec la locale française
-            $startDate = strftime('%d %B %Y', $booking->getStartAt()->getTimestamp());
-
-
             $email = (new TemplatedEmail())
                 ->from('Cabane et gite au naturel <contact@cabaneetgiteaunaturel.com>')
                 ->to($customer->getEmail())
@@ -162,7 +154,7 @@ class StripeController extends AbstractController
                 ->htmlTemplate('/mail/confirmation_booking.html.twig')
                 ->context([
                     'firstname' => $customer->getFirstname(),
-                    'date_start' =>  $startDate,
+                    'date_start' =>  $booking->getStartAt(),
                 ]);
 
             $mailer->send($email);
