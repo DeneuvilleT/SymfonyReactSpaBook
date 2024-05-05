@@ -95,7 +95,7 @@ const Privacy = ({ success, container }) => {
                   contact@cabaneetgiteaunaturel.com
                   <Icon icon="lets-icons:e-mail" />
                 </a>
-                <a href="tel:0323565150" style={{ alignItems: "flex-end" }}>
+                <a href="tel:0323565150">
                   03 23 56 51 50
                   <Icon icon="fluent:phone-32-regular" />
                 </a>

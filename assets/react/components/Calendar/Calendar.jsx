@@ -112,100 +112,111 @@ const Calendar = ({
 
   return (
     <>
-      <h4>{title}</h4>
+      {dateDebut.length !== 0 ? (
+        <h4>{title}</h4>
+      ) : (
+        <h3>Il n'y a plus de disponibilités pour cet hébergement.</h3>
+      )}
 
-      <div id={container} className={styles.calendar}>
-        {moisEntreDates.map((month, indexMonth) => (
-          <article key={indexMonth}>
-            <h5>
-              {month.debut.toLocaleString("default", {
-                month: "long",
-                year: "numeric",
-              })}
-            </h5>
+      {dateDebut.length !== 0 ? (
+        <div id={container} className={styles.calendar}>
+          {moisEntreDates.map((month, indexMonth) => (
+            <article key={indexMonth}>
+              <h5>
+                {month.debut.toLocaleString("default", {
+                  month: "long",
+                  year: "numeric",
+                })}
+              </h5>
 
-            <div className={styles.rowCalendar}>
-              <div className={styles.days}>
-                {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map(
-                  (jour, dayIndex) => (
-                    <span key={dayIndex}>{jour}</span>
-                  )
-                )}
-              </div>
-
-              {Array.from({ length: 6 }, (_, i) => i).map((_, weekIndex) => (
-                <div className={styles.dates} key={weekIndex}>
-                  {Array.from({ length: 7 }, (_, i) => i).map((_, dayIndex) => {
-                    const firstDayMonth = new Date(
-                      month.debut.getFullYear(),
-                      month.debut.getMonth(),
-                      1
-                    );
-
-                    const firstDaysWeek = firstDayMonth.getDay();
-                    const dayInTheMonth = new Date(
-                      month.debut.getFullYear(),
-                      month.debut.getMonth() + 1,
-                      0
-                    ).getDate();
-
-                    const jour = dayIndex - firstDaysWeek + 1 + weekIndex * 7;
-
-                    const currentDate = new Date(
-                      month.debut.getFullYear(),
-                      month.debut.getMonth(),
-                      jour
-                    );
-
-                    return (
-                      isInMonth(currentDate, month) && (
-                        <span
-                          key={dayIndex}
-                          datatype={dayIndex}
-                          className={`${
-                            isInPeriod(
-                              currentDate,
-                              month.debutPeriode,
-                              month.finPeriode
-                            )
-                              ? styles.available
-                              : ""
-                          }`}
-                          onClick={(e) =>
-                            isInPeriod(
-                              currentDate,
-                              month.debutPeriode,
-                              month.finPeriode
-                            )
-                              ? handleDateSelection(
-                                  currentDate,
-                                  e.currentTarget,
-                                  debuts.indexOf(month.debutPeriode)
-                                )
-                              : null
-                          }
-                        >
-                          {isInPeriod(
-                            currentDate,
-                            month.debutPeriode,
-                            month.finPeriode
-                          ) ? (
-                            <b>{jour}</b>
-                          ) : jour > 0 && jour <= dayInTheMonth ? (
-                            jour
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      )
-                    );
-                  })}
+              <div className={styles.rowCalendar}>
+                <div className={styles.days}>
+                  {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map(
+                    (jour, dayIndex) => (
+                      <span key={dayIndex}>{jour}</span>
+                    )
+                  )}
                 </div>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
+
+                {Array.from({ length: 6 }, (_, i) => i).map((_, weekIndex) => (
+                  <div className={styles.dates} key={weekIndex}>
+                    {Array.from({ length: 7 }, (_, i) => i).map(
+                      (_, dayIndex) => {
+                        const firstDayMonth = new Date(
+                          month.debut.getFullYear(),
+                          month.debut.getMonth(),
+                          1
+                        );
+
+                        const firstDaysWeek = firstDayMonth.getDay();
+                        const dayInTheMonth = new Date(
+                          month.debut.getFullYear(),
+                          month.debut.getMonth() + 1,
+                          0
+                        ).getDate();
+
+                        const jour =
+                          dayIndex - firstDaysWeek + 1 + weekIndex * 7;
+
+                        const currentDate = new Date(
+                          month.debut.getFullYear(),
+                          month.debut.getMonth(),
+                          jour
+                        );
+
+                        return (
+                          isInMonth(currentDate, month) && (
+                            <span
+                              key={dayIndex}
+                              datatype={dayIndex}
+                              className={`${
+                                isInPeriod(
+                                  currentDate,
+                                  month.debutPeriode,
+                                  month.finPeriode
+                                )
+                                  ? styles.available
+                                  : ""
+                              }`}
+                              onClick={(e) =>
+                                isInPeriod(
+                                  currentDate,
+                                  month.debutPeriode,
+                                  month.finPeriode
+                                )
+                                  ? handleDateSelection(
+                                      currentDate,
+                                      e.currentTarget,
+                                      debuts.indexOf(month.debutPeriode)
+                                    )
+                                  : null
+                              }
+                            >
+                              {isInPeriod(
+                                currentDate,
+                                month.debutPeriode,
+                                month.finPeriode
+                              ) ? (
+                                <b>{jour}</b>
+                              ) : jour > 0 && jour <= dayInTheMonth ? (
+                                jour
+                              ) : (
+                                ""
+                              )}
+                            </span>
+                          )
+                        );
+                      }
+                    )}
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

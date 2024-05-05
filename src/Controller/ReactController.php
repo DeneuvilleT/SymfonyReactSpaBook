@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use DateTime;
+
 use App\Repository\LocationTypesRepository;
+use App\Repository\ConfigurationRepository;
+
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -19,29 +21,35 @@ use Symfony\Component\Serializer\Serializer;
 class ReactController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(SessionInterface $session): Response
+    public function index(SessionInterface $session, ConfigurationRepository $configRepo): Response
     {
-        $tokenAfterBuy = $session->get('token');
+        $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
-        if ($tokenAfterBuy) {
+        if (!$maintenance->isValue()) {
+            $tokenAfterBuy = $session->get('token');
 
-            $session->remove('token');
+            if ($tokenAfterBuy) {
 
-            $response = $this->render('base.html.twig', [
-                'back' => $tokenAfterBuy
-            ]);
+                $session->remove('token');
 
-            $response->headers->set('Set-Cookie', 'tokenAfterBuy=' . $tokenAfterBuy . '; path=/; expires=' . (new \DateTime('+10 minutes'))->format('r') . '; SameSite=None; Secure');
+                $response = $this->render('base.html.twig', [
+                    'back' => $tokenAfterBuy
+                ]);
 
-            return $response;
-        } else if ($tokenAfterBuy === false) {
-            return $this->render('base.html.twig', [
-                'back' => 'error_buy'
-            ]);
-        } else if ($tokenAfterBuy === null) {
-            return $this->render('base.html.twig', [
-                'back' => false
-            ]);
+                $response->headers->set('Set-Cookie', 'tokenAfterBuy=' . $tokenAfterBuy . '; path=/; expires=' . (new \DateTime('+10 minutes'))->format('r') . '; SameSite=None; Secure');
+
+                return $response;
+            } else if ($tokenAfterBuy === false) {
+                return $this->render('base.html.twig', [
+                    'back' => 'error_buy'
+                ]);
+            } else if ($tokenAfterBuy === null) {
+                return $this->render('base.html.twig', [
+                    'back' => false
+                ]);
+            }
+        } else {
+            return $this->render('maintenance.html.twig');
         }
     }
 
@@ -50,69 +58,75 @@ class ReactController extends AbstractController
         name: 'app_home_search',
         methods: ['GET', 'POST']
     )]
-    public function searchBar(Request $request, LocationTypesRepository $localRepo)
+    public function searchBar(Request $request, LocationTypesRepository $localRepo, ConfigurationRepository $configRepo)
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
+        $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
-        $datas = json_decode($request->getContent(), true);
-        $queryType = $datas["cottage"] !== 'null' ? boolval($datas["cottage"]) : null;
-        $queryBegin = new DateTime($datas["begin"]);
-        $queryEnd = new DateTime($datas["end"]);
-        $queryCapacity = (int) $datas["capacity"];
-        $querySanitary =  boolval($datas["hasSanitary"]);
-        $queryPool =  boolval($datas["hasPool"]);
-        $queryAnimal =  boolval($datas["animalAccepted"]);
-        $queryGarden =  boolval($datas["hasGarden"]);
+        if (!$maintenance->isValue()) {
+            $encoders = [new XmlEncoder(), new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $serializer = new Serializer($normalizers, $encoders);
 
-        $locations = $localRepo->searchLocations(
-            $queryType,
-            $queryBegin,
-            $queryEnd,
-            $queryCapacity,
-            $querySanitary,
-            $queryPool,
-            $queryAnimal,
-            $queryGarden
-        );
+            $datas = json_decode($request->getContent(), true);
+            $queryType = $datas["cottage"] !== 'null' ? boolval($datas["cottage"]) : null;
+            $queryBegin = new DateTime($datas["begin"]);
+            $queryEnd = new DateTime($datas["end"]);
+            $queryCapacity = (int) $datas["capacity"];
+            $querySanitary =  boolval($datas["hasSanitary"]);
+            $queryPool =  boolval($datas["hasPool"]);
+            $queryAnimal =  boolval($datas["animalAccepted"]);
+            $queryGarden =  boolval($datas["hasGarden"]);
 
-        $data = [];
+            $locations = $localRepo->searchLocations(
+                $queryType,
+                $queryBegin,
+                $queryEnd,
+                $queryCapacity,
+                $querySanitary,
+                $queryPool,
+                $queryAnimal,
+                $queryGarden
+            );
 
-        /** @var \App\Entity\LocationTypes $location */
-        foreach ($locations as $location) {
-            $locationData = [
-                'id' => $location->getId(),
-                'title' => $location->isType(),
-                'capacity' => $location->getCapacity(),
-                'has_sanitary' => $location->isHasSanitary(),
-                'has_garden' => $location->isHasGarden(),
-                'has_pool' => $location->isHasPool(),
-                'animal_accpeted' => $location->isAnimalAccepted(),
-                'tree_height' => $location->getTreeHeight(),
-                'is_available' => $location->isIsAvailable(),
-                'cottage' => [
-                    'id' => $location->getCategoriesCottage()->getId(),
-                    'name' => $location->getCategoriesCottage()->getName(),
-                    'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),
-                    'description' => $location->getCategoriesCottage()->getDescription(),
-                    'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
-                    'privacy' => $location->getCategoriesCottage()->getPrivacy(),
-                    'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
-                    'periods' => $this->checkBookings(
-                        $location->getCategoriesCottage()->getPeriods(),
-                        $location->getBookings(),
-                        $location->getCategoriesCottage()->getPeriodMinimum(),
-                    )
-                ],
-            ];
+            $data = [];
 
-            $data[] = $locationData;
+            /** @var \App\Entity\LocationTypes $location */
+            foreach ($locations as $location) {
+                $locationData = [
+                    'id' => $location->getId(),
+                    'title' => $location->isType(),
+                    'capacity' => $location->getCapacity(),
+                    'has_sanitary' => $location->isHasSanitary(),
+                    'has_garden' => $location->isHasGarden(),
+                    'has_pool' => $location->isHasPool(),
+                    'animal_accpeted' => $location->isAnimalAccepted(),
+                    'tree_height' => $location->getTreeHeight(),
+                    'is_available' => $location->isIsAvailable(),
+                    'cottage' => [
+                        'id' => $location->getCategoriesCottage()->getId(),
+                        'name' => $location->getCategoriesCottage()->getName(),
+                        'period_minimum' => $location->getCategoriesCottage()->getPeriodMinimum(),
+                        'description' => $location->getCategoriesCottage()->getDescription(),
+                        'price_one_night' => $location->getCategoriesCottage()->getPriceOneNight(),
+                        'privacy' => $location->getCategoriesCottage()->getPrivacy(),
+                        'covers' => $this->getCoversData($location->getCategoriesCottage()->getCovers()),
+                        'periods' => $this->checkBookings(
+                            $location->getCategoriesCottage()->getPeriods(),
+                            $location->getBookings(),
+                            $location->getCategoriesCottage()->getPeriodMinimum(),
+                        )
+                    ],
+                ];
+
+                $data[] = $locationData;
+            }
+
+            $jsonContent = $serializer->serialize($data, 'json');
+
+            return new Response($jsonContent);
+        } else {
+            return $this->render('maintenance.html.twig');
         }
-
-        $jsonContent = $serializer->serialize($data, 'json');
-
-        return new Response($jsonContent);
     }
 
     private function checkBookings(Collection $periods, Collection $bookings, int $period_minimum)

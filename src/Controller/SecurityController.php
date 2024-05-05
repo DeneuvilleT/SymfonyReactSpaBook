@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Controller\Admin\ProductsCrudController;
+
 use App\Repository\CustomerRepository;
+use App\Repository\ConfigurationRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,95 +30,113 @@ class SecurityController extends AbstractController
 
    #[IsGranted('ROLE_SUPER_ADMIN')]
    #[Route('/api/v1/access_admin', name: 'app_access', methods: ['GET'])]
-   public function accessBackOffice(Request $request, CustomerRepository $customerRepo, AdminUrlGenerator $adminUrlGenerator): JsonResponse
+   public function accessBackOffice(Request $request, CustomerRepository $customerRepo, AdminUrlGenerator $adminUrlGenerator, ConfigurationRepository $configRepo): JsonResponse
    {
-      $user = $this->getUser();
-      $tokenBearer = $request->headers->get('Authorization');
+      $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
-      if (!$tokenBearer && $user !== null) {
-         throw new AccessDeniedException("Vous n'avez pas les droits nécesssaires");
-      } else {
+      if (!$maintenance->isValue()) {
+         $user = $this->getUser();
+         $tokenBearer = $request->headers->get('Authorization');
 
-         $tokenInterface = $this->tokenStorage->getToken();
+         if (!$tokenBearer && $user !== null) {
+            throw new AccessDeniedException("Vous n'avez pas les droits nécesssaires");
+         } else {
 
-         try {
-            $tokenData = $this->jwtManager->decode($tokenInterface);
+            $tokenInterface = $this->tokenStorage->getToken();
 
-            $customer = $customerRepo->findOneBy(["email" => $tokenData["email"]]);
-            $role = $customer->getRoles()[0];
+            try {
+               $tokenData = $this->jwtManager->decode($tokenInterface);
 
-            if ($role === "ROLE_SUPER_ADMIN") {
+               $customer = $customerRepo->findOneBy(["email" => $tokenData["email"]]);
+               $role = $customer->getRoles()[0];
 
-               $token = $this->jwtManager->create($user);
-               $url = $adminUrlGenerator->setController(ProductsCrudController::class)
-                  ->set('rules', base64_encode($role))
-                  ->set('token', base64_encode($token))
-                  ->generateUrl();
+               if ($role === "ROLE_SUPER_ADMIN") {
 
-               $data = [
-                  'url' => $url,
-               ];
+                  $token = $this->jwtManager->create($user);
+                  $url = $adminUrlGenerator->setController(ProductsCrudController::class)
+                     ->set('rules', base64_encode($role))
+                     ->set('token', base64_encode($token))
+                     ->generateUrl();
 
-               $expirationTime = new \DateTime('+1 hour');
-               $response = new JsonResponse($data, Response::HTTP_OK);
-               $response->headers->setCookie(new Cookie('jaat', $token, $expirationTime, '/', null, true, true));
-               return $response;
-            } else {
-               return $this->redirectToRoute('app_home', [], Response::HTTP_UNAUTHORIZED);
+                  $data = [
+                     'url' => $url,
+                  ];
+
+                  $expirationTime = new \DateTime('+1 hour');
+                  $response = new JsonResponse($data, Response::HTTP_OK);
+                  $response->headers->setCookie(new Cookie('jaat', $token, $expirationTime, '/', null, true, true));
+                  return $response;
+               } else {
+                  return $this->redirectToRoute('app_home', [], Response::HTTP_UNAUTHORIZED);
+               }
+            } catch (\Exception $e) {
+               throw new AccessDeniedException('Token invalide');
             }
-         } catch (\Exception $e) {
-            throw new AccessDeniedException('Token invalide');
          }
+      } else {
+         return $this->render('maintenance.html.twig');
       }
    }
 
    #[Route('/api/v1/logout', name: 'app_logout', methods: ['GET'])]
-   public function logout()
+   public function logout(ConfigurationRepository $configRepo)
    {
-      $response = $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-      $response->headers->setCookie(new Cookie('jaat', '', 1, '/', null, false, true));
-      return $response;
+      $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
+
+      if (!$maintenance->isValue()) {
+         $response = $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+         $response->headers->setCookie(new Cookie('jaat', '', 1, '/', null, false, true));
+         return $response;
+      } else {
+         return $this->render('maintenance.html.twig');
+      }
    }
 
    #[Route('/api/v1/check_token', name: 'app_token', methods: ['GET'])]
-   public function checkToken(Request $request, CustomerRepository $customerRepo): JsonResponse
+   public function checkToken(Request $request, CustomerRepository $customerRepo, ConfigurationRepository $configRepo): JsonResponse
    {
-      $tokenBearer = $request->headers->get('Authorization');
+      $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
-      if (!$tokenBearer) {
-         throw new AccessDeniedException("Vous n'avez pas les droits nécesssaires");
-      } else {
+      if (!$maintenance->isValue()) {
+         $tokenBearer = $request->headers->get('Authorization');
 
-         $tokenInterface = $this->tokenStorage->getToken();
+         if (!$tokenBearer) {
+            throw new AccessDeniedException("Vous n'avez pas les droits nécesssaires");
+         } else {
 
-         try {
-            $tokenData = $this->jwtManager->decode($tokenInterface);
+            $tokenInterface = $this->tokenStorage->getToken();
 
-            $customer = $customerRepo->findOneBy(["email" => $tokenData["email"]]);
+            try {
+               $tokenData = $this->jwtManager->decode($tokenInterface);
 
-            $token = substr($tokenBearer, 7);
+               $customer = $customerRepo->findOneBy(["email" => $tokenData["email"]]);
 
-            if ($customer !== null) {
-               $data = [
-                  'token' => $token,
-                  "user" => [
-                     'email' => $customer->getEmail(),
-                     'password' => $customer->getPassword(),
-                     'firstname' => $customer->getFirstname(),
-                     'lastname' => $customer->getLastName(),
-                     'phone' => $customer->getPhone(),
-                     'roles' => $customer->getRoles(),
-                     'uid' => $customer->getUid(),
-                  ]
-               ];
+               $token = substr($tokenBearer, 7);
 
-               return new JsonResponse($data, Response::HTTP_OK);
-            } else {
-               throw new AccessDeniedException("Adresse mail invalide");
+               if ($customer !== null) {
+                  $data = [
+                     'token' => $token,
+                     "user" => [
+                        'email' => $customer->getEmail(),
+                        'password' => $customer->getPassword(),
+                        'firstname' => $customer->getFirstname(),
+                        'lastname' => $customer->getLastName(),
+                        'phone' => $customer->getPhone(),
+                        'roles' => $customer->getRoles(),
+                        'uid' => $customer->getUid(),
+                     ]
+                  ];
+
+                  return new JsonResponse($data, Response::HTTP_OK);
+               } else {
+                  throw new AccessDeniedException("Adresse mail invalide");
+               }
+            } catch (\Exception $e) {
+               throw new AccessDeniedException('Token invalide');
             }
-         } catch (\Exception $e) {
-            throw new AccessDeniedException('Token invalide');
          }
+      } else {
+         return $this->render('maintenance.html.twig');
       }
    }
 }

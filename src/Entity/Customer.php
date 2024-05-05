@@ -80,15 +80,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?int $isVerified = 0;
 
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Comments::class)]
-    private Collection $comments;
-
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Addresses::class)]
-    private Collection $addresses;
-
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Orders::class)]
-    private Collection $orders;
-
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Bookings::class)]
     private Collection $bookings;
 
@@ -103,9 +94,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
-        $this->addresses = new ArrayCollection();
-        $this->orders = new ArrayCollection();
         $this->bookings = new ArrayCollection();
     }
 
@@ -220,96 +208,6 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(int $isVerified): static
     {
         $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comments>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): static
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): static
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getCustomer() === $this) {
-                $comment->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Addresses>
-     */
-    public function getAddresses(): Collection
-    {
-        return $this->addresses;
-    }
-
-    public function addAddress(Addresses $address): static
-    {
-        if (!$this->addresses->contains($address)) {
-            $this->addresses->add($address);
-            $address->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAddress(Addresses $address): static
-    {
-        if ($this->addresses->removeElement($address)) {
-            // set the owning side to null (unless already changed)
-            if ($address->getCustomer() === $this) {
-                $address->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Orders>
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Orders $order): static
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders->add($order);
-            $order->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Orders $order): static
-    {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getCustomer() === $this) {
-                $order->setCustomer(null);
-            }
-        }
 
         return $this;
     }

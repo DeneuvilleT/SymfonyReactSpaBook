@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     height: 120,
   },
   subtitle: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 800,
     marginTop: 20,
     marginBottom: 5,
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   tableCol: {
-    fontSize: 14,
+    fontSize: 12,
     width: "50%",
     textAlign: "left",
   },
   tableColRight: {
     fontWeight: 400,
-    fontSize: 14,
+    fontSize: 12,
     color: "#333",
     width: "50%",
     textAlign: "right",
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   text: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 400,
     marginTop: 2.5,
     marginBottom: 2.5,
@@ -99,16 +99,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#222",
     textAlign: "start",
+    marginBottom: 3,
   },
   bottomPage: {
-    flexDirection : "column",
-    alignItems : "center",
+    flexDirection: "column",
+    alignItems: "center",
   },
   textBottomUp: {
     fontSize: 10,
     color: "#333",
     textAlign: "center",
-    marginBottom : 10,
+    marginBottom: 10,
   },
   textBottom: {
     fontSize: 10,
@@ -128,7 +129,7 @@ const Invoice = ({ booking, infos }) => (
               {infos.lastname} {infos.firstname}
             </Text>
             <Text style={styles.textTop}>{infos.email}</Text>
-            <Text style={styles.textTop}>{infos.phone}</Text>
+            <Text style={styles.textTop}>0{infos.phone}</Text>
           </View>
           <Image style={styles.logoImg} src={logo} />
         </View>
@@ -228,7 +229,7 @@ const Invoice = ({ booking, infos }) => (
         <View>
           <Text style={styles.subtitle}>Nous contacter :</Text>
           <View style={styles.section}>
-            <Text style={styles.text}>Par téléphone au : 03.23.56.51.50</Text>
+            <Text style={styles.text}>Par téléphone au : 05.46.93.17.82</Text>
             <Text style={styles.text}>
               Par courriel : contact@cabaneetgiteaunaturel.com
             </Text>
@@ -237,7 +238,8 @@ const Invoice = ({ booking, infos }) => (
 
         <View style={styles.bottomPage}>
           <Text style={styles.textBottomUp}>
-            SIRET : 95340636000016 &nbsp;|&nbsp; TVA : FR74953406360 &nbsp;|&nbsp; Adresse : 2 RUE DE CHEZ CHABOT 17460 RIOUX
+            SIRET : 95340636000016 &nbsp;|&nbsp; TVA : FR74953406360
+            &nbsp;|&nbsp; Adresse : 2 RUE DE CHEZ CHABOT 17460 RIOUX
           </Text>
           <Text style={styles.textBottom}>
             Copyright | 2024 Pause et nature | Tous droits réservés

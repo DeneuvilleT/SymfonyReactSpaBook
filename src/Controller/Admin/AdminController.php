@@ -2,15 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Comments;
 use App\Entity\Customer;
-use App\Entity\Products;
-use App\Entity\Addresses;
 use App\Entity\Bookings;
 use App\Entity\CategoriesCottage;
+use App\Entity\Configuration;
 use App\Entity\Covers;
 use App\Entity\LocationTypes;
-use App\Entity\Orders;
 use App\Entity\Periods;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -61,10 +58,8 @@ class AdminController extends AbstractDashboardController
 
         yield MenuItem::section('Donnés clients');
         yield from $this->yieldMenuItem('Clients', 'fas fa-list', Customer::class, $encodedRole, $tokenRequest);
-        yield from $this->yieldMenuItem('Adresses', 'fas fa-list', Addresses::class, $encodedRole, $tokenRequest);
 
         yield MenuItem::section('Réservations');
-        // yield from $this->yieldMenuItem('Commandes', 'fas fa-list', Orders::class, $encodedRole, $tokenRequest);
         yield from $this->yieldMenuItem('Réservations', 'fas fa-list', Bookings::class, $encodedRole, $tokenRequest);
 
         yield MenuItem::section('Paramétrages des locations');
@@ -73,9 +68,8 @@ class AdminController extends AbstractDashboardController
         yield from $this->yieldMenuItem('Périodes de disponibilité', 'fas fa-list', Periods::class, $encodedRole, $tokenRequest);
         yield from $this->yieldMenuItem('Images', 'fas fa-list', Covers::class, $encodedRole, $tokenRequest);
 
-        // yield MenuItem::section('Autres');
-        // yield from $this->yieldMenuItem('Commentaires', 'fas fa-list', Comments::class, $encodedRole, $tokenRequest);
-        // yield from $this->yieldMenuItem('Produits', 'fas fa-list', Products::class, $encodedRole, $tokenRequest);
+        yield MenuItem::section('Paramétrage du site');
+        yield from $this->yieldMenuItem('Paramétres', 'fas fa-list', Configuration::class, $encodedRole, $tokenRequest);
     }
 
     private function yieldMenuItem(string $label, string $icon, $entityClass, $encodedRole, $tokenRequest): iterable

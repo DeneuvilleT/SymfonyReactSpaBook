@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\CategoriesCottage;
-use App\Entity\LocationTypes;
+
 use App\Repository\CustomerRepository;
+use App\Repository\ConfigurationRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,38 +21,44 @@ use Doctrine\Common\Collections\Collection;
 class BookingsController extends AbstractController
 {
     #[Route('/load_bookings/{uid}', name: 'app_bookings_show', methods: ['GET'])]
-    public function getUserOrders(string $uid, CustomerRepository $customerRepository): Response
+    public function getUserOrders(string $uid, CustomerRepository $customerRepository, ConfigurationRepository $configRepo): Response
     {
-        $user = $this->getUser();
-        $customer = $customerRepository->findOneByUid($uid);
+        $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
-        if ($user !== null && $user === $customer) {
-            $encoders = [new XmlEncoder(), new JsonEncoder()];
-            $normalizers = [new ObjectNormalizer()];
+        if (!$maintenance->isValue()) {
+            $user = $this->getUser();
+            $customer = $customerRepository->findOneByUid($uid);
 
-            $serializer = new Serializer($normalizers, $encoders);
+            if ($user !== null && $user === $customer) {
+                $encoders = [new XmlEncoder(), new JsonEncoder()];
+                $normalizers = [new ObjectNormalizer()];
 
-            $bookings = $customer->getBookings();
+                $serializer = new Serializer($normalizers, $encoders);
 
-            $bookingsData = [];
+                $bookings = $customer->getBookings();
 
-            foreach ($bookings as $booking) {
-                $bookingsData[] = [
-                    'id' => $booking->getId(),
-                    'createdAt' => $booking->getCreatedAt()->format('Y-m-d H:i:s'),
-                    'traveller' => $booking->getQuantityTraveller(),
-                    'price' => $booking->getTotalPrice(),
-                    'start' => $booking->getStartAt()->format('Y-m-d H:i:s'),
-                    'end' => $booking->getEndAt()->format('Y-m-d H:i:s'),
-                    'cottage' => $this->getCottageData($booking
-                        ->getLocationType()->getCategoriesCottage())
-                ];
+                $bookingsData = [];
+
+                foreach ($bookings as $booking) {
+                    $bookingsData[] = [
+                        'id' => $booking->getId(),
+                        'createdAt' => $booking->getCreatedAt()->format('Y-m-d H:i:s'),
+                        'traveller' => $booking->getQuantityTraveller(),
+                        'price' => $booking->getTotalPrice(),
+                        'start' => $booking->getStartAt()->format('Y-m-d H:i:s'),
+                        'end' => $booking->getEndAt()->format('Y-m-d H:i:s'),
+                        'cottage' => $this->getCottageData($booking
+                            ->getLocationType()->getCategoriesCottage())
+                    ];
+                }
+
+                $jsonContent = $serializer->serialize($bookingsData, 'json');
+                return new Response($jsonContent);
+            } else {
+                throw new AccessDeniedException("Vous ne pouvez pas faire ça pour le moment.");
             }
-
-            $jsonContent = $serializer->serialize($bookingsData, 'json');
-            return new Response($jsonContent);
         } else {
-            throw new AccessDeniedException("Vous ne pouvez pas faire ça pour le moment.");
+            return $this->render('maintenance.html.twig');
         }
     }
 
@@ -63,7 +71,7 @@ class BookingsController extends AbstractController
             'price' => $cottage->getPriceOneNight(),
             'privacy' => $cottage->getPrivacy(),
             'covers' => $this->getCoversData($cottage->getCovers()),
-            
+
         ];
 
         return $locationTypesData;
@@ -84,6 +92,4 @@ class BookingsController extends AbstractController
 
         return $coversData;
     }
-
-    
 }
