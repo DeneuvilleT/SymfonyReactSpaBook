@@ -1,0 +1,25 @@
+{% extends 'maintenance.html.twig' %}
+
+{% block access %}
+<section data-state="admin">
+
+	<h2>Connexion Administrateur</h2>
+
+	<form action="{{ path('app_login_access_admin') }}" method="post">
+		<label for="email">E-mail :</label>
+		<input type="email" id="email" name="email" />
+
+		<label for="password">Mot de passe :</label>
+		<input type="password" id="password" name="password" />
+
+		<button type="submit">
+			Se connecter
+		</button>
+	</form>
+
+	{% if error %}
+	<span>{{ error }}</span>
+	{% endif %}
+
+</section>
+{% endblock %}

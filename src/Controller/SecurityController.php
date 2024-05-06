@@ -2,36 +2,89 @@
 
 namespace App\Controller;
 
-use App\Controller\Admin\ProductsCrudController;
+use App\Controller\Admin\BookingsCrudController;
 
 use App\Repository\CustomerRepository;
 use App\Repository\ConfigurationRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class SecurityController extends AbstractController
 {
 
-   public function __construct(private TokenStorageInterface $tokenStorage, private JWTTokenManagerInterface $jwtManager)
-   {
+   public function __construct(
+      private TokenStorageInterface $tokenStorage,
+      private JWTTokenManagerInterface $jwtManager,
+      private JWTTokenManagerInterface $jwtTokenManager
+   ) {
+      $this->jwtTokenManager = $jwtTokenManager;
       $this->tokenStorage = $tokenStorage;
       $this->jwtManager = $jwtManager;
    }
 
+   #[Route('/api/v1/log-access-admin', name: 'app_login_access_admin')]
+   public function loginAdmin(
+      Request $request,
+      CustomerRepository $customerRepo,
+      AdminUrlGenerator $adminUrlGenerator
+   ): Response {
+      if ($request->isMethod('POST')) {
+         $email = $request->request->get('email');
+         $password = $request->request->get('password');
+
+         $customer = $customerRepo->findOneBy(['email' => $email]);
+
+         if (
+            !$customer ||
+            !$this->isPasswordValid($password, $customer->getPassword()) ||
+            $customer->getRoles()[0] !== "ROLE_SUPER_ADMIN"
+         ) {
+            return $this->render('log-access-admin.html.twig', ['error' => 'Mauvais identifiants']);
+         }
+
+         $token = $this->jwtManager->create($customer);
+         $url = $adminUrlGenerator->setController(BookingsCrudController::class)
+            ->set('rules', base64_encode($customer->getRoles()[0]))
+            ->set('token', base64_encode($token))
+            ->generateUrl();
+
+         $response = new RedirectResponse($url);
+         $expirationTime = new \DateTime('+1 hour');
+         $cookie = new Cookie('jaat', $token, $expirationTime, '/', null, true, true);
+         $response->headers->setCookie($cookie);
+
+         return $response;
+      }
+
+      return $this->render('log-access-admin.html.twig', ['error' => false]);
+   }
+
+   private function isPasswordValid(string $plainTextPassword, string $hashedPassword): bool
+   {
+      return password_verify($plainTextPassword, $hashedPassword);
+   }
+
    #[IsGranted('ROLE_SUPER_ADMIN')]
    #[Route('/api/v1/access_admin', name: 'app_access', methods: ['GET'])]
-   public function accessBackOffice(Request $request, CustomerRepository $customerRepo, AdminUrlGenerator $adminUrlGenerator, ConfigurationRepository $configRepo): JsonResponse
-   {
+   public function accessBackOffice(
+      Request $request,
+      CustomerRepository $customerRepo,
+      AdminUrlGenerator $adminUrlGenerator,
+      ConfigurationRepository $configRepo
+   ): JsonResponse {
       $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
       if (!$maintenance->isValue()) {
@@ -53,7 +106,7 @@ class SecurityController extends AbstractController
                if ($role === "ROLE_SUPER_ADMIN") {
 
                   $token = $this->jwtManager->create($user);
-                  $url = $adminUrlGenerator->setController(ProductsCrudController::class)
+                  $url = $adminUrlGenerator->setController(BookingsCrudController::class)
                      ->set('rules', base64_encode($role))
                      ->set('token', base64_encode($token))
                      ->generateUrl();

@@ -10,7 +10,7 @@ import Logup from "../Logup/Logup";
 import axios from "axios";
 import styles from "./login.styles.scss";
 
-const Login = ({ isLog }) => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
