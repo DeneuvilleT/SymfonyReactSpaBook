@@ -12,8 +12,8 @@ const parseDates = (dates) => {
     );
     datesArr.push(date);
   });
-  
-  return datesArr;
+
+  return JSON.stringify(datesArr);
 };
 
 const initialState = {

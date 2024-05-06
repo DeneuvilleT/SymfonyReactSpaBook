@@ -38,8 +38,9 @@ const Summary = () => {
   }, [locationHook]);
 
   const transformDates = (datesChoices) => {
-    const dateStart = new Date(datesChoices[0]);
-    const dateEnd = new Date(datesChoices[1]);
+    const datesStorage = JSON.parse(datesChoices);
+    const dateStart = new Date(datesStorage[0]);
+    const dateEnd = new Date(datesStorage[1]);
 
     const millisecondsPerDay = 1000 * 60 * 60 * 24;
     const differenceInMilliseconds = dateEnd - dateStart;
@@ -57,7 +58,7 @@ const Summary = () => {
 
     const datasBooking = {
       location: JSON.parse(localStorage.getItem("location")),
-      dates: datesChoices,
+      dates: JSON.parse(datesChoices),
       price: locations[0].cottage.price_one_night * nbNight,
     };
 
