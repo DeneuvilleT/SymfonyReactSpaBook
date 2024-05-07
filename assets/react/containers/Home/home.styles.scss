@@ -1,41 +1,4 @@
-@keyframes appear {
-  0% {
-    opacity: 0.5;
-    transform: translateY(90vh);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(1px);
-  }
-}
 
-@keyframes disappear {
-  0% {
-    opacity: 1;
-    height: 100%;
-    transform: translateY(1px);
-  }
-  100% {
-    opacity: 0;
-    height: 0%;
-    transform: translateY(100vh);
-    z-index: -1;
-  }
-}
-
-@keyframes disappearTablet {
-  0% {
-    opacity: 1;
-    height: auto;
-    transform: translateY(1px);
-  }
-  100% {
-    opacity: 0;
-    height: 0%;
-    transform: translateY(100vh);
-    z-index: -1;
-  }
-}
 
 .home {
   display: flex;
@@ -51,6 +14,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 0 30px 70px;
     margin: 0;
     width: 100%;
@@ -115,6 +79,7 @@
   width: 100%;
   margin: 60px auto;
   max-width: 1360px;
+  opacity: 0;
   animation: appear 2.5s linear forwards;
 
   .textBox {
@@ -173,7 +138,7 @@
   }
 
   .textBox a span {
-    min-width: 190px;
+    min-width: 191px;
     margin-left: 0;
   }
 
@@ -214,6 +179,8 @@
   }
 }
 
+
+// Pages réglementaires
 .welcome.other {
   height: auto;
   margin: 60px auto 100px;
@@ -254,6 +221,7 @@
   max-width: 1450px;
   margin: -670px auto auto;
   width: 100%;
+  opacity: 0;
   transform: translateY(90vh);
 
   > li {
@@ -266,6 +234,46 @@
     width: 100%;
   }
 }
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(90vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(1px);
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+    height: 100%;
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 0;
+    height: 0%;
+    transform: translateY(100vh);
+    z-index: -1;
+  }
+}
+
+@keyframes disappearTablet {
+  0% {
+    opacity: 1;
+    height: auto;
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 0;
+    height: 0%;
+    transform: translateY(100vh);
+    z-index: -1;
+  }
+}
+
 
 .locations.speed {
   transition: transform 0s ease-out;
@@ -518,7 +526,7 @@
 
 @media (max-width: 1920px) {
   .locations .thumbails {
-    width: 50%;
+    width: 51%;
   }
 }
 

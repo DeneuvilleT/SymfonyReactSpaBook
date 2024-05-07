@@ -27,7 +27,6 @@ const PeriodsBooking = () => {
 
   const [ready, setReady] = useState(false);
   const [qtyTraveller, setQtyTraveller] = useState(0);
-  const [privacyChecked, setPrivacyChecked] = useState(false);
 
   const [perdiodsStartUpdated, setPerdiodsStartUpdated] = useState(null);
   const [perdiodsEndUpdated, setPerdiodsEndUpdated] = useState(null);
@@ -124,7 +123,6 @@ const PeriodsBooking = () => {
             handleNavigateToSummary(Number(spanChoice.textContent));
           };
           btnPrivacy.current.disabled = false;
-          setPrivacyChecked(true);
         }
       };
 
@@ -266,11 +264,9 @@ const PeriodsBooking = () => {
         handleNavigateToSummary();
       };
       btnPrivacy.current.disabled = false;
-      setPrivacyChecked(true);
     } else {
       btnPrivacy.current.onclick = null;
       btnPrivacy.current.disabled = true;
-      setPrivacyChecked(false);
     }
   };
 

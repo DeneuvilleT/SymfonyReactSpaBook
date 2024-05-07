@@ -17,8 +17,10 @@ const parseDates = (dates) => {
 };
 
 const initialState = {
-  locations: [],
-  choiceLocation: false,
+  locations: localStorage.getItem("location")
+    ? [JSON.parse(localStorage.getItem("location"))[0]]
+    : [],
+  choiceLocation: localStorage.getItem("location") ? true : false,
   privacy: null,
   datesChoices: parseDates(localStorage.getItem("dates")),
 };

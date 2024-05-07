@@ -15,6 +15,8 @@ const Logo = ({ page }) => {
   const handleBackToHome = () => {
     hideHeader(false);
     dispatch(deleteLocations());
+    localStorage.getItem("location") ? localStorage.removeItem("location") :null;
+    localStorage.getItem("dates") ? localStorage.removeItem("dates") :null;
   };
 
   return (

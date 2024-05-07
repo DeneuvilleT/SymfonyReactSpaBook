@@ -64,6 +64,9 @@ const Locations = ({ locationsDatas }) => {
 
   return (
     <>
+      {/* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+      /* LOCATIONS */
+      /* ::::::::::::::::::::::::::::::::::::::::::::::::: */}
       <ul
         ref={locationContainer}
         className={`${styles.locations} ${
