@@ -52,7 +52,6 @@ const PeriodsBooking = () => {
     if (choiceLocation) {
       period.current.classList.add(styles.activeBooking);
       convertTimestamp(locations[0].cottage.periods);
-      buildSelectTraveller();
     } else {
       period.current.classList.remove(styles.activeBooking);
     }
@@ -102,7 +101,7 @@ const PeriodsBooking = () => {
     });
   };
 
-  const buildSelectTraveller = () => {
+  const buildSelectTraveller = (dateEnd) => {
     if (locations[0].cottage.period_minimum !== 0) {
       contentTraveller.current.innerHTML = "";
 
@@ -120,7 +119,7 @@ const PeriodsBooking = () => {
 
         if (document.getElementById("privacy").checked) {
           btnPrivacy.current.onclick = function () {
-            handleNavigateToSummary(Number(spanChoice.textContent));
+            handleNavigateToSummary(Number(spanChoice.textContent), dateEnd);
           };
           btnPrivacy.current.disabled = false;
         }
@@ -244,6 +243,8 @@ const PeriodsBooking = () => {
 
   const handleDateEndSelection = (date) => {
     setDateEndSelectionnee(date);
+
+    return buildSelectTraveller(date);
   };
 
   const handleDisplayPrivacy = (e) => {
@@ -261,7 +262,7 @@ const PeriodsBooking = () => {
       qtyTraveller !== 0
     ) {
       btnPrivacy.current.onclick = function () {
-        handleNavigateToSummary();
+        handleNavigateToSummary(qtyTraveller, dateEndSelectionnee);
       };
       btnPrivacy.current.disabled = false;
     } else {
@@ -270,7 +271,7 @@ const PeriodsBooking = () => {
     }
   };
 
-  const handleNavigateToSummary = (qty) => {
+  const handleNavigateToSummary = (qty, dateEnd) => {
     localStorage.setItem(
       "location",
       JSON.stringify([
@@ -283,7 +284,7 @@ const PeriodsBooking = () => {
       "dates",
       JSON.stringify([
         dateStartSelectionnee.toLocaleString(),
-        dateEndSelectionnee.toLocaleString(),
+        dateEnd.toLocaleString(),
       ])
     );
 
@@ -291,7 +292,7 @@ const PeriodsBooking = () => {
       setDatesLocation(
         JSON.stringify([
           dateStartSelectionnee.toLocaleString(),
-          dateEndSelectionnee.toLocaleString(),
+          dateEnd.toLocaleString(),
         ])
       )
     );

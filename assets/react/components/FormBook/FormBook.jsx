@@ -48,10 +48,10 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
             }
 
             navigate("/");
+            dispatch(setLocations(response.data));
 
             setTimeout(() => {
               setIcone("lets-icons:search-light");
-              dispatch(setLocations(response.data));
             }, 2000);
           } else {
             setIcone("lets-icons:search-light");

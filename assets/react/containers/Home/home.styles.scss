@@ -1,5 +1,3 @@
-
-
 .home {
   display: flex;
   flex-direction: column;
@@ -179,7 +177,6 @@
   }
 }
 
-
 // Pages réglementaires
 .welcome.other {
   height: auto;
@@ -273,7 +270,6 @@
     z-index: -1;
   }
 }
-
 
 .locations.speed {
   transition: transform 0s ease-out;
@@ -614,9 +610,9 @@
     animation: disappearTablet 2s linear forwards;
   }
 
-  .locations.appear {
-    animation: none;
-  }
+  // .locations.appear {
+  //   animation: none;
+  // }
 
   .locations {
     transform: translateY(-70px);

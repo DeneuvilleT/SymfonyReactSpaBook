@@ -41,6 +41,11 @@ const Nav = () => {
       const submitLogout = await axios.get("/api/v1/logout");
 
       if (submitLogout.status === 200) {
+        ocalStorage.getItem("location")
+          ? localStorage.removeItem("location")
+          : null;
+        localStorage.getItem("dates") ? localStorage.removeItem("dates") : null;
+
         setTimeout(() => {
           dispatch(logout());
           setIcon("quill:off");
