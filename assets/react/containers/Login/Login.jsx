@@ -6,6 +6,7 @@ import { login } from "../../Store/slices/authSlices";
 import { Icon } from "@iconify/react";
 
 import Logup from "../Logup/Logup";
+import ForgottenPass from "../ForgottenPass/ForgottenPass";
 
 import axios from "axios";
 import styles from "./login.styles.scss";
@@ -20,6 +21,7 @@ const Login = () => {
 
   const [msgErr, setMsgErr] = useState("");
   const [icone, setIcone] = useState("bxs:right-arrow");
+  const [forgottenPass, setForgottenPass] = useState(false);
   const [canSave, setCanSave] = useState(false);
   const [formData, setFormData] = useState({
     _email: "",
@@ -72,6 +74,11 @@ const Login = () => {
     }
   };
 
+  const handleForgottenPass = () => {
+    setForgottenPass(true);
+    handleChangeForm();
+  };
+
   const handleChangeForm = () => {
     formLog.current.classList.toggle(styles.formSlide);
   };
@@ -95,7 +102,10 @@ const Login = () => {
           <div className={styles.formContainerBox}>
             <h2>Vous ne disposez pas de compte ?</h2>
             <button
-              onClick={() => handleChangeForm()}
+              onClick={() => {
+                handleChangeForm();
+                setForgottenPass(false);
+              }}
               className={styles.formSignUpBtn}
             >
               Inscription
@@ -122,6 +132,8 @@ const Login = () => {
                   onChange={handleInputChange}
                 />
 
+                <p onClick={handleForgottenPass}>mot de passe oublié ?</p>
+
                 <span className={msgErr !== "" ? styles.error : ""}>
                   <Icon icon="line-md:alert-twotone" color="white" />
                   {msgErr}
@@ -129,13 +141,13 @@ const Login = () => {
 
                 <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
                   Se connecter{" "}
-                  <Icon icon={icone} color="white" width="22.5" height="22.5" />
+                  <Icon icon={icone} color="white" width="18" height="18" />
                 </button>
               </form>
             </div>
 
             <div className={styles.formSignUp}>
-              <Logup />
+              {!forgottenPass ? <Logup /> : <ForgottenPass />}
             </div>
           </div>
         </div>

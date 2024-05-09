@@ -25,6 +25,21 @@
   }
 }
 
+// Reset password
+.formBox .formSignIn p {
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #999;
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: color 0.5s ease-out;
+}
+
+.formBox .formSignIn p:hover {
+  color: #696969;
+}
+
 .formContainer {
   position: relative;
   width: 60vw;
@@ -198,16 +213,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 5px;
     background: linear-gradient(155deg, #0f9310, #0ea32c 70%, #43a70f);
     border: none;
     color: #fff;
 
-    padding: 10px 10px 10px 15px;
+    padding: 5px 10px 5px 15px;
     max-width: 180px;
+    width: fit-content;
+    min-height: 40px;
     cursor: pointer;
     letter-spacing: 1px;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 500;
     margin-top: 20px;
     border-radius: 5px;

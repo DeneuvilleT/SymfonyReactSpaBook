@@ -15,12 +15,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class SecurityController extends AbstractController
 {
@@ -190,6 +198,121 @@ class SecurityController extends AbstractController
          }
       } else {
          return $this->render('maintenance.html.twig');
+      }
+   }
+
+   #[Route('/password/reset-request', name: 'app_password_reset_request')]
+   public function resetPasswordRequest(Request $request, MailerInterface $mailer, CustomerRepository $custoRepo): JsonResponse
+   {
+      if ($request->isMethod('POST')) {
+
+         $datas = json_decode($request->getContent(), true);
+         $customer = $custoRepo->findOneBy(['email' => $datas['email']]);
+
+         if (!$customer  || $customer !== null) {
+            $encoders = [new XmlEncoder(), new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $serializer = new Serializer($normalizers, $encoders);
+
+            // Générer un token unique et l'enregistrer dans la base de données
+            $token = md5(uniqid());
+            $customer->setResetToken($token);
+            $custoRepo->save($customer, true);
+
+            // Envoyer un e-mail avec le lien de réinitialisation
+            $email = (new TemplatedEmail())
+               ->from('Cabane et gite au naturel <contact@cabaneetgiteaunaturel.com>')
+               ->to($customer->getEmail())
+               ->subject("Réinitialisation du mot de passe")
+               ->htmlTemplate('/mail/reset_password.html.twig')
+               ->context([
+                  'firstname' => $customer->getFirstname(),
+                  'token' => $token
+               ]);
+
+            $mailer->send($email);
+
+            $message = "L'email pour la procédure de réinitialisation vous a été envoyé.";
+            $jsonContent = $serializer->serialize(["status" => "error", "message" => $message], 'json');
+            return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+         }
+      }
+   }
+
+   #[Route('/password/reset/{token}', name: 'app_password_reset')]
+   public function resetPassword(Request $request, string $token, UserPasswordHasherInterface $userPasswordHasher, CustomerRepository $custoRepo): Response
+   {
+      $customer = $custoRepo->findOneBy(['resetToken' => $token]);
+
+      if (!$customer || $customer === null) {
+         return $this->render('base.html.twig', [
+            'back' => false
+         ]);
+         
+      } else {
+         if ($request->isMethod('POST')) {
+
+            $encoders = [new XmlEncoder(), new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $serializer = new Serializer($normalizers, $encoders);
+
+            $datas = json_decode($request->getContent(), true);
+
+            $password = $datas['password'];
+            $confirmPassword =  $datas['confirm_password'];
+
+            if ($password === $confirmPassword) {
+
+               if (preg_match_all("/[0-9]/", $password) < 2) {
+                  $errorMessage = "Le mot de passe doit contenir au moins deux chiffres.";
+
+                  $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                  return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+               }
+
+               if (!preg_match("/[!@#$%^&*€()-]/", $password)) {
+                  $errorMessage = "Le mot de passe doit contenir au moins un caractère spécial parmi ! @ # $ % ^ & * € ( ) - .";
+
+                  $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                  return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+               }
+
+               if (!preg_match("/[A-Z]/", $password)) {
+                  $errorMessage = "Le mot de passe doit contenir au moins une majuscule.";
+
+                  $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                  return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+               }
+
+               if (strlen($password) < 8) {
+                  $errorMessage = "Le mot de passe doit avoir au moins 8 caractères.";
+
+                  $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+                  return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+               }
+
+               $hashedPassword = $userPasswordHasher->hashPassword($customer, $datas['password']);
+               $customer->setPassword($hashedPassword);
+               $customer->setResetToken(null);
+
+               $custoRepo->save($customer, true);
+
+               // Redirection vers une page de confirmation
+               return $this->render('base.html.twig', [
+                  'back' => 'reset_pass'
+               ]);
+            } else {
+               $errorMessage = "Le deuxième mot de passe doit être identique au premier.";
+
+               $jsonContent = $serializer->serialize(["status" => "error", "message" => $errorMessage], 'json');
+               return new JsonResponse($jsonContent, Response::HTTP_UNAUTHORIZED);
+            }
+         } else {
+            // Redirection vers la page de renseignement du nouveau mot de passe
+            return $this->render('base.html.twig', [
+               'back' => 'init_pass'
+            ]);
+         }
       }
    }
 }

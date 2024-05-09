@@ -24,7 +24,7 @@ const App = ({ container }) => {
   const locationHook = useLocation();
   const headerDom = useRef(null);
 
-  const [backBuy, setBackBuy] = useState(null);
+  const [notif, setNotif] = useState(null);
 
   useEffect(() => {
     if (
@@ -43,14 +43,14 @@ const App = ({ container }) => {
 
   useEffect(() => {
     if (container.dataset.back || container.dataset.back !== false) {
-      setBackBuy(container.dataset.back);
+      setNotif(container.dataset.back);
     }
   }, [container]);
 
   return (
     <>
       <Slider />
-      <Privacy success={backBuy} container={container} />
+      <Privacy notif={notif} container={container} />
 
       <Header headerDom={headerDom} />
       <Routes>

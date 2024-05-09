@@ -1,45 +1,66 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Icon } from "@iconify/react";
 import { resetPrivacy } from "../../Store/slices/locationsSlices";
 
+import Form from "../Form/Form";
+
 import Cookies from "js-cookie";
 import styles from "../Slider/sliderContainer.styles.scss";
 
-const Privacy = ({ success, container }) => {
+const Privacy = ({ notif, container }) => {
   const { privacy } = useSelector((state) => ({ ...state.location }));
+
+  const dispatch = useDispatch();
+  const locationHook = useLocation();
 
   const [successContent, setSuccessContent] = useState(false);
   const [errorContent, setErrorContent] = useState(false);
+  const [initResetContent, setInitResetContent] = useState(false);
+  const [resetContent, setResetContent] = useState(false);
   const [privacyContent, setPrivacyContent] = useState(null);
+  const [tokenReset, setTokenReset] = useState("");
   const sliderDom = useRef(null);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (privacy !== null) {
       setPrivacyContent(privacy);
       document.body.style.overflowY = "hidden";
-    } else if (success !== null && success !== undefined) {
-      if (success === "error_buy") {
-        setErrorContent(true);
-      } else {
-        const stripeToken = Cookies.get("tokenAfterBuy");
-        if (stripeToken === container.dataset.back) {
-          setSuccessContent(true);
-        } else {
+    } else if (notif !== null && notif !== undefined) {
+      switch (notif) {
+        case "error_buy":
           setErrorContent(true);
-        }
+          break;
+
+        case "init_pass":
+          setInitResetContent(true);
+
+          const tokenResetSplit = location.pathname.split("/");
+          setTokenReset(tokenResetSplit[tokenResetSplit.length - 1]);
+          break;
+
+        case "reset_pass":
+          setResetContent(true);
+          break;
+
+        default:
+          const stripeToken = Cookies.get("tokenAfterBuy");
+          if (stripeToken === container.dataset.back) {
+            setSuccessContent(true);
+          } else {
+            setErrorContent(true);
+          }
+          break;
       }
 
       document.body.style.overflowY = "hidden";
     }
-  }, [privacy, success]);
+  }, [privacy, notif]);
 
   const handleClose = () => {
-    if (success === null || success === undefined) {
+    if (notif === null || notif === undefined) {
       dispatch(resetPrivacy());
       setPrivacyContent(null);
     } else {
@@ -47,26 +68,40 @@ const Privacy = ({ success, container }) => {
         container.removeAttribute("data-back");
       }
 
+      setResetContent(false);
+      setInitResetContent(false);
       setSuccessContent(false);
       setErrorContent(false);
     }
+
     document.body.style.overflowY = "auto";
   };
 
   return (
     <div
       className={`${styles.sliderContainer} ${
-        successContent || errorContent ? styles.not_privacy : ""
+        successContent || errorContent || resetContent || initResetContent
+          ? styles.not_privacy
+          : ""
       }`}
       style={{
         display:
-          privacyContent || successContent || errorContent ? "flex" : "none",
+          privacyContent ||
+          successContent ||
+          errorContent ||
+          resetContent ||
+          initResetContent
+            ? "flex"
+            : "none",
       }}
       onClick={handleClose}
     >
       <Icon icon="fontisto:close-a" />
       <div className={`${styles.slider} ${styles.privacy}`} ref={sliderDom}>
         {privacyContent ? (
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          /* PRIVACY CONTENT */
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
           <p
             className={styles.privacy}
             dangerouslySetInnerHTML={{
@@ -74,6 +109,9 @@ const Privacy = ({ success, container }) => {
             }}
           />
         ) : successContent ? (
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          /* SUCCESS PAIEMENT */
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
           <section className={styles.success}>
             <h2>Félicitations pour votre réservation !</h2>
             <p>
@@ -116,6 +154,9 @@ const Privacy = ({ success, container }) => {
             <Icon icon="meteocons:sun-hot-fill" />
           </section>
         ) : errorContent ? (
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          /* ERROR PAIEMENT */
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
           <section className={styles.error}>
             <h2>Désolé mais votre paiement a échoué</h2>
             <p>
@@ -155,6 +196,46 @@ const Privacy = ({ success, container }) => {
             </p>
             <Link to={"/"} onClick={handleClose}>
               Retour à la page d'accueil <Icon icon="teenyicons:home-solid" />
+            </Link>
+          </section>
+        ) : initResetContent ? (
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          /* INIT RESET PASSWORD */
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          <section
+            className={styles.reset}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Veuillez entrer votre nouveau mot de passe</h3>
+            <Form
+              url={`/password/reset/${tokenReset}`}
+              btnSubmit={"Envoyer"}
+              after={false}
+              inputs={{
+                password: {
+                  label: "Nouveau mot de passe",
+                  name: "password",
+                  type: "password",
+                },
+                confirm_password: {
+                  label: "Confirmer votre mot de passe",
+                  name: "confirm_password",
+                  type: "password",
+                },
+              }}
+            />
+          </section>
+        ) : resetContent ? (
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          /* RESET PASSWORD */
+          /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
+          <section className={styles.success_reset}>
+            <h2>Félicitaions votre mot de passe a bien été changé !</h2>
+            <p>
+              Vous pouvez également dés à présent vous reconnecter avec votre nouveau mot de passe.
+            </p>
+            <Link to={"/login"}>
+              Connexion <Icon icon="bxs:user" />
             </Link>
           </section>
         ) : (

@@ -92,9 +92,25 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?int $phone = null;
 
+    #[Groups("api")]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $resetToken;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
     }
 
     public function getUid(): ?string

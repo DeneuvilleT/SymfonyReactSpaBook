@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 
 import styles from "./form.styles.scss";
 
-const Form = ({ url, btnSubmit, hasLabel, after, inputs }) => {
+const Form = ({ url, btnSubmit, hasLabel, after, inputs, secure = true }) => {
   const initialFormData = Object.fromEntries(
     Object.entries(inputs).map(([key, input]) => [
       key,
@@ -27,11 +27,15 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs }) => {
       setCanSave(false);
       try {
         setIcone("svg-spinners:90-ring-with-bg");
-        const response = await axios.post(url, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+
+        const response = secure
+          ? await axios.post(url, formData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+          : await axios.post(url, formData);
+
         setMsgsErr([]);
 
         if (response.status === 200) {
@@ -122,7 +126,7 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs }) => {
 
       <button onClick={(e) => handleSubmit(e)} disabled={!canSave}>
         {btnSubmit}
-        <Icon icon={icone} color="white" width="22.5" height="22.5" />
+        <Icon icon={icone} color="white" width="18" height="18" />
       </button>
     </form>
   );
