@@ -56,8 +56,24 @@ const Summary = () => {
 
     setIcone("svg-spinners:90-ring-with-bg");
 
+    let locationParse = JSON.parse(localStorage.getItem("location"));
+
+    const combining = /[\u0300-\u036F]/g;
+
+    const objectLocation = [
+      {
+        id: locationParse[0].id,
+        name: locationParse[0].cottage.name
+          .normalize("NFKD")
+          .replace(combining, ""),
+      },
+      {
+        qtyTraveller: locationParse[1].qtyTraveller,
+      },
+    ];
+
     const datasBooking = {
-      location: JSON.parse(localStorage.getItem("location")),
+      location: objectLocation,
       dates: JSON.parse(datesChoices),
       price: locations[0].cottage.price_one_night * nbNight,
     };

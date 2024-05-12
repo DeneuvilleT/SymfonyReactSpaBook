@@ -9,10 +9,12 @@ use App\Repository\ConfigurationRepository;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\Annotation\Route;
+
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -20,33 +22,33 @@ use Symfony\Component\Serializer\Serializer;
 
 class ReactController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(SessionInterface $session, ConfigurationRepository $configRepo): Response
     {
         $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
 
         if (!$maintenance->isValue()) {
-            $tokenAfterBuy = $session->get('token');
+            $tokenBack = $session->get('token');
 
-            if ($tokenAfterBuy) {
+            if ($tokenBack) {
 
                 $session->remove('token');
 
                 $response = $this->render('base.html.twig', [
-                    'back' => $tokenAfterBuy
+                    'back' => $tokenBack
                 ]);
 
-                $response->headers->set('Set-Cookie', 'tokenAfterBuy=' . $tokenAfterBuy . '; path=/; expires=' . (new \DateTime('+10 minutes'))->format('r') . '; SameSite=None; Secure');
+                $response->headers->set('Set-Cookie', 'tokenAfterBuy=' . $tokenBack . '; path=/; expires=' . (new \DateTime('+10 minutes'))->format('r') . '; SameSite=None; Secure');
 
                 return $response;
-            } else if ($tokenAfterBuy === false) {
+            } else if ($tokenBack === false) {
 
                 $session->remove('token');
-                
+
                 return $this->render('base.html.twig', [
                     'back' => 'error_buy'
                 ]);
-            } else if ($tokenAfterBuy === null) {
+            } else if ($tokenBack === null) {
                 return $this->render('base.html.twig', [
                     'back' => false
                 ]);
@@ -59,7 +61,7 @@ class ReactController extends AbstractController
     #[Route(
         '/location/search',
         name: 'app_home_search',
-        methods: ['GET', 'POST']
+        methods: ['POST']
     )]
     public function searchBar(Request $request, LocationTypesRepository $localRepo, ConfigurationRepository $configRepo)
     {

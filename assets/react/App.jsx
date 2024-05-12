@@ -50,7 +50,7 @@ const App = ({ container }) => {
   return (
     <>
       <Slider />
-      <Privacy notif={notif} container={container} />
+      <Privacy notif={notif} container={container} resetNotif={setNotif} />
 
       <Header headerDom={headerDom} />
       <Routes>
@@ -79,7 +79,6 @@ const App = ({ container }) => {
           path="/summary"
           element={<Authentication child={Summary} auth={false} />}
         />
-
         <Route
           path="/profile"
           element={<Authentication child={ProfileBridge} auth={true} />}
@@ -92,7 +91,6 @@ const App = ({ container }) => {
           path="/user/reservations"
           element={<Authentication child={UserBookings} auth={true} />}
         />
-
         <Route
           path="/login"
           element={<Authentication child={Login} auth={false} />}

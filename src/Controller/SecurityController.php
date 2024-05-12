@@ -7,24 +7,26 @@ use App\Controller\Admin\BookingsCrudController;
 use App\Repository\CustomerRepository;
 use App\Repository\ConfigurationRepository;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -43,7 +45,7 @@ class SecurityController extends AbstractController
       $this->jwtManager = $jwtManager;
    }
 
-   #[Route('/api/v1/log-access-admin', name: 'app_login_access_admin')]
+   #[Route('/api/v1/log-access-admin', name: 'app_login_access_admin', methods: ['GET', 'POST'])]
    public function loginAdmin(
       Request $request,
       CustomerRepository $customerRepo,
@@ -201,7 +203,7 @@ class SecurityController extends AbstractController
       }
    }
 
-   #[Route('/password/reset-request', name: 'app_password_reset_request')]
+   #[Route('/password/reset-request', name: 'app_password_reset_request', methods: ['POST'])]
    public function resetPasswordRequest(Request $request, MailerInterface $mailer, CustomerRepository $custoRepo): JsonResponse
    {
       if ($request->isMethod('POST')) {
@@ -239,16 +241,13 @@ class SecurityController extends AbstractController
       }
    }
 
-   #[Route('/password/reset/{token}', name: 'app_password_reset')]
-   public function resetPassword(Request $request, string $token, UserPasswordHasherInterface $userPasswordHasher, CustomerRepository $custoRepo): Response
+   #[Route('/password/reset/{token}', name: 'app_password_reset', methods: ['GET', 'POST'])]
+   public function resetPassword(Request $request, string $token, UserPasswordHasherInterface $userPasswordHasher, CustomerRepository $custoRepo, SessionInterface $session): Response
    {
       $customer = $custoRepo->findOneBy(['resetToken' => $token]);
 
       if (!$customer || $customer === null) {
-         return $this->render('base.html.twig', [
-            'back' => false
-         ]);
-         
+         return $this->redirectToRoute('app_home');
       } else {
          if ($request->isMethod('POST')) {
 
@@ -298,9 +297,8 @@ class SecurityController extends AbstractController
                $custoRepo->save($customer, true);
 
                // Redirection vers une page de confirmation
-               return $this->render('base.html.twig', [
-                  'back' => 'reset_pass'
-               ]);
+               $session->set('token', 'reset_pass');
+               return new JsonResponse('success', Response::HTTP_OK);
             } else {
                $errorMessage = "Le deuxième mot de passe doit être identique au premier.";
 

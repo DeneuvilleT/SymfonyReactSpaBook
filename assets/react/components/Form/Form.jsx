@@ -40,7 +40,11 @@ const Form = ({ url, btnSubmit, hasLabel, after, inputs, secure = true }) => {
 
         if (response.status === 200) {
           setIcone("line-md:circle-to-confirm-circle-transition");
-          return after ? location.reload() : (location.href = "/");
+          return after
+            ? location.reload()
+            : after === null
+            ? null
+            : (location.href = "/");
         }
       } catch (err) {
         const errors = JSON.parse(err.response.data);

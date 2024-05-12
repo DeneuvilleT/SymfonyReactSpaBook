@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Icon } from "@iconify/react";
 import { resetPrivacy } from "../../Store/slices/locationsSlices";
@@ -10,11 +10,10 @@ import Form from "../Form/Form";
 import Cookies from "js-cookie";
 import styles from "../Slider/sliderContainer.styles.scss";
 
-const Privacy = ({ notif, container }) => {
+const Privacy = ({ notif, container, resetNotif }) => {
   const { privacy } = useSelector((state) => ({ ...state.location }));
 
   const dispatch = useDispatch();
-  const locationHook = useLocation();
 
   const [successContent, setSuccessContent] = useState(false);
   const [errorContent, setErrorContent] = useState(false);
@@ -74,6 +73,7 @@ const Privacy = ({ notif, container }) => {
       setErrorContent(false);
     }
 
+    resetNotif(null);
     document.body.style.overflowY = "auto";
   };
 
@@ -232,7 +232,8 @@ const Privacy = ({ notif, container }) => {
           <section className={styles.success_reset}>
             <h2>Félicitaions votre mot de passe a bien été changé !</h2>
             <p>
-              Vous pouvez également dés à présent vous reconnecter avec votre nouveau mot de passe.
+              Vous pouvez également dés à présent vous reconnecter avec votre
+              nouveau mot de passe.
             </p>
             <Link to={"/login"}>
               Connexion <Icon icon="bxs:user" />

@@ -244,19 +244,18 @@
                         <tbody>
                           <tr>
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;" align="left">
-
                               <div style="font-size: 14px; line-height: 160%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 22px; line-height: 35.2px;">Bonjour {{firstname}},</span></p>
                                 <p style="font-size: 14px; line-height: 160%;">&nbsp;</p>
-                                <p style="font-size: 14px; line-height: 160%;">Votre réservation est désormais confirmée pour la date du : {{ date_start|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}
-                                  .
+                                <p style="font-size: 14px; line-height: 160%;">Votre réservation est désormais confirmée pour la date du :
+                                  <br> <strong style="font-size: 16px;">{{ date_start|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")|capitalize }}</strong>.
                                   <br>
+                                  Nous avons hâte de vous accueillir et de vous faire découvrir tout ce que notre établissement et ses environs ont à vous offrir.
                                   <br>
-                                  Nous avons hâte de vous accueillir et de vous faire découvrir tout ce que notre établissement et ses environs ont à vous offrir.<br><br>Si vous avez la moindre question ou demande spéciale, n'hésitez pas à
+                                  Si vous avez la moindre question ou demande spéciale, n'hésitez pas à
                                   nous contacter. Nous sommes là pour rendre votre séjour aussi agréable que possible. &nbsp;
                                 </p>
                               </div>
-
                             </td>
                           </tr>
                         </tbody>
@@ -277,7 +276,6 @@
                                 </a>
                                 <!--[if mso]></center></v:roundrect><![endif]-->
                               </div>
-
                             </td>
                           </tr>
                         </tbody>

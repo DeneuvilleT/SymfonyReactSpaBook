@@ -16,20 +16,19 @@ use App\Repository\BookingsRepository;
 use App\Repository\LocationTypesRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Validator\Constraints\Date;
 
 class StripeController extends AbstractController
 {
-    #[Route('/api/v1/stripe/checkout/{uid}', name: 'app_checkout', methods: ['POST', 'GET'])]
+    #[Route('/api/v1/stripe/checkout/{uid}', name: 'app_checkout', methods: ['POST'])]
     public function checkout(string $uid, CustomerRepository $customerRepository, Request $request, ConfigurationRepository $configRepo)
     {
         $maintenance = $configRepo->findOneBy(['name' => 'Maintenance']);
@@ -43,7 +42,6 @@ class StripeController extends AbstractController
 
                 $location = $data['location'][0];
                 $price = (int)$data['price'];
-                $images = $location['cottage']['covers'];
 
                 $fuseau_horaire_fr = new DateTimeZone('Europe/Paris');
                 $dateStartFormat = new DateTime($data['dates'][0]);
@@ -52,29 +50,13 @@ class StripeController extends AbstractController
                 $dateStartFormat->setTimezone($fuseau_horaire_fr);
                 $dateEndFormat->setTimezone($fuseau_horaire_fr);
 
-                $selectedPath = '';
-                foreach ($images as $image) {
-                    if (isset($image['priority']) && $image['priority'] == 1) {
-                        $selectedPath = $image['path'];
-                        break;
-                    }
-                }
-
-                $protocol = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] . '://' : 'http://';
-
-                $host = $_SERVER['HTTP_HOST'];
-                $baseURL = $protocol . $host;
-
-                $cover =  $baseURL . '/uploads/images/' . $selectedPath;
-
                 $lineItems[] = [
                     'price_data' => [
                         'currency' => 'eur',
                         'unit_amount' => $price,
                         'product_data' => [
-                            'name' => 'Location : ' . $location['cottage']['name'],
+                            'name' => 'Location : ' . $location['name'],
                             'description' => 'Du ' . date_format($dateStartFormat, 'd/m/Y') . ' au ' .  date_format($dateEndFormat, 'd/m/Y'),
-                            'images' => [$cover],
                         ],
                     ],
                     'quantity' => 1,
