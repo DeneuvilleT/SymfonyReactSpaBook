@@ -254,6 +254,9 @@
 
 @media (max-width: 620px) {
   .formBook {
+    box-shadow: none;
+    backdrop-filter: none;
+    
     aside:first-child {
       padding-bottom: 0;
       justify-content: space-between;
