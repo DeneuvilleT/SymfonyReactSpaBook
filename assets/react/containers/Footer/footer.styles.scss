@@ -287,11 +287,21 @@
 
 @media (max-width: 768px) {
   .reassurance {
+    background-image: 
+      linear-gradient(90deg, #1a6408c9, #1a6408c4 100%, #1a6408a6 0), 
+      url(/public/images/AZUR/cours-gite.jpg)
+    ;
+    
     div h3 {
       font-size: 2em;
       padding: 0 10px 0px;
       border-bottom: 10px solid #75ff2f;
       letter-spacing: 1px;
+    }
+
+    div address {
+      font-weight: 500;
+      font-size: 0.9em;
     }
   }
 
