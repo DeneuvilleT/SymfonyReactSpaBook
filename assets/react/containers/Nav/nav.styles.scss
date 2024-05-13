@@ -144,5 +144,10 @@
 @media (max-width: 620px) {
   .nav {
     gap: 0;
+
+    ul a, ul svg {
+      background-color: rgb(95 95 95);
+      backdrop-filter: blur(100px) brightness(0.5);
+    }
   }
 }
