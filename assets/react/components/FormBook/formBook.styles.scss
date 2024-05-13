@@ -217,8 +217,25 @@
 }
 
 @media (max-width: 780px) {
-  aside:nth-child(2) {
-    justify-content: space-evenly;
+  .formBook {
+    aside:nth-child(2) {
+      justify-content: space-evenly;
+    }
+    
+    aside:nth-child(2) div label {
+      font-size: .8em;
+    }
+
+    aside:first-child label {
+      font-size: .7em;
+      color: #666666e8;
+    }
+
+     button {
+      background-color: transparent;
+      color:transparent;
+      width: 100%;
+    }
   }
 }
 
@@ -227,12 +244,7 @@
     menu {
       display: none;
     }
-
-    button {
-      font-size: 0.9em;
-      width: 100%;
-    }
-
+    
     aside:nth-child(2) {
       height: auto;
       transform: translateY(1px);
@@ -244,6 +256,14 @@
   .formBook {
     aside:first-child {
       padding-bottom: 0;
+      justify-content: space-between;
+    }
+    
+    aside:first-child div {
+      width: 47%;
+      border-radius: 40px;
+      overflow: hidden;
+      margin-bottom: 2.5px;
     }
 
     aside:first-child div:first-child {
@@ -272,7 +292,6 @@
     aside:nth-child(2).active {
       height: 70px;
       padding: 0 13px;
-      margin-top: 10px;
       transform: translateY(1px);
     }
 
@@ -281,6 +300,8 @@
       width: 100%;
       color: #fff;
       list-style: none;
+      margin-top: -25px;
+      z-index: 2;
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 14.702L6.692 9.394l.708-.707l4.6 4.6l4.6-4.6l.708.707z'/%3E%3C/svg%3E");
@@ -288,13 +309,20 @@
 
     aside:nth-child(2).active + menu {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='m7.4 14.702l-.708-.708L12 8.687l5.308 5.307l-.708.708l-4.6-4.6z'/%3E%3C/svg%3E");
+      margin-top: 5px;
     }
 
     button {
       order: 5;
       width: 80%;
-      max-width: 325px;
+      max-width: none;
       background-color: #333;
+      padding-top: 0;
+    }
+
+    select,
+    input:not(input[type="checkbox"]) {
+      min-height: 30px;
     }
 
     ul.error_messages.appear {
@@ -308,10 +336,6 @@
     select,
     input:not(input[type="checkbox"]) {
       min-width: 0;
-    }
-
-    aside:first-child div {
-      width: 49%;
     }
 
     aside:first-child label {
