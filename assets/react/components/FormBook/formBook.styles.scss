@@ -228,6 +228,11 @@
       display: none;
     }
 
+    button {
+      font-size: 0.9em;
+      width: 100%;
+    }
+
     aside:nth-child(2) {
       height: auto;
       transform: translateY(1px);
@@ -320,12 +325,6 @@
 
     aside:nth-child(2) div label {
       font-weight: 400;
-    }
-
-    button {
-      margin-top: 10px;
-      font-size: 0.9em;
-      width: 100%;
     }
 
     aside:nth-child(2) {
