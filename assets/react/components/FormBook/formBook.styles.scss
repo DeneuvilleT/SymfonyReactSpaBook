@@ -261,6 +261,12 @@
       padding-bottom: 0;
       justify-content: space-between;
     }
+
+    aside:first-child label {
+      padding-left: 5px;
+      color: #666666e8;
+      font-weight: 500;
+    }
     
     aside:first-child div {
       width: 47%;
@@ -339,11 +345,6 @@
     select,
     input:not(input[type="checkbox"]) {
       min-width: 0;
-    }
-
-    aside:first-child label {
-      color: #666;
-      font-weight: 500;
     }
 
     aside:nth-child(2) div {
