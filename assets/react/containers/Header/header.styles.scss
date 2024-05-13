@@ -37,6 +37,12 @@
   }
 }
 
+@media (max-width: 620px) {
+  .header {
+    backdrop-filter: blur(9px) brightness(0.75);
+  }
+}
+
 @media (max-width: 515px) {
   .header {
     padding-top: 15px;
