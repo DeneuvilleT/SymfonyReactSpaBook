@@ -909,10 +909,20 @@
   .welcome {
     margin: 25px auto;
 
+    .textBox p, 
+    .textBox h2 {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+    
     .textBox p {
       font-size: 0.8em;
     }
 
+    .textBox p span {
+      margin-left: 0;
+    }
+    
     .imageBox img {
       max-width: 225px;
     }
