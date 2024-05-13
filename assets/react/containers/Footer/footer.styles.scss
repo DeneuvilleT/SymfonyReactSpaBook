@@ -257,7 +257,6 @@
     div h3 {
       display: flex;
       gap: 15px;
-      padding: 0 20px 20px;
       border-bottom-left-radius: 10px;
     }
 
@@ -267,7 +266,8 @@
 
     div address {
       text-align: center;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 0.9em;
       padding: 0 10px;
     }
   }
@@ -288,9 +288,10 @@
 @media (max-width: 768px) {
   .reassurance {
     div h3 {
-      font-size: 2.25em;
+      font-size: 2em;
+      padding: 0 10px 0px;
+      border-bottom: 10px solid #75ff2f;
       letter-spacing: 1px;
-      padding: 0px 10px 20px;
     }
   }
 
@@ -300,7 +301,7 @@
 
   .footerContainer {
     grid-template-columns: repeat(1, 1fr);
-    grid-gap: 30px;
+    grid-gap: 10px;
 
     div {
       display: flex;
@@ -315,14 +316,43 @@
       text-align: center;
     }
 
+    div h2 {
+      font-size: 1.25em;
+    }
+
     div ul li a {
+      font-size: 0.875em;
       justify-content: center;
     }
 
     .footerSocialLinks {
       display: flex;
       justify-content: center;
+      margin-top: 10px;
       gap: 50px;
+    }
+
+    .footerSecAboutUs {
+      h2 {
+        font-size: 1.25em;
+      }
+  
+      p {
+       font-size: 0.875em;
+      }
+    }
+
+    .footerContact {
+      h2 {
+         font-size: 1.25em;
+      }
+    }
+
+    .footerCopyrightText {
+      p,
+      span {
+        font-size: 0.875em;
+      }
     }
   }
 }
