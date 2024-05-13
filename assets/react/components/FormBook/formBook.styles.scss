@@ -221,13 +221,13 @@
     aside:nth-child(2) {
       justify-content: space-evenly;
     }
-    
+
     aside:nth-child(2) div label {
-      font-size: .8em;
+      font-size: 0.8em;
     }
 
     aside:first-child label {
-      font-size: .7em;
+      font-size: 0.7em;
       color: #666666e8;
     }
 
@@ -242,7 +242,7 @@
     menu {
       display: none;
     }
-    
+
     aside:nth-child(2) {
       height: auto;
       transform: translateY(1px);
@@ -254,7 +254,7 @@
   .formBook {
     box-shadow: none;
     backdrop-filter: none;
-    
+
     aside:first-child {
       padding-bottom: 0;
       justify-content: space-between;
@@ -265,7 +265,7 @@
       color: #666666e8;
       font-weight: 500;
     }
-    
+
     aside:first-child div {
       width: 47%;
       border-radius: 40px;
@@ -319,7 +319,8 @@
       margin-top: 5px;
     }
 
-    button, button:disabled {
+    button,
+    button:disabled {
       order: 5;
       width: 100%;
       max-width: none;

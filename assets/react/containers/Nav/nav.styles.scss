@@ -124,7 +124,8 @@
       display: none;
     }
 
-    ul a, ul:first-child svg {
+    ul a,
+    ul:first-child svg {
       padding: 4.5px 9px;
       width: 43px;
     }
@@ -134,12 +135,13 @@
 @media (max-width: 620px) {
   .nav {
     gap: 0;
-    
+
     > aside {
       background-color: transparent;
     }
-    
-    ul a, ul:first-child svg {
+
+    ul a,
+    ul:first-child svg {
       justify-content: center;
       width: 37.5px;
       height: 37.5px;
@@ -148,7 +150,7 @@
       border-radius: 20px;
       background-color: #494949;
       backdrop-filter: blur(100px) brightness(0.5);
-      box-shadow: 0 2px 4px rgba(0,0,0,.16);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
     }
 
     ul:first-child svg {

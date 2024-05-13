@@ -602,10 +602,6 @@
     animation: disappearTablet 2s linear forwards;
   }
 
-  // .locations.appear {
-  //   animation: none;
-  // }
-
   .locations {
     transform: translateY(-70px);
     justify-content: center;
@@ -757,12 +753,11 @@
       width: 217px;
       margin-right: 20px;
     }
-    
+
     .textBox a span {
-      min-width: 160px;
-      font-size: 0.9em;
+      min-width: 161px;
     }
-    
+
     .textBox a:after {
       min-height: 20px;
       min-width: 40px;
@@ -901,13 +896,13 @@
   .welcome {
     margin: 25px auto;
 
-    .textBox p, 
+    .textBox p,
     .textBox h2 {
       padding-left: 0;
       margin-left: 15px;
       margin-right: 15px;
     }
-    
+
     .textBox p {
       font-size: 0.8em;
     }
@@ -915,7 +910,7 @@
     .textBox p span {
       margin-left: 0;
     }
-    
+
     .imageBox img {
       max-width: 225px;
     }

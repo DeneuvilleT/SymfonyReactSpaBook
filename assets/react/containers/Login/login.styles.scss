@@ -358,6 +358,14 @@
   .formBox .formSignIn p {
     font-weight: 400;
   }
+
+  .formBox {
+    .formSignIn form,
+    .formSignUp form {
+      padding: 0 20px;
+      border-bottom: 1px solid #999999c7;
+    }
+  }
 }
 
 @media (max-width: 515px) {
@@ -378,23 +386,24 @@
       max-height: none;
     }
 
-    .formSignIn form,
-    .formSignUp form {
-      padding: 0 15px;
-    }
-
     .formSignIn h3,
     .formSignUp h3 {
       margin: 0 0 20px;
-      padding: 80px 25px 20px;
+      padding: 0 25px 20px;
+    }
+
+    .formSignIn form input,
+    .formSignUp form input {
+      max-width: 360px;
     }
   }
 
   .formContainer {
     align-items: flex-end;
 
-    button {
-      margin-bottom: 15vh;
+    form button {
+      margin-top: 0 !important;
+      margin-bottom: 4.5vh;
     }
   }
 
@@ -402,14 +411,22 @@
     height: auto;
     margin: 0 auto;
     padding: 0;
+
+    button {
+      margin-bottom: 13.5vh;
+    }
   }
 }
 
 @media (max-width: 375px) {
+  .formLog {
+    min-height: 760px;
+  }
+
   .formContainer {
     align-items: flex-start;
 
-    button {
+    form button {
       margin-bottom: 5vh;
     }
   }
@@ -417,7 +434,7 @@
   .formBox {
     .formSignIn h3,
     .formSignUp h3 {
-      padding: 80px 25px 5px;
+      padding: 15px 25px 5px;
     }
 
     .formSignIn form button,
@@ -427,6 +444,6 @@
   }
 
   .formContainerBox {
-    height: 100vh;
+    height: 105vh;
   }
 }
