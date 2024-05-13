@@ -231,10 +231,8 @@
       color: #666666e8;
     }
 
-     button {
-      background-color: transparent;
-      color:transparent;
-      width: 100%;
+    button {
+      width: 80%;
     }
   }
 }
@@ -321,11 +319,13 @@
       margin-top: 5px;
     }
 
-    button {
+    button, button:disabled {
       order: 5;
-      width: 80%;
+      width: 100%;
       max-width: none;
-      background-color: #333;
+      font-size: 0;
+      color: transparent;
+      background-color: transparent;
       padding-top: 0;
     }
 

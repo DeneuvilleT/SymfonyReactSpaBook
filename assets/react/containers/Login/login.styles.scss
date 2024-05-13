@@ -27,6 +27,7 @@
 
 // Reset password
 .formBox .formSignIn p {
+  color: #2f2f2f;
   cursor: pointer;
   margin-top: 15px;
   margin-bottom: 25px;
@@ -44,7 +45,7 @@
   position: relative;
   width: 60vw;
   height: 65vh;
-  max-height: 700px;
+  max-height: 600px;
   max-width: 1140px;
   backdrop-filter: blur(20px) brightness(0.75);
   display: flex;
@@ -69,7 +70,7 @@
     font-size: 1.1em;
     font-weight: 400;
     margin-bottom: 25px;
-    text-shadow: 0 0px 4px rgb(119 119 119);
+    text-shadow: 3px 2px 30px #000;
   }
 
   button {
@@ -104,7 +105,7 @@
   max-width: 515px;
   min-width: 515px;
 
-  max-height: 800px;
+  max-height: 750px;
   min-height: 500px;
   background-color: #fff;
 
@@ -176,11 +177,11 @@
 
   .formSignIn h3,
   .formSignUp h3 {
-    font-size: 1.5em;
+    font-size: 1.375em;
     font-weight: 600;
     padding: 0 50px;
     margin-bottom: 40px;
-    color: #333;
+    color: #2f2f2f;
   }
 
   .formSignIn form input,
@@ -350,6 +351,12 @@
     .formBox {
       left: auto;
     }
+  }
+}
+
+@media (max-width: 620px) {
+  .formBox .formSignIn p {
+    font-weight: 400;
   }
 }
 

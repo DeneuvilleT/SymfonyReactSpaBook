@@ -2,21 +2,21 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.f0f15a6b.js",
-        "/build/748.c0c08d3d.js",
-        "/build/app.b783e4cb.js"
+        "/build/runtime.js",
+        "/build/vendors-node_modules_reduxjs_toolkit_dist_redux-toolkit_esm_js-node_modules_date-fns_esm_form-930211.js",
+        "/build/app.js"
       ],
       "css": [
-        "/build/632.7ac3a25c.css"
+        "/build/assets_react_components_Calendar_calendar_styles_scss-assets_react_components_FormBook_formBo-2950c2.css"
       ]
     },
     "styles": {
       "js": [
-        "/build/runtime.f0f15a6b.js"
+        "/build/runtime.js"
       ],
       "css": [
-        "/build/632.7ac3a25c.css",
-        "/build/styles.31d6cfe0.css"
+        "/build/assets_react_components_Calendar_calendar_styles_scss-assets_react_components_FormBook_formBo-2950c2.css",
+        "/build/styles.css"
       ]
     }
   }
