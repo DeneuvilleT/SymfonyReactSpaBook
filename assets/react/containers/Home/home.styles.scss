@@ -334,7 +334,7 @@
 
   .content p div {
     font-family: "Poppins", sans-serif;
-    color: #333;
+    color: #2f2f2f;
     font-size: 1.05em;
     font-weight: 400;
     line-height: 21px;
@@ -788,7 +788,7 @@
     .textBox h2 {
       font-size: 2em;
       padding-left: 20px;
-      margin-top: 25px;
+      margin-top: 10px;
       margin-bottom: 50px;
     }
   }
@@ -835,7 +835,6 @@
       .content > ul div[role="figure"] {
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        overflow: hidden;
         clip-path: none;
       }
 
@@ -904,7 +903,7 @@
     }
 
     .textBox p {
-      font-size: 0.8em;
+      font-size: 0.85em;
     }
 
     .textBox p span {
@@ -916,20 +915,36 @@
     }
   }
 
+  .locations.choiceActive .cardsLoc,
   .cardsLoc {
     .imgBox {
       border-radius: 7.5px;
-      min-height: 300px;
+      min-height: 225px;
     }
 
     .content {
+      box-shadow: none;
       border-radius: 12.5px;
-      padding: 20px 0 0;
+      padding: 10px 0 0;
       margin: 0;
+    }
+
+    .content p {
+      padding-right: 5px;
+    }
+
+    .content h3 {
+      font-size: 1.1em;
+      padding: 0 10px;
     }
 
     .content > ul {
       padding: 10px 0;
+    }
+
+    .content > ul li {
+      height: 35px;
+      width: 35px;
     }
 
     .content > ul,
@@ -938,16 +953,30 @@
     }
 
     .content p div {
-      font-size: 0.9em;
+      color: #888888;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 5px;
+      font-size: 0.85em;
       max-height: 160px;
       overflow-y: auto;
     }
 
+    .content p div::-webkit-scrollbar {
+      display: block;
+      width: 4px;
+    }
+
+    .content p div::-webkit-scrollbar-thumb {
+      background-color: #999;
+    }
+
     .content > ul div[role="figure"] {
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
-      overflow: hidden;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      padding-right: 0;
       clip-path: none;
+      overflow: hidden;
     }
 
     .content > ul div[role="figure"].locationActive:hover,
@@ -955,16 +984,44 @@
       clip-path: none;
     }
 
+    .content > ul div[role="figure"].locationActive span,
+    .content > ul div[role="figure"].locationOff span,
     .content > ul div[role="figure"] span {
-      font-size: 1.5em;
-      padding-left: 0;
-      padding-top: 0;
+      border-bottom-left-radius: 50px;
+      border-top-left-radius: 50px;
+      
+      border-top: 1px solid #44444444;
+      border-right: 1px solid #44444444;
+      border-bottom: 1px solid #44444444;
+      
+      box-shadow: -1px 0px 10px #444444ba;
+      background-color: #fff;
+      text-shadow: none;
+
+      color: #444;
+      font-size: 1.1em;
+      padding: 17px 10px 20px 25px;
+      height: 100%;
+    }
+    
+    .content > ul div[role="figure"].locationActive span {
+      padding: 18px 10px 15px 25px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .content > ul div[role="figure"].locationActive span strong {
+      font-size: 1.1em;
+      font-weight: 600;
+      font-style: italic;
     }
 
     .content > span {
+      border-top: 5px solid #f1f1f1;
+      border-right: 5px solid #f1f1f1;
       border-top-right-radius: 20px;
-      height: 55px;
-      top: -55px;
+      height: 45px;
+      top: -45px;
     }
   }
 
@@ -989,7 +1046,7 @@
 
   .locations.choiceActive {
     .thumbails li {
-      height: 140px;
+      height: 125px;
     }
   }
 
@@ -997,14 +1054,6 @@
     .cardsLoc {
       .content > ul {
         gap: 10px;
-      }
-
-      .content > ul div[role="figure"] {
-        padding-right: 10px;
-      }
-
-      .content > ul div[role="figure"] span {
-        font-size: 1.25em;
       }
     }
   }
@@ -1041,12 +1090,6 @@
 
     .content > ul div[role="figure"] {
       padding-right: 10px;
-    }
-
-    .content > ul div[role="figure"].locationOff span,
-    .content > ul div[role="figure"] span {
-      font-size: 1.25em;
-      margin-right: 0;
     }
 
     .content > ul li svg {
