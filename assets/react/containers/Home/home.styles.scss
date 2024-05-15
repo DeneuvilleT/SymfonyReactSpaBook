@@ -165,7 +165,7 @@
   }
 
   .imageBox img {
-    max-width: 400px;
+    max-width: 350px;
     border-radius: 40px;
     box-shadow: rgba(0, 0, 0, 0.3) 10px 10px 10px;
     transform: scale3d(1, 1, 1);
@@ -215,8 +215,8 @@
   align-content: flex-start;
   justify-content: flex-start;
   gap: 100px;
-  max-width: 1450px;
-  margin: -670px auto auto;
+  max-width: 1360px;
+  margin: -625px auto auto;
   width: 100%;
   opacity: 0;
   transform: translateY(90vh);
@@ -282,7 +282,7 @@
 // Locations trouvées
 .cardsLoc {
   position: relative;
-  width: 50vw;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -335,7 +335,7 @@
   .content p div {
     font-family: "Poppins", sans-serif;
     color: #2f2f2f;
-    font-size: 1.05em;
+    font-size: 1em;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.03em;
@@ -358,7 +358,7 @@
 
   .content h3 {
     color: #fff;
-    font-size: 1.75em;
+    font-size: 1.375em;
     font-weight: 600;
     padding: 0px 20px 0px;
     text-shadow: 0 0 10px #000;
@@ -389,7 +389,7 @@
     height: 100%;
     padding-right: 20px;
     background: linear-gradient(155deg, #017143, #0da72c 70%, #349b00);
-    clip-path: ellipse(20% 65% at 90% 70%);
+    clip-path: ellipse(20% 52% at 90% 70%);
     border-bottom-right-radius: 15px;
     z-index: 0;
     transition: clip-path 0.75s ease-in-out;
@@ -477,7 +477,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 15px;
+  gap: 10px;
   height: fit-content;
   width: 50%;
   padding-bottom: 20px;
@@ -488,8 +488,8 @@
     background-repeat: no-repeat;
     box-shadow: rgb(0 0 0 / 14%) 1px 5px 5px;
     border-radius: 10px;
-    width: 275px;
-    height: 205px;
+    width: 250px;
+    height: 180px;
     margin: 0 5px;
     cursor: pointer;
     transform: scale3d(1, 1, 1);
@@ -512,7 +512,7 @@
   }
 
   .locations .thumbails {
-    width: 65%;
+    width: 40%;
   }
 
   .cardsLoc {
@@ -522,7 +522,7 @@
 
 @media (max-width: 1920px) {
   .locations .thumbails {
-    width: 51%;
+    width: 40%;
   }
 }
 
@@ -541,6 +541,22 @@
 }
 
 @media (max-width: 1500px) {
+  .locations {
+    > li {
+      justify-content: center;
+      gap: 10PX;
+    }
+  }
+
+  .locations .thumbails {
+    width: 45%;
+
+    li {
+      height: 175px;
+      width: 235px;
+    }
+  }
+
   .cardsLoc {
     margin-left: 0;
 
@@ -608,6 +624,7 @@
     margin: auto;
 
     > li {
+      justify-content: space-between;
       position: relative;
       padding-top: 0;
       max-height: 875px;
@@ -642,12 +659,12 @@
   .locations span[role="previous"],
   .locations span[role="next"] {
     display: inline-block;
-    width: 300px;
-    height: 45px;
+    width: 265px;
+    height: 35px;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: absolute;
-    right: 0;
+    right: 17.5px;
     z-index: 5;
     overflow: hidden;
     border-radius: 10px;

@@ -199,7 +199,7 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
           <div>
             {msgsErr.map((err, index) => (
               <span key={index}>
-                <Icon icon="uiw:warning" color="white" width="25" height="25" />
+                <Icon icon="uiw:warning" color="white" width="20" height="20" />
                 {err}
               </span>
             ))}
