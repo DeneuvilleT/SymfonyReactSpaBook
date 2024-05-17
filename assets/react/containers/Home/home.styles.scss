@@ -729,11 +729,11 @@
       max-height: 500px;
       overflow-y: auto;
       gap: 10px;
-      
-      li {
-        height: 175px;
-        width: 235px;
-      }
+    }
+
+    .thumbails li {
+      height: 150px;
+      width: 210px;
     }
 
     .thumbails::-webkit-scrollbar {
@@ -905,7 +905,7 @@
 
       .content > ul div[role="figure"] span {
         display: flex;
-        gap: 15px;
+        gap: 7.5px;
         font-size: 1.5em;
         padding-left: 0;
         padding-top: 0;
@@ -934,7 +934,7 @@
     gap: 50px;
 
     > li {
-      box-shadow: rgba(191, 191, 191, 0.5) 0px 18px 22px;
+      box-shadow: 0 18px 22px hsl(0deg 0% 75% / 20%);
     }
   }
 
@@ -1037,6 +1037,7 @@
       overflow: hidden;
     }
 
+    .content > ul div[role="figure"].locationActive,
     .content > ul div[role="figure"].locationActive:hover,
     .content > ul div[role="figure"]:hover {
       clip-path: none;
@@ -1061,7 +1062,6 @@
     }
 
     .content > ul div[role="figure"].locationActive span {
-      padding: 18px 10px 15px 25px;
       align-items: center;
       gap: 8px;
     }
@@ -1097,13 +1097,27 @@
   }
 
   .locations.choiceActive {
+    .cardsLoc {
+      .content p {
+        padding-right: 10px;
+        margin: 20px 0;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+    }
+
+    > li {
+      box-shadow: none;
+    }
+
     .thumbails {
+      max-height: 300px;
       gap: 7.5px;
     }
 
     .thumbails li {
-      width: 44vw;
-      height: 200px;
+      height: 130px;
+      width: 190px;
     }
   }
 }
@@ -1117,7 +1131,8 @@
 
   .locations.choiceActive {
     .thumbails li {
-      height: 125px;
+      height: 110px;
+      width: 170px;
     }
   }
 
@@ -1135,6 +1150,12 @@
 
     .content > ul li:hover span {
       opacity: 0;
+    }
+
+    .content > ul div[role="figure"].locationActive span,
+    .content > ul div[role="figure"].locationOff span,
+    .content > ul div[role="figure"] span {
+      margin-right: 5px;
     }
   }
 

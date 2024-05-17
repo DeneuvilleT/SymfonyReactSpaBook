@@ -79,7 +79,7 @@
     font-size: 0.95em;
     background-color: #36d23624;
   }
-  
+
   .dates span.available b {
     font-weight: 600;
   }
@@ -142,7 +142,29 @@
 
 @media (max-width: 620px) {
   .calendar {
-    flex-direction: column;
     align-items: center;
+    flex-wrap: nowrap;
+    gap: 45px;
+
+    padding-left: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+
+    overflow-x: scroll;
+  }
+
+  .calendar::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+  }
+
+  .calendar::-webkit-scrollbar-thumb {
+    background-color: #8e8e8e;
+  }
+
+  .rowCalendar {
+    .dates span.available b {
+      font-size: 0.875em;
+    }
   }
 }

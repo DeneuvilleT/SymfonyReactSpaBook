@@ -256,10 +256,6 @@
       align-items: center;
     }
 
-    h4 {
-      font-size: 2em;
-    }
-
     aside label {
       flex-direction: column;
       align-items: flex-start;
@@ -273,7 +269,7 @@
     aside label input[type="checkbox"]:checked,
     aside label input[type="checkbox"] {
       height: 23px;
-      width: 23px;
+      min-width: 23px;
     }
   }
 }
@@ -292,7 +288,7 @@
     aside p {
       flex-wrap: wrap;
       min-width: 0;
-      font-size: 1em;
+      font-size: 0.9em;
     }
 
     aside p b {
@@ -306,18 +302,35 @@
     }
 
     aside label {
-      margin: 20px 10px;
+      margin: 20px 0;
+      font-size: 0.9em;
+    }
+
+    aside label:nth-child(2) {
+      flex-direction: row;
+    }
+
+    aside label div span {
+      width: 34.5px;
+      height: 34.5px;
+    }
+
+    aside label input[type="checkbox"]:checked,
+    aside label input[type="checkbox"] {
+      margin-top: 25px;
     }
 
     aside button {
-      font-size: 1.05em;
+      font-size: 1em;
     }
 
     h4 {
+      margin-top: 20px;
       padding-left: 20px;
     }
 
     > div > aside:first-child {
+      border-bottom: 1px solid #99999945;
       padding: 0 10px 20px;
       margin-bottom: 0;
     }
