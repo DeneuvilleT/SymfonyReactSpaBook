@@ -125,7 +125,7 @@
     border-radius: 40px;
     letter-spacing: 1px;
     text-decoration: none;
-    width: 210px;
+    width: 197.5px;
     height: 53px;
     overflow: hidden;
     margin-top: 20px;
@@ -136,7 +136,7 @@
   }
 
   .textBox a span {
-    min-width: 191px;
+    min-width: 195px;
     margin-left: 0;
   }
 
@@ -150,7 +150,7 @@
 
   .textBox a:hover {
     background-color: #0da72c;
-    width: 265px;
+    width: 270px;
   }
 
   .textBox a:active {
@@ -335,7 +335,7 @@
   .content p div {
     font-family: "Poppins", sans-serif;
     color: #2f2f2f;
-    font-size: 1em;
+    font-size: 0.95em;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.03em;
@@ -373,6 +373,7 @@
   .content > ul {
     display: flex;
     gap: 20px;
+    height: 100px;
     margin-top: 50px;
     padding: 20px 0;
     position: relative;
@@ -389,24 +390,24 @@
     height: 100%;
     padding-right: 20px;
     background: linear-gradient(155deg, #017143, #0da72c 70%, #349b00);
-    clip-path: ellipse(20% 52% at 90% 70%);
+    clip-path: ellipse(20% 55% at 90% 70%);
     border-bottom-right-radius: 15px;
     z-index: 0;
     transition: clip-path 0.75s ease-in-out;
   }
 
   .content > ul div[role="figure"]:hover {
-    clip-path: ellipse(23% 68% at 90% 70%);
+    clip-path: ellipse(22% 60% at 90% 70%);
   }
 
   .content > ul div[role="figure"] span {
     opacity: 1;
     pointer-events: initial;
     cursor: pointer;
-    padding-top: 27px;
-    padding-right: 7px;
+    padding-top: 20px;
+    padding-right: 15px;
     letter-spacing: 0.55px;
-    font-size: 1.75em;
+    font-size: 1.5em;
     font-style: italic;
     font-weight: 600;
     color: #f6f6f6;
@@ -417,7 +418,7 @@
 
   .content > ul div[role="figure"].locationOff span {
     cursor: default;
-    margin-right: -3px;
+    margin-right: -5px;
     padding-right: 0;
   }
 
@@ -457,19 +458,49 @@
 
   .content > ul li {
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 7px;
-    border-radius: 5px;
-    background-color: #d9d9d9;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
+
+    width: 54px;
+    height: 54px;
+
+    overflow: hidden;
+    padding: 10px 0 10px 10px;
     z-index: 1;
+
+    border-radius: 2ex;
+    background-color: #fff;
+    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.25);
+
+    border-top: 1px solid #9999994f;
+    border-right: 1px solid #9999994f;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    transition: width 0.5s ease-in;
+  }
+
+  .content > ul li:hover {
+    width: 220px;
+    border-bottom: 1px solid #9999994f;
+    border-left: 1px solid #9999994f;
+  }
+
+  .content > ul li span {
+    opacity: 0;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9em;
+    transition: 0.25s opacity 0.5s ease-in;
+  }
+
+  .content > ul li:hover span {
+    opacity: 1;
   }
 
   .content > ul li svg {
-    width: 2em;
-    height: 2em;
+    min-width: 32px;
+    min-height: 32px;
   }
 }
 
@@ -522,6 +553,7 @@
 
 @media (max-width: 1920px) {
   .locations .thumbails {
+    justify-content: flex-start;
     width: 40%;
   }
 }
@@ -544,11 +576,12 @@
   .locations {
     > li {
       justify-content: center;
-      gap: 10PX;
+      gap: 10px;
     }
   }
 
   .locations .thumbails {
+    justify-content: flex-end;
     width: 45%;
 
     li {
@@ -560,6 +593,10 @@
   .cardsLoc {
     margin-left: 0;
 
+    .content > ul div[role="figure"] {
+      clip-path: ellipse(20% 55% at 90% 70%);
+    }
+
     .content > ul div[role="figure"] span {
       padding-top: 17px;
     }
@@ -570,44 +607,6 @@
 
     .content > ul div[role="figure"].locationActive span strong {
       font-size: 1.5em;
-    }
-
-    .content p div {
-      font-size: 1em;
-    }
-
-    .content h3 {
-      font-size: 1.5em;
-    }
-
-    .content > ul li {
-      height: 46px;
-      overflow: hidden;
-      transition: height 0.5s ease-out;
-    }
-
-    .content > ul li svg {
-      height: 30px;
-      width: 30px;
-      margin-bottom: -10px;
-    }
-
-    .content > ul li span {
-      font-size: 0;
-      font-weight: 500;
-      transition: font-size 0.5s ease-out;
-    }
-
-    .content > ul li:hover {
-      height: 75px;
-    }
-
-    .content > ul li:hover svg {
-      margin-bottom: auto;
-    }
-
-    .content > ul li:hover span {
-      font-size: 1em;
     }
   }
 }
@@ -643,6 +642,7 @@
 
     .content > ul div[role="figure"] span {
       padding-top: 20px;
+      padding-right: 10px;
     }
   }
 
@@ -889,6 +889,10 @@
   .locations {
     transform: translateY(-15px);
     gap: 50px;
+
+    > li {
+      box-shadow: rgba(191, 191, 191, 0.5) 0px 18px 22px;
+    }
   }
 
   .home,
@@ -940,14 +944,15 @@
     }
 
     .content {
-      box-shadow: none;
       border-radius: 12.5px;
-      padding: 10px 0 0;
+      padding: 0;
       margin: 0;
     }
 
     .content p {
       padding-right: 5px;
+      max-height: 0;
+      overflow-y: hidden;
     }
 
     .content h3 {
@@ -956,7 +961,9 @@
     }
 
     .content > ul {
+      height: auto;
       padding: 10px 0;
+      margin-top: 0;
     }
 
     .content > ul li {
@@ -967,16 +974,6 @@
     .content > ul,
     .content p div {
       padding-left: 20px;
-    }
-
-    .content p div {
-      color: #888888;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-top: 5px;
-      font-size: 0.85em;
-      max-height: 160px;
-      overflow-y: auto;
     }
 
     .content p div::-webkit-scrollbar {
@@ -992,6 +989,7 @@
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
       padding-right: 0;
+      background: none;
       clip-path: none;
       overflow: hidden;
     }
@@ -1004,23 +1002,21 @@
     .content > ul div[role="figure"].locationActive span,
     .content > ul div[role="figure"].locationOff span,
     .content > ul div[role="figure"] span {
-      border-bottom-left-radius: 50px;
-      border-top-left-radius: 50px;
-      
-      border-top: 1px solid #44444444;
-      border-right: 1px solid #44444444;
-      border-bottom: 1px solid #44444444;
-      
-      box-shadow: -1px 0px 10px #444444ba;
-      background-color: #fff;
-      text-shadow: none;
-
-      color: #444;
+      background: linear-gradient(-180deg, #00a314, #0da72c 30%, #2fab18);
+      padding: 9px 12.5px 7.5px;
+      margin-right: 20px;
+      border-radius: 40px;
       font-size: 1.1em;
-      padding: 17px 10px 20px 25px;
-      height: 100%;
     }
-    
+
+    .content > ul div[role="figure"].locationOff {
+      background: none;
+    }
+
+    .content > ul div[role="figure"].locationOff span {
+      background: #c17500;
+    }
+
     .content > ul div[role="figure"].locationActive span {
       padding: 18px 10px 15px 25px;
       align-items: center;
@@ -1031,6 +1027,21 @@
       font-size: 1.1em;
       font-weight: 600;
       font-style: italic;
+    }
+
+    .content > ul div[role="figure"]:hover span {
+      text-shadow: none;
+    }
+
+    .content > ul li {
+      padding: 10px 0 10px 5px;
+      height: 40px;
+      width: 40px;
+    }
+
+    .content > ul li svg {
+      min-width: 27px;
+      min-height: 27px;
     }
 
     .content > span {
@@ -1064,6 +1075,23 @@
   .locations.choiceActive {
     .thumbails li {
       height: 125px;
+    }
+  }
+
+  .cardsLoc {
+    .content > ul li {
+      box-shadow: none;
+      border: none;
+    }
+
+    .content > ul li:hover {
+      width: 40px;
+      border-bottom: none;
+      border-left: none;
+    }
+
+    .content > ul li:hover span {
+      opacity: 0;
     }
   }
 
@@ -1107,6 +1135,12 @@
 
     .content > ul div[role="figure"] {
       padding-right: 10px;
+    }
+
+    .content > ul div[role="figure"].locationActive span,
+    .content > ul div[role="figure"].locationOff span,
+    .content > ul div[role="figure"] span {
+      margin-right: 0;
     }
 
     .content > ul li svg {
