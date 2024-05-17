@@ -13,17 +13,18 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 30px;
+    gap: 5px;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.16);
     background-color: #fff;
     border-radius: 25px;
     margin-left: 70px;
-    padding: 30px;
+    padding: 20px 30px;
     width: 100%;
   }
 
   h4 {
-    font-size: 2em;
+    margin-bottom: 20px;
+    font-size: 1.5em;
   }
 
   > div div[id="bookStart"] + h4 {
@@ -49,7 +50,7 @@
   }
 
   aside.activeBtn {
-    min-height: 100px;
+    min-height: 75px;
     height: auto;
     opacity: 1;
   }
@@ -61,7 +62,7 @@
     flex-wrap: wrap;
     gap: 25px;
 
-    padding: 0 20px 20px;
+    padding: 0 20px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid #999;
   }
@@ -80,7 +81,7 @@
     height: 50px;
     padding: 12px 17.5px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.1em;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px;
     transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
   }
@@ -103,7 +104,7 @@
   aside p {
     color: #333;
     font-family: Poppins, sans-serif;
-    font-size: 1.05em;
+    font-size: 1em;
     font-weight: 400;
     letter-spacing: 0.03em;
     line-height: 21px;
@@ -113,7 +114,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    font-size: 1.15em;
+    font-size: 1em;
     min-width: 500px;
   }
 
@@ -234,18 +235,25 @@
     aside button {
       margin: 10px auto;
     }
+
+    > div > aside:first-child {
+      padding-bottom: 20px;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .periodsBooking {
+    > div {
+      margin-top: 20px;
+    }
   }
 }
 
 @media (max-width: 870px) {
   .periodsBooking {
-    > div {
-      padding: 30px 15px 15px;
-    }
-
     aside p {
       align-items: center;
-      font-size: 1.05em;
     }
 
     h4 {
@@ -266,6 +274,15 @@
     aside label input[type="checkbox"] {
       height: 23px;
       width: 23px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .periodsBooking {
+    > div {
+      box-shadow: none;
+      padding: 20px 10px;
     }
   }
 }

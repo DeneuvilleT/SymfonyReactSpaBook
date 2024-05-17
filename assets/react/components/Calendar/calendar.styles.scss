@@ -7,7 +7,8 @@
 
   h5 {
     text-transform: capitalize;
-    font-size: 1.25em;
+    font-size: 1.05em;
+    text-align: center;
   }
 
   article {
@@ -52,6 +53,10 @@
     text-align: start;
   }
 
+  .days span {
+    font-size: 0.875em;
+  }
+
   .dates span {
     font-size: 0.9em;
     color: #b3b3b3;
@@ -68,10 +73,15 @@
   }
 
   .dates span.available {
-    user-select: initial;
     cursor: pointer;
     color: #0da72c;
+    user-select: initial;
+    font-size: 0.95em;
     background-color: #36d23624;
+  }
+  
+  .dates span.available b {
+    font-weight: 600;
   }
 
   .dates span.available.dateActive,
@@ -120,7 +130,7 @@
 
 @media (max-width: 768px) {
   .calendar {
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 0;
 
     article {
