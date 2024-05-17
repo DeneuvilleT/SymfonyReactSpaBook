@@ -105,24 +105,25 @@ const Summary = () => {
         <section>
           <h2>Récapitulatif de votre réservation :</h2>
 
-          <p>
-            {isLog &&
-            infos.firstname.length !== 0 &&
-            infos.lastname.length !== 0 ? (
-              <>
-                <b>
-                  <span>{`${infos.lastname}`}</span> {`${infos.firstname}`}
-                </b>
-                , vous êtes sur le point de réserver :
-              </>
-            ) : (
-              "Vous êtes sur le point de réserver :"
-            )}
-          </p>
-
           <article>
             <div>
+              <p>
+                {isLog &&
+                infos.firstname.length !== 0 &&
+                infos.lastname.length !== 0 ? (
+                  <>
+                    <b>
+                      <span>{`${infos.lastname}`}</span> {`${infos.firstname}`}
+                    </b>
+                    , vous êtes sur le point de réserver :
+                  </>
+                ) : (
+                  "Vous êtes sur le point de réserver :"
+                )}
+              </p>
+
               <h3>{locations[0].cottage.name}</h3>
+
               <img
                 alt={locations[0].cottage.name}
                 src={`${window.location.origin}/uploads/images/${

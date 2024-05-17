@@ -62,12 +62,13 @@
   h3 {
     font-size: 1.65em;
     margin-bottom: 20px;
+    color: #2f2f2f;
   }
 
   h2 {
     color: #333;
     font-family: Poppins, sans-serif;
-    font-size: 3em;
+    font-size: 2em;
     font-weight: 600;
     line-height: 1.15em;
     margin-bottom: 20px;
@@ -101,7 +102,7 @@
     min-width: 320px;
   }
 
-  article div p {
+  article div:not(:first-child) p {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
