@@ -1,9 +1,20 @@
 .notFound {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 25px;
-  max-width: 1450px;
-  margin: 50px auto 20px auto;
+  min-height: 500px;
+  width: 100%;
+  padding: 60px 15vw 100px;
+  background-color: #f1f1f1f1;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 1360px;
+    width: 100%;
+  }
 
   div {
     display: flex;
@@ -12,10 +23,29 @@
   }
 
   h2 {
-    font-size: 26px;
+    font-size: 2em;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 620px) {
+  .notFound {
+    flex-direction: column;
+
+    h2 {
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+
+    h3 {
+      font-weight: 400;
+    }
+
+    div {
+      align-items: center;
+    }
   }
 }

@@ -245,7 +245,20 @@ const Summary = () => {
           </article>
         </section>
       ) : (
-        <p>Vous n'avez sélectionné aucun hébergement</p>
+        <section>
+          <h3>Vous n'avez sélectionné aucun hébergement</h3>
+          <p>
+            Veuillez rechercher un hébergement dans la barre de recherche juste
+            au dessus.
+          </p>
+
+          <Icon
+            icon="bi:house-slash"
+            width="100"
+            height="100"
+            style={{ color: "#2f2f2f" }}
+          />
+        </section>
       )}
     </main>
   );
