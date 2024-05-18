@@ -373,7 +373,8 @@
       font-size: 0.9em;
     }
 
-    article:last-child p {
+    article:last-child aside,
+    article p {
       font-weight: 400;
       padding: 0 10px 20px;
     }
