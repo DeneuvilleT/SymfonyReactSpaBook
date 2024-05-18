@@ -344,6 +344,24 @@
 
 @media (max-width: 620px) {
   .summary {
+    article div:not(:first-child) p b {
+      font-size: 1.1em;
+    }
+
+    article div:nth-child(2) p:nth-child(3) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    article div:not(:first-child) p span svg {
+      gap: 5px;
+    }
+
+    article div:not(:first-child) p span svg {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
     article:last-child a {
       font-size: 0.9em;
     }
@@ -394,12 +412,24 @@
     }
 
     article:last-child {
-      gap: 40px;
+      gap: 30px;
       align-items: center;
     }
 
     article div p:last-child b {
       font-size: 2em;
+    }
+  }
+}
+
+@media (max-width: 515px) {
+  .summary {
+    h2 {
+      font-size: 1.5em;
+    }
+
+    h3 {
+      font-size: 1.25em;
     }
   }
 }

@@ -603,8 +603,14 @@
     .error,
     .success,
     .success_reset {
-      gap: 30px;
+      gap: 15px;
       padding: 20px;
+    }
+
+    .error p span,
+    .success p span {
+      gap: 20px;
+      margin-top: 20px;
     }
 
     .success h2,
