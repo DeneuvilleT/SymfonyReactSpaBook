@@ -37,6 +37,11 @@ const FormBook = ({ url, btnSubmit, hasLabel, inputs }) => {
     if (canSave) {
       setIcone("svg-spinners:90-ring");
 
+      localStorage.getItem("location")
+        ? localStorage.removeItem("location")
+        : null;
+      localStorage.getItem("dates") ? localStorage.removeItem("dates") : null;
+
       try {
         const response = await axios.post(url, formData);
         setMsgsErr([]);

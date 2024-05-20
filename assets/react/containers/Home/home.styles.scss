@@ -853,8 +853,8 @@
     .thumbails.moreCover + span[role="next"] {
       background: linear-gradient(
         180deg,
-        hsl(0deg 0% 100% / 0%),
-        hsl(0deg 0% 100% / 82.4%) 25%,
+        hsla(0, 0%, 100%, 0),
+        hsl(0deg 0% 100%) 25%,
         #fff
       );
     }
@@ -934,7 +934,8 @@
     gap: 50px;
 
     > li {
-      box-shadow: 0 18px 22px hsl(0deg 0% 75% / 20%);
+      box-shadow: 0 18px 22px hsl(0deg 0% 87.29% / 59%);
+      border-radius: 7.5px;
     }
   }
 
@@ -954,6 +955,11 @@
 
   .welcome.other {
     margin: 45px auto;
+
+    .textBox h2 {
+      margin-top: 0;
+      margin-bottom: 35px;
+    }
   }
 
   .welcome {
@@ -962,8 +968,8 @@
     .textBox p,
     .textBox h2 {
       padding-left: 0;
-      margin-left: 15px;
-      margin-right: 15px;
+      margin-left: 7.5px;
+      margin-right: 7.5px;
     }
 
     .textBox p {
@@ -987,7 +993,7 @@
     }
 
     .content {
-      border-radius: 12.5px;
+      box-shadow: none;
       padding: 0;
       margin: 0;
     }
@@ -1007,6 +1013,7 @@
       height: auto;
       padding: 10px 0;
       margin-top: 0;
+      gap: 0;
     }
 
     .content > ul li {
@@ -1014,9 +1021,14 @@
       width: 35px;
     }
 
-    .content > ul,
-    .content p div {
+    .content > ul {
+      padding-top: 10px;
       padding-left: 20px;
+      border-top: 1px solid hsl(0deg 0% 60% / 19%);
+    }
+
+    .content p div {
+      padding-left: 10px;
     }
 
     .content p div::-webkit-scrollbar {
@@ -1050,7 +1062,8 @@
       padding: 9px 12.5px 7.5px;
       margin-right: 20px;
       border-radius: 40px;
-      font-size: 1.1em;
+      font-size: 1em;
+      font-weight: 500;
     }
 
     .content > ul div[role="figure"].locationOff {
@@ -1088,9 +1101,11 @@
     }
 
     .content > span {
+      border-bottom-left-radius: 5px;
       border-top: 5px solid #f1f1f1;
       border-right: 5px solid #f1f1f1;
       border-top-right-radius: 20px;
+      min-width: 0;
       height: 45px;
       top: -45px;
     }
@@ -1100,9 +1115,18 @@
     .cardsLoc {
       .content p {
         padding-right: 10px;
+        padding-bottom: 10px;
         margin: 20px 0;
         max-height: 200px;
         overflow-y: auto;
+      }
+
+      .content > ul {
+        padding-top: 20px;
+      }
+
+      .content > ul div[role="figure"].locationActive {
+        top: 5px;
       }
     }
 
@@ -1118,6 +1142,11 @@
     .thumbails li {
       height: 130px;
       width: 190px;
+    }
+
+    .thumbails.moreCover + span[role="next"] {
+      width: 100%;
+      left: 10px;
     }
   }
 }
@@ -1157,6 +1186,10 @@
     .content > ul div[role="figure"] span {
       margin-right: 5px;
     }
+
+    .content > ul {
+      padding-left: 10px;
+    }
   }
 
   .locations.choiceActive {
@@ -1188,11 +1221,6 @@
   }
 
   .cardsLoc {
-    .content > ul {
-      gap: 5px;
-    }
-
-    .content > ul,
     .content p div {
       padding-left: 10px;
     }

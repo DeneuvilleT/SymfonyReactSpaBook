@@ -147,10 +147,15 @@
     gap: 45px;
 
     padding-left: 15px;
+    padding-right: 15px;
     margin-bottom: 20px;
     width: 100%;
 
     overflow-x: scroll;
+
+    h5 {
+      font-size: 0.9em;
+    }
   }
 
   .calendar::-webkit-scrollbar {
@@ -165,6 +170,16 @@
   .rowCalendar {
     .dates span.available b {
       font-size: 0.875em;
+    }
+
+    .days span,
+    .dates span {
+      width: 32.5px;
+      height: 32.5px;
+    }
+
+    .days span {
+      font-size: 0.8em;
     }
   }
 }

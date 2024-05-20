@@ -112,10 +112,8 @@ const Summary = () => {
                 infos.firstname.length !== 0 &&
                 infos.lastname.length !== 0 ? (
                   <>
-                    <b>
-                      <span>{`${infos.lastname}`}</span> {`${infos.firstname}`}
-                    </b>
-                    , vous êtes sur le point de réserver :
+                    <b>{infos.firstname}</b>, vous êtes sur le point de réserver
+                    :
                   </>
                 ) : (
                   "Vous êtes sur le point de réserver :"

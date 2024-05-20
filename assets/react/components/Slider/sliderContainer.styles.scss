@@ -36,8 +36,8 @@
   top: 25%;
   left: 25%;
   transform: translate(-20%, -15%);
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 1150px;
+  max-height: 768px;
 }
 
 .sliderSlides {
@@ -45,6 +45,7 @@
   justify-content: flex-start;
   align-items: flex-end;
 
+  opacity: 0;
   position: absolute;
   top: 50%;
   left: 150%;
@@ -63,6 +64,7 @@
 .sliderSlides:nth-child(1),
 .sliderSlides:nth-child(2) {
   position: absolute;
+  opacity: 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -73,18 +75,22 @@
 }
 
 .sliderSlides:nth-child(3) {
-  left: calc(50% + 30vw);
+  opacity: 1;
+  left: calc(50% + 32vw);
   top: 55%;
 }
 .sliderSlides:nth-child(4) {
-  left: calc(50% + 35vw);
+  opacity: 1;
+  left: calc(50% + 36vw);
 }
 .sliderSlides:nth-child(5) {
+  opacity: 1;
   left: calc(50% + 40vw);
   top: 45%;
 }
 .sliderSlides:nth-child(6) {
-  left: calc(50% + 45vw);
+  opacity: 1;
+  left: calc(50% + 44vw);
   opacity: 0;
   top: 35%;
 }
@@ -201,6 +207,7 @@
 .sliderContainer.not_privacy {
   .slider {
     background-color: transparent;
+    max-height: none;
   }
 
   .error,
@@ -258,7 +265,8 @@
   .success h2,
   .success_reset h2 {
     color: #fff;
-    font-size: 2.5em;
+    font-size: 2em;
+    font-family: "Lato", sans-serif;
   }
 
   .error p,
@@ -335,6 +343,11 @@
 /* ::::::::::::::::::::::::::::::::::::::::::::::::: */
 /* RESET PASSWORD */
 .sliderContainer.not_privacy {
+  .slider {
+    background-color: transparent;
+    max-height: none;
+  }
+
   .reset {
     width: 100%;
     height: 75vh;
@@ -481,6 +494,10 @@
     transform: translate(0%, -15%);
   }
 
+  .buttons {
+    top: 85vh;
+  }
+
   .sliderSlides {
     width: 100px;
     height: 100px;
@@ -491,7 +508,7 @@
 
   .sliderSlides:nth-child(1),
   .sliderSlides:nth-child(2) {
-    top: initial;
+    top: 20vh;
   }
 
   .sliderSlides:nth-child(3) {
@@ -578,8 +595,19 @@
     .reset h3 {
       padding: 0 25px;
     }
+
     .reset form {
       padding: 0 30px;
+    }
+
+    .error a,
+    .success a,
+    .success_reset a,
+    .error p,
+    .success p,
+    .success_reset p {
+      line-height: 21px;
+      font-size: 0.9em;
     }
   }
 }
@@ -631,9 +659,8 @@
     }
 
     .reset {
-      justify-content: flex-start;
-      padding-top: 150px;
-      height: 50vh;
+      justify-content: center;
+      height: 500px;
     }
 
     .reset h3,

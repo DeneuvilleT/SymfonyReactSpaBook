@@ -21,7 +21,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1vw;
+    gap: 0.9vw;
     padding: 13px 0;
     height: auto;
     transition: transform 0.75s ease-in-out, height 0.5s ease-in;
@@ -253,7 +253,7 @@
 
     aside:first-child {
       padding-bottom: 0;
-      justify-content: space-between;
+      justify-content: space-around;
     }
 
     aside:first-child label {
@@ -264,7 +264,6 @@
 
     aside:first-child div {
       width: 47%;
-      border-radius: 40px;
       overflow: hidden;
       margin-bottom: 2.5px;
     }

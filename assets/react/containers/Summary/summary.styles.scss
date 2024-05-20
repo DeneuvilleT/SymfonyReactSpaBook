@@ -344,6 +344,11 @@
 
 @media (max-width: 620px) {
   .summary {
+    section > h2 {
+      font-size: 1.75em;
+      margin-bottom: 10px;
+    }
+
     article div:not(:first-child) p b {
       font-size: 1.1em;
     }

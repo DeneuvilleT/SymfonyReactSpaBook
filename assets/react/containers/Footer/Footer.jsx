@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Icon } from "@iconify/react";
 
 import styles from "./footer.styles.scss";
+import { deleteLocations } from "../../Store/slices/locationsSlices";
 
 const Footer = () => {
   const { isLog } = useSelector((state) => ({ ...state.auth }));
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -92,7 +95,9 @@ const Footer = () => {
               </li>
               <li>{isLog ? <Link to={"/profile"}>Mon compte</Link> : <></>}</li>
               <li>
-                <Link to={"/"}>Accueil</Link>
+                <Link onClick={() => dispatch(deleteLocations())} to={"/"}>
+                  Accueil
+                </Link>
               </li>
             </ul>
           </div>

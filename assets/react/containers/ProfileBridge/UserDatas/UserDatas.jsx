@@ -16,7 +16,7 @@ const UserDatas = ({ infos }) => {
     <div className={styles.userDatas}>
       <section title="Modifier vos coordonnées">
         <div>
-          <h3>Bienvenue {infos.firstname}</h3>
+          <h3>Vos informations personnelles {infos.firstname}</h3>
           {!modif ? (
             <article className={styles.datas}>
               <Datas infos={infos} setModif={setModif} />

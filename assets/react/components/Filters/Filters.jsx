@@ -65,7 +65,7 @@ const Filters = ({ location }) => {
       </div>
       {location.has_garden ? (
         <li>
-          <Icon icon="guidance:garden" style={{ color: "#333" }} />
+          <Icon icon="majesticons:flower-2" style={{ color: "#333" }} />
           <span>Vue sur jardin</span>
         </li>
       ) : (

@@ -18,8 +18,6 @@
     max-width: 1360px;
     margin: 0 auto;
     border-radius: 20px;
-    border-top: 1px solid #c5c5c573;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 4px;
   }
 
   div {
@@ -194,8 +192,6 @@
       justify-content: flex-start;
       gap: 5px;
       padding: 0;
-      box-shadow: none;
-      border-top: none;
     }
   }
 }
@@ -212,7 +208,7 @@
   .userBookings {
     article {
       width: 100%;
-      min-width: 0;
+      min-width: 320px;
     }
 
     span em {
@@ -236,6 +232,25 @@
   .userBookings {
     article aside {
       padding: 15px;
+    }
+
+    article p {
+      padding-left: 0;
+    }
+
+    article p:first-child {
+      padding-bottom: 20px;
+      border-bottom: 1px solid hsl(0deg 0% 60% / 19%);
+    }
+
+    article p:nth-child(2) {
+      text-align: right;
+      padding-right: 0;
+      margin-bottom: 10px;
+    }
+
+    article p b {
+      margin-left: 2px;
     }
   }
 }

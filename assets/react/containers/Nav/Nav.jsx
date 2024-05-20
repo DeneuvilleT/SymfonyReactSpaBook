@@ -121,7 +121,7 @@ const Nav = () => {
               ],
             },
             begin: {
-              label: "A partir de :",
+              label: "A partir du :",
               name: "begin",
               type: "date",
             },

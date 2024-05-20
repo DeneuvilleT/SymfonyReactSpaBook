@@ -123,9 +123,7 @@ const UserBookings = ({ infos }) => {
                 </article>
               ))
             ) : (
-              <p>
-                Vous n'avez pas encore de réservations
-              </p>
+              <p>Vous n'avez pas encore de réservations</p>
             )}
           </section>
         </div>

@@ -22,9 +22,10 @@ const Locations = ({ locationsDatas }) => {
   const locationHook = useLocation();
 
   useEffect(() => {
-    /**
-     * SI RETOUR EN ARRIERE NAVIGATEUR AUSSI
-     */
+    window.addEventListener("popstate", () => {
+      location.href = "/";
+    });
+
     if (locationHook.search === "?param=modify") {
       locationContainer.current.classList.add(styles.speed, styles.appear);
     } else {
@@ -34,6 +35,12 @@ const Locations = ({ locationsDatas }) => {
         }, 2000);
       }
     }
+
+    return () => {
+      window.removeEventListener("popstate", () => {
+        location.href = "/";
+      });
+    };
   }, [locations, locationHook]);
 
   useEffect(() => {

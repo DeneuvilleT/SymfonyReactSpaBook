@@ -17,7 +17,7 @@ const Details = ({ booking, cottage, display }) => {
   const [heightLine, setHeightLine] = useState(60);
 
   useEffect(() => {
-    setHeightLine(innerWidth > 515 ? heightLine * 1.4 : 235);
+    setHeightLine(innerWidth > 515 ? heightLine * 1.45 : 235);
   }, []);
 
   const handleDisplayPrivacy = (e) => {
@@ -38,8 +38,8 @@ const Details = ({ booking, cottage, display }) => {
           <span>
             <Icon
               icon="iwwa:file-pdf"
-              width="3em"
-              height="3em"
+              width="2.5em"
+              height="2.5em"
               style={{ color: "#fff" }}
             />
 
